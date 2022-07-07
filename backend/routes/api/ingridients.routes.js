@@ -1,6 +1,6 @@
 const ingridientsRouter = require('express').Router();
 
-const { Ingridient } = require('../db/models');
+const { Ingridient } = require('../../db/models');
 
 ingridientsRouter
   .route('/')
@@ -87,3 +87,5 @@ ingridientsRouter
       res.end();
     }
   });
+
+module.exports = ingridientsRouter;
