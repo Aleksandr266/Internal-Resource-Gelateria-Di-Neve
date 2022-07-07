@@ -27,17 +27,21 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    category_id: {
+    base_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: 'Categories',
+        model: 'Bases',
         key: 'id',
       },
     },
     market_price: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.DECIMAL
+    },
+    base_weight: {
+      allowNull: false,
+      type: DataTypes.DECIMAL
     },
     createdAt: {
       allowNull: false,

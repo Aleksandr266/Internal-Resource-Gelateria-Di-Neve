@@ -12,17 +12,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      category_id: {
+      base_id: {
         allowNull: false,
         type: Sequelize.INTEGER, 
         references: {
-          model: 'Categories',
+          model: 'Bases',
           key: 'id',
         },
       },
       market_price: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL
+      },
+      base_weight: {
+        allowNull: false,
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
