@@ -1,4 +1,3 @@
-require('@babel/register');
 require('dotenv').config();
 const express = require('express');
 const expressConfig = require('./config/express');
