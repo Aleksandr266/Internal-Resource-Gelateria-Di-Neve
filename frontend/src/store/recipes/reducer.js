@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loadRecipes = createAsyncThunk(
   'recipes/loadRecipes',
-  async function (_, { rejectWithValue }) {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetch('/recipes');
 
