@@ -1,14 +1,30 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Categories', {
+    await queryInterface.createTable('BaseIngridients', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      base_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Bases',
+          key: 'id',
+        },
+      },
+      ingridient_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Ingridients',
+          key: 'id',
+        },
+      },
+      weight: {
         allowNull: false,
         type: Sequelize.TEXT
       },
@@ -23,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Categories');
+    await queryInterface.dropTable('BaseIngridients');
   }
 };

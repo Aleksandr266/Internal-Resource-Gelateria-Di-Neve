@@ -3,41 +3,43 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Recipe extends Model {
+  class BaseIngridient extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Base, RecipeIngridient, Store, Production}) {
-      Recipe.Base = Recipe.belongsTo(Base, {foreignKey: 'base_id'})
-      Recipe.RecipeIngridients = Recipe.hasMany(RecipeIngridient, {foreignKey: 'recipe_id'})
-      Recipe.Store = Recipe.belongsTo(Store, {foreignKey: 'recipe_id'})
-      Recipe.Productions = Recipe.hasMany(Production, {foreignKey: 'recipe_id'})
+    static associate({Base, Ingridient}) {
+      BaseIngridient.Base = BaseIngridient.belongsTo(Base,{foreignKey: 'base_id'})
+      BaseIngridient.Ingridient = BaseIngridient.belongsTo(Ingridient,{foreignKey: 'ingridient_id'})
     }
   }
-  Recipe.init({
+  BaseIngridient.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    title: {
-      allowNull: false,
-      type: DataTypes.TEXT
-    },
-    category_id: {
+    base_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: 'Categories',
+        model: 'Bases',
         key: 'id',
       },
     },
-    market_price: {
+    ingridient_id: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Ingridients',
+        key: 'id',
+      },
+    },
+    weight: {
+      allowNull: false,
+      type: DataTypes.TEXT
     },
     createdAt: {
       allowNull: false,
@@ -49,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Recipe',
+    modelName: 'BaseIngridient',
   });
-  return Recipe;
+  return BaseIngridient;
 };
