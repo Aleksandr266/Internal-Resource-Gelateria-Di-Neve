@@ -22,4 +22,8 @@
   display: flex;
   justify-content: center;
 }
+.inputRecipeRow {
+  box-sizing: border-box;
+}
+
 
