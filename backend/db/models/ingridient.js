@@ -7,11 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ RecipeIngridient, BaseIngridient }) {
+    static associate({ RecipeIngridient, BaseIngridient, IngridientPrice }) {
       Ingridient.RecipeIngridients = Ingridient.hasMany(RecipeIngridient, {
         foreignKey: 'ingridient_id',
       });
       Ingridient.BaseIngridients = Ingridient.hasMany(BaseIngridient, {
+        foreignKey: 'ingridient_id',
+      });
+      Ingridient.IngridientPrices = Ingridient.hasMany(IngridientPrice, {
         foreignKey: 'ingridient_id',
       });
     }
@@ -27,10 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         allowNull: false,
         type: DataTypes.TEXT,
-      },
-      price: {
-        allowNull: false,
-        type: DataTypes.DECIMAL,
       },
       fat: {
         allowNull: false,
