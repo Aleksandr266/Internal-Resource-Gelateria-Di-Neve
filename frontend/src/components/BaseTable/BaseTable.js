@@ -1,16 +1,13 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 import RecipeRow from '../RecipeRow/RecipeRow';
 
-function BaseTable() {
-  const { recipesByBases } = useSelector((state) => state.recipes);
-  // if (props.id) {
-
-  // }
-  const { id } = useParams();
-  const { recipes } = recipesByBases[Number(id)];
+function BaseTable({ recipes }) {
+  // const { recipesByBases } = useSelector((state) => state.recipes);
+  // const { id } = useParams();
+  // const { recipes } = recipesByBases[Number(id)];
   return (
     <table className="tableRecipelist" cellSpacing={3} cellPadding={1}>
       <tbody>

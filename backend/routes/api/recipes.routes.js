@@ -4,7 +4,7 @@ const recipesRouter = require('express').Router();
 const { Recipe, RecipeIngridient } = require('../../db/models');
 
 recipesRouter
-  .route('/') //получаем все рецепты, включая базу
+  .route('/')
   .get(async (req, res) => {
     try {
       const recipes = await Recipe.findAll({
