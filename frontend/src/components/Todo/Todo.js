@@ -6,6 +6,7 @@ function Todo() {
   // количесто загрузок молочной базы
   const [milks, setmilk] = useState()
   // количесто загрузок сиропа
+  ///
   const [sirops, setSirop] = useState()
 
   const [milkBase, setmilkBase] = useState()
