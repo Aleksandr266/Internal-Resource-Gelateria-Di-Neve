@@ -1,0 +1,25 @@
+.tdRecipeRow {
+  background-color: #f7b7d0;
+  font-weight: 300;
+  text-align: center;
+}
+
+.thRecipeRow {
+  background-color: #f7b7d0;
+}
+
+.tableRecipeRow {
+  background-color: #cd3039;
+  border-color: #cd3039;
+}
+
+.boxTableRecipeRow {
+  display: flex;
+  justify-content: center;
+}
+
+.titleRecipesRow {
+  display: flex;
+  justify-content: center;
+}
+

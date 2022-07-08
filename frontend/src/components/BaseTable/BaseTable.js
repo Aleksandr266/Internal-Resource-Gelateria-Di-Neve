@@ -1,7 +1,8 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import RecipeRow from '../RecipeRow/RecipeRow';
 
 function BaseTable() {
   const { recipesByBases } = useSelector((state) => state.recipes);
@@ -21,21 +22,7 @@ function BaseTable() {
           <th className="thRecipeList">Итоговое кол. базы</th>
         </tr>
         {recipes.map((recipe) => (
-          <tr key={recipe.id}>
-            <td className="tdRecipeList">
-              <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-            </td>
-            <td className="tdRecipeList">{Math.round(Number(recipe.base_weight) * 10) / 100}</td>
-            <td className="tdRecipeList">{recipe.Store.amount}</td>
-            <td className="tdRecipeList">{recipe.Store.standart - recipe.Store.amount}</td>
-            <td className="tdRecipeList">
-              {Math.round(
-                (Math.round(Number(recipe.base_weight) * 10) / 100) *
-                  (recipe.Store.standart - recipe.Store.amount) *
-                  100,
-              ) / 100}
-            </td>
-          </tr>
+          < RecipeRow key={recipe.id} recipe={recipe}  />
         ))}
       </tbody>
     </table>
