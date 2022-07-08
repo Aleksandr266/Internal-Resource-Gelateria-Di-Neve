@@ -4,14 +4,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const loadRecipes = createAsyncThunk(
   'recipes/loadRecipes',
   async (_, { rejectWithValue }) => {
+    console.log('data');
     try {
-      const response = await fetch('/recipes');
+      const response = await fetch('/recipes', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
 
       if (!response.ok) {
         throw new Error('Server Error!');
       }
 
       const data = await response.json();
+      console.log(data);
 
       return data;
     } catch (error) {
@@ -28,7 +35,7 @@ const setError = (state, action) => {
 const recipeSlice = createSlice({
   name: 'recipes',
   initialState: {
-    recipes: ['aaaa', 'sss'],
+    recipes: [],
     status: null,
     error: null,
   },
