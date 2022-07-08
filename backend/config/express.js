@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const addUser = require('../middlewares/addUser');
+const path = require('path');
 
 const sessionConfig = {
   store: new FileStore(),
@@ -16,7 +17,8 @@ const sessionConfig = {
 };
 
 function expressConfig(app) {
-  app.use(express.static(`${__dirname}/../public`));
+  //app.use(express.static(`${__dirname}/../public`));
+  app.use(express.static(path.join(__dirname, '../../frontend/build')));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(session(sessionConfig));
