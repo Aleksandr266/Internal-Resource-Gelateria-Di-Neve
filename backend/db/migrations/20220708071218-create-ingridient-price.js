@@ -1,27 +1,23 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Recipes', {
+    await queryInterface.createTable('IngridientPrices', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      price: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.DECIMAL,
       },
-      base_id: {
+      ingridient_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Bases',
+          model: 'Ingridients',
           key: 'id',
         },
-      },
-      base_weight: {
-        allowNull: false,
-        type: Sequelize.DECIMAL,
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Recipes');
+    await queryInterface.dropTable('IngridientPrices');
   },
 };

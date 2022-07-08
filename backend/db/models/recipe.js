@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Base, RecipeIngridient, Store, Production }) {
+    static associate({ Base, RecipeIngridient, Store, Production, RecipePrice }) {
       Recipe.Base = Recipe.belongsTo(Base, { foreignKey: 'base_id' });
       Recipe.RecipeIngridients = Recipe.hasMany(RecipeIngridient, { foreignKey: 'recipe_id' });
       Recipe.Store = Recipe.hasOne(Store, { foreignKey: 'recipe_id' });
       Recipe.Productions = Recipe.hasMany(Production, { foreignKey: 'recipe_id' });
+      Recipe.RecipePrices = Recipe.hasMany(RecipePrice, { foreignKey: 'recipe_id' });
     }
   }
   Recipe.init(
@@ -33,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Bases',
           key: 'id',
         },
-      },
-      market_price: {
-        allowNull: false,
-        type: DataTypes.DECIMAL,
       },
       base_weight: {
         allowNull: false,
