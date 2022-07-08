@@ -1,5 +1,7 @@
+/* eslint-disable import/no-unresolved */
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const expressConfig = require('./config/express');
 const { sequelize } = require('./db/models');
 
@@ -17,7 +19,7 @@ expressConfig(app);
 app.use('/recipes', recipesRouter);
 app.use('/ingridients', ingridientsRouter);
 app.get('*', (req, res) => {
-  res.send('Страница не найдена');
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 app.listen(PORT, async () => {

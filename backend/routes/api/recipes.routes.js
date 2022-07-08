@@ -8,8 +8,8 @@ recipesRouter
   .get(async (req, res) => {
     try {
       const recipes = await Recipe.findAll({
-        raw: true,
-        include: [Recipe.Base],
+        // raw: true,
+        include: [Recipe.Base, Recipe.Store],
       });
       res.status(200);
       res.json(recipes);

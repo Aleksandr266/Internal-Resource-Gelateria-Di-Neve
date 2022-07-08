@@ -1,21 +1,22 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable operator-linebreak */
 import React from 'react';
 import './style.css';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadRecipes } from '../../store/recipes/reducer';
 
 function RecipesList() {
-  const navigate = useNavigate();
-  // const state = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const { recipes, status, error } = useSelector((state) => state.recipes);
+  const { recipes, recipesByBases } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(loadRecipes());
   }, [dispatch]);
 
-  console.log(status);
-  console.log(error);
+  console.log('recipesByBases', recipesByBases);
 
   return (
     <div>
@@ -33,22 +34,20 @@ function RecipesList() {
             {recipes.map((recipe) => (
               <tr key={recipe.id}>
                 <td className="tdRecipeList">
-                  <button variant="outlined" onClick={() => navigate(`/recipes/${recipe.id}`)}>
-                    {recipe.title}
-                  </button>
+                  <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
                 </td>
-                <td className="tdRecipeList">{recipe.base_weight}</td>
                 <td className="tdRecipeList">
-                  0
-                  {/* <input
-                  className="input"
-                  onChange={(e) => e.target.value}
-                  placeholder={el}
-                  required></input>
-                <button onClick={save}>сохранить</button> */}
+                  {Math.round(Number(recipe.base_weight) * 10) / 100}
                 </td>
-                <td className="tdRecipeList">0</td>
-                <td className="tdRecipeList">0</td>
+                <td className="tdRecipeList">{recipe.Store.amount}</td>
+                <td className="tdRecipeList">{recipe.Store.standart - recipe.Store.amount}</td>
+                <td className="tdRecipeList">
+                  {Math.round(
+                    (Math.round(Number(recipe.base_weight) * 10) / 100) *
+                      (recipe.Store.standart - recipe.Store.amount) *
+                      100,
+                  ) / 100}
+                </td>
               </tr>
             ))}
           </tbody>
