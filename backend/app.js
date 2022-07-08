@@ -8,7 +8,11 @@ const { sequelize } = require('./db/models');
 // const authRouter = require('./routes/api/auth.routes');
 const recipesRouter = require('./routes/api/recipes.routes');
 const ingridientsRouter = require('./routes/api/ingridients.routes');
+
 const basesRouter = require('./routes/api/bases.routes');
+
+const storesRouter = require('./routes/api/stores.routes');
+
 
 const app = express();
 
@@ -19,7 +23,11 @@ expressConfig(app);
 // app.use('/auth', authRouter);
 app.use('/recipes', recipesRouter);
 app.use('/ingridients', ingridientsRouter);
+
 app.use('/bases', basesRouter);
+
+app.use('/stores', storesRouter);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });

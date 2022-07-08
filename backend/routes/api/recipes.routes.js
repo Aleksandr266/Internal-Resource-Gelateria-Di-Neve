@@ -18,8 +18,10 @@ recipesRouter
       res.status(500).end();
     }
   })
-  .post(async (req, res) => {
-    const { title, base_id, market_price, base_weight, ingridients } = req.body;
+  .post(async (req, res) => { // если такого рецепта в БД нет, создаем новый
+    const {
+      title, base_id, market_price, base_weight, ingridients,
+    } = req.body;
     try {
       const sameRecipe = await Recipe.findOne({
         where: {
@@ -49,7 +51,7 @@ recipesRouter
   .route('/:id')
   .get(async (req, res) => {
     try {
-      const recipe = await RecipeIngridient.findAll({
+      const recipe = await RecipeIngridient.findAll({ // получаем все рецепты, включая ингридиенты
         raw: true,
         where: { recipe_id: Number(req.params.id) },
         include: [RecipeIngridient.Recipe, RecipeIngridient.Ingridient],
@@ -61,8 +63,10 @@ recipesRouter
       res.status(500).end();
     }
   })
-  .put(async (req, res) => {
-    const { title, base_id, market_price, base_weight, ingridients } = req.body;
+  .put(async (req, res) => { // перезаписываем данные рецепта
+    const {
+      title, base_id, market_price, base_weight, ingridients,
+    } = req.body;
     try {
       const recipe_id = Number(req.params.id);
       const sameRecipe = await Recipe.findOne({

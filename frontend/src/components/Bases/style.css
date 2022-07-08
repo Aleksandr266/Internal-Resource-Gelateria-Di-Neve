@@ -21,3 +21,21 @@
   display: flex;
   justify-content: center;
 }
+
+.tablist {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.tab {
+  padding: 10px 30px;
+  cursor: pointer;
+  border: 1px solid green;
+}
+
+.react-tabs__tab--selected {
+  color: red;
+  border: 1px solid red;
+  background: yellow;
+}

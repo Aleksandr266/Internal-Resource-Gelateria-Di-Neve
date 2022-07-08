@@ -45,6 +45,38 @@ export const loadRecipes = createAsyncThunk(
   },
 );
 
+export const updateStore = createAsyncThunk(
+  'recipes/updateStore',
+  async ({value, id}, { rejectWithValue, dispatch }) => {
+    try {
+      console.log(value, 'Это значение');
+      console.log(id, 'Это id');
+      const response = await fetch('/stores', {
+        method: 'PUT',
+        body: JSON.stringify({
+          value,
+          id,
+        }),
+        headers: {
+          'Content-Type' : 'application/json',
+          Accept: 'application/json',
+        }
+      })
+      console.log("это перед респонсом")
+      console.log(response);
+      if (!response.ok) {
+
+        throw new Error('Server Error!');
+      }
+      dispatch(changeAmountComplete({id,value}))
+      console.log('Сразу после dispatch');
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -69,7 +101,18 @@ const recipeSlice = createSlice({
     // removeTodo(state, action) {
     //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     // },
+    changeAmountComplete(state, action) {
+      console.log('Я здесь');
+      console.log(action.payload, 'Это пейлоад');
+      console.log(state.recipes, 'Это стейт');
+     const findedRecipe = state.recipes.find((store) => 
+      store.id === action.payload.id)
+      findedRecipe.Store.amount = action.payload.value
+      console.log(state.recipes, 'Это стейт after');
+      state.recipesByBases = getCategories(state.recipes);
+    }
   },
+  
   extraReducers: {
     [loadRecipes.pending]: (state) => {
       state.status = 'loading';
@@ -81,9 +124,10 @@ const recipeSlice = createSlice({
       state.recipesByBases = getCategories(action.payload);
     },
     [loadRecipes.rejected]: setError,
+    [updateStore.rejected]: setError,
   },
 });
-
+const {changeAmountComplete} =  recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 
 export default recipeSlice.reducer;

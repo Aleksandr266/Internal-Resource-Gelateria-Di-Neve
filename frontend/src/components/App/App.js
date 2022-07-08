@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Recipe from '../Recipe/Recipe';
 import RecipesList from '../RecipesList/RecipesList';
-import BaseTable from '../BaseTable/BaseTable';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
 
@@ -12,9 +11,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<RecipesList />} />
-      <Route path="/bases" element={<Bases />}>
-        <Route path="/bases/:id" element={<BaseTable />} />
-      </Route>
+      <Route path="/bases" element={<Bases />} />
       <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/recipesList" element={<RecipesList />} />
       <Route path="/todo" element={<Todo />} />
