@@ -13,8 +13,9 @@ expressConfig(app);
 
 // подключаем роутеры
 app.use('/auth', authRouter);
+
 app.get('*', (req, res) => {
-  res.send('Страница не найдена');
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 app.listen(PORT, async () => {
