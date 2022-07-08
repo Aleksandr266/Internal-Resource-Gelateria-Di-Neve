@@ -1,10 +1,29 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+const getCategories = (recipes) => {
+  const categories = {};
+  console.log(recipes);
+  recipes.forEach((recipe) => {
+    if (categories.hasOwnProperty(recipe.Base.title)) {
+      categories[recipe.Base.title].push(recipe);
+    } else {
+      categories[recipe.Base.title] = [recipe];
+    }
+  });
+  const bases = [];
+  for (const category in categories) {
+    bases.push({ id: categories[category][0].base_id, category, recipes: categories[category] });
+  }
+  return bases;
+};
 
 export const loadRecipes = createAsyncThunk(
   'recipes/loadRecipes',
   async (_, { rejectWithValue }) => {
-    console.log('data');
     try {
       const response = await fetch('/recipes', {
         headers: {
@@ -18,7 +37,6 @@ export const loadRecipes = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log(data);
 
       return data;
     } catch (error) {
@@ -36,6 +54,7 @@ const recipeSlice = createSlice({
   name: 'recipes',
   initialState: {
     recipes: [],
+    recipesByBases: [],
     status: null,
     error: null,
   },
@@ -59,6 +78,7 @@ const recipeSlice = createSlice({
     [loadRecipes.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.recipes = action.payload;
+      state.recipesByBases = getCategories(action.payload);
     },
     [loadRecipes.rejected]: setError,
   },
