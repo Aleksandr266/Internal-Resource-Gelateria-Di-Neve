@@ -1,0 +1,23 @@
+.tdRecipe {
+  background-color: #f7b7d0;
+  font-weight: 500;
+}
+
+.thRecipe {
+  background-color: #f7b7d0;
+}
+
+.tableRecipe {
+  background-color: #cd3039;
+  border-color: #cd3039;
+}
+
+.boxTableRecipe {
+  display: flex;
+  justify-content: center;
+}
+
+.titlePlombir {
+  display: flex;
+  justify-content: center;
+}
