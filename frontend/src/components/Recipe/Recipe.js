@@ -4,7 +4,7 @@ import './style.css';
 function Recipe() {
   return (
     <div>
-      <h1 className="titlePlombir">Пломбир</h1>
+      <h1 className="titleRecipes">{}</h1>
       <div className="boxTableRecipe">
         <table className="tableRecipe" cellSpacing={3} cellPadding={10}>
           <tr>
