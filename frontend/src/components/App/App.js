@@ -8,8 +8,8 @@ import RecipesList from '../RecipesList/RecipesList';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Recipe />} />
-      <Route path="/recipes" element={<Recipe />} />
+      <Route path="/" element={<RecipesList />} />
+      <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/recipesList" element={<RecipesList />} />
     </Routes>
   );
