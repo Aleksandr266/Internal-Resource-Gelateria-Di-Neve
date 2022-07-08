@@ -1,54 +1,67 @@
 import React, { useState } from 'react';
 import './style.css';
-// import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-// import { loadRecipes } from '../../store/recipes/reducer';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 15,
+  },
+}))(TableCell);
 
 function Recipe() {
-  // const { recipes, status, error } = useSelector((state) => state.recipes);
-  // const dispatch = useDispatch();
   const [recipes, setRecipe] = useState([]);
   const { id } = useParams();
-
-  // React.useEffect(() => {
-  //   dispatch(loadRecipes());
-  // }, [dispatch]);
 
   React.useEffect(() => {
     fetch(`/recipes/${id}`)
       .then((res) => res.json())
-      // .then((res) => console.log(res))
       .then((res) => setRecipe(res));
   }, []);
 
   const [recipe] = recipes.filter((el, i) => i === 0);
 
   return (
-    <>
-    { recipe
-      && <div>
-      <h1 className="titleRecipes">{recipe['Recipe.title']}</h1>
+    <div className="boxRecipe">
+    { recipe && 
       <div className="boxTableRecipe">
-        <table className="tableRecipe" cellSpacing={3} cellPadding={10}>
-        <tbody>
-          <tr>
-            <th className="thRecipe">Ингридиенты</th>
-            <th className="thRecipe">Для производства</th>
-          </tr>
-          {
-            recipes.map((el) => (
-            <tr>
-              <td className="tdRecipe">{el['Ingridient.title']}</td>
-              <td className="tdRecipe">{el.weight}</td>
-            </tr>
-            ))
-          }
-          </tbody>
-        </table>
+          <h1 className="titleRecipes">{recipe['Recipe.title']}</h1>
+          <div >
+          <TableContainer component={Paper}>
+            <Table aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="center">Ингридиенты</StyledTableCell>
+                  <StyledTableCell align="center">Для производства</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+              {
+                recipes.map((el) => (
+                  <TableRow key={el.id}>
+                    <StyledTableCell align="center">{el['Ingridient.title']}</StyledTableCell>
+                    <StyledTableCell align="center">{el.weight}</StyledTableCell>
+                  </TableRow>
+                ))
+              }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
-    </div>
     }
-    </>
+    </div>
   );
 }
 
