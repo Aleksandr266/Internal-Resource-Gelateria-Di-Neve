@@ -6,6 +6,7 @@ import Recipe from '../Recipe/Recipe';
 import RecipesList from '../RecipesList/RecipesList';
 import BaseTable from '../BaseTable/BaseTable';
 import Bases from '../Bases/Bases';
+import Todo from '../Todo/Todo';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       </Route>
       <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/recipesList" element={<RecipesList />} />
+      <Route path="/todo" element={<Todo />} />
     </Routes>
   );
 }
