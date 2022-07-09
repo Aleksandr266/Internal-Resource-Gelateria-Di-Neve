@@ -69,11 +69,11 @@ function BaseTable({ recipes }) {
         rows={recipes}
         columns={columns}
         onCellEditStop={(params, event) => {
-          console.log(params);
-          console.log(event);
-          console.log('params.reason', params.reason);
+          // console.log(params);
+          // console.log(event);
+          // console.log('params.reason', params.reason);
           if (params.reason === GridCellEditStopReasons.cellFocusOut) {
-            console.log('first');
+            // console.log('first');
             event.defaultMuiPrevented = true;
           }
         }}
