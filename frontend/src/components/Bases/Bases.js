@@ -12,7 +12,7 @@ import { loadRecipes } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
 
 function Bases() {
-  const { recipesByBases } = useSelector((state) => state.recipes);
+  const { recipesByBases, recipes } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
 
   React.useEffect(() => {

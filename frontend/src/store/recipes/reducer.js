@@ -68,6 +68,36 @@ export const loadRecipeById = createAsyncThunk(
     }
   },
 );
+export const updateStore = createAsyncThunk(
+  'recipes/updateStore',
+  async ({ value, id }, { rejectWithValue, dispatch }) => {
+    try {
+      console.log(value, 'Это значение');
+      console.log(id, 'Это id');
+      const response = await fetch('/stores', {
+        method: 'PUT',
+        body: JSON.stringify({
+          value,
+          id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      console.log('это перед респонсом');
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      dispatch(changeAmountComplete({ id, value }));
+      console.log('Сразу после dispatch');
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 const setError = (state, action) => {
   state.status = 'rejected';
@@ -97,7 +127,14 @@ const recipeSlice = createSlice({
     removeRecipeIngridients(state, action) {
       state.recipeIngridients = [];
     },
+    changeAmountComplete(state, action) {
+      const findedRecipe = state.recipes.find((store) => store.id === action.payload.id);
+      findedRecipe.Store.amount = action.payload.value;
+      console.log(state.recipes, 'Это стейт after');
+      state.recipesByBases = getCategories(state.recipes);
+    },
   },
+
   extraReducers: {
     [loadRecipes.pending]: (state) => {
       state.status = 'loading';
@@ -118,9 +155,10 @@ const recipeSlice = createSlice({
       state.recipeIngridients = action.payload;
     },
     [loadRecipeById.rejected]: setError,
+    [updateStore.rejected]: setError,
   },
 });
-
+const { changeAmountComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const { removeRecipeIngridients } = recipeSlice.actions;
 // export { removeRecipeIngridients };
