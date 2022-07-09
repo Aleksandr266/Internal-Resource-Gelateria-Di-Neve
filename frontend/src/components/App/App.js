@@ -5,18 +5,17 @@ import './App.css';
 import Recipe from '../Recipe/Recipe';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
-import Container from '@mui/material/Container';
+import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 
 function App() {
   return (
-    <Container maxWidth="xl">
-      <Routes>
-        <Route path="/" element={<Bases />} />
-        <Route path="/bases" element={<Bases />} />
-        <Route path="/recipes/:id" element={<Recipe />} />
-        <Route path="/todo" element={<Todo />} />
-      </Routes>
-    </Container>
+    <Routes>
+      <Route path="/" element={<Bases />} />
+      <Route path="/bases" element={<Bases />} />
+      <Route path="/recipes/:id" element={<Recipe />} />
+      <Route path="/todo" element={<Todo />} />
+      <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+    </Routes>
   );
 }
 
