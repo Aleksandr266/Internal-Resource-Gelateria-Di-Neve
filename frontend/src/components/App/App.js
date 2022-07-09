@@ -5,6 +5,7 @@ import './App.css';
 import Recipe from '../Recipe/Recipe';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
+import TechnologBases from '../TechnologBases/TechnologBases'
 import Container from '@mui/material/Container';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Bases />} />
         <Route path="/bases" element={<Bases />} />
+        <Route path="/bases/technolog" element={<TechnologBases />} />
         <Route path="/recipes/:id" element={<Recipe />} />
         <Route path="/todo" element={<Todo />} />
       </Routes>
