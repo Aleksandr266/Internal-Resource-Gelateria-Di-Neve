@@ -45,9 +45,32 @@ export const loadRecipes = createAsyncThunk(
   },
 );
 
+export const loadRecipeById = createAsyncThunk(
+  'recipes/loadRecipeById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/recipes/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 export const updateStore = createAsyncThunk(
   'recipes/updateStore',
-  async ({value, id}, { rejectWithValue, dispatch }) => {
+  async ({ value, id }, { rejectWithValue, dispatch }) => {
     try {
       console.log(value, 'Это значение');
       console.log(id, 'Это id');
@@ -58,17 +81,16 @@ export const updateStore = createAsyncThunk(
           id,
         }),
         headers: {
-          'Content-Type' : 'application/json',
+          'Content-Type': 'application/json',
           Accept: 'application/json',
-        }
-      })
-      console.log("это перед респонсом")
+        },
+      });
+      console.log('это перед респонсом');
       console.log(response);
       if (!response.ok) {
-
         throw new Error('Server Error!');
       }
-      dispatch(changeAmountComplete({id,value}))
+      dispatch(changeAmountComplete({ id, value }));
       console.log('Сразу после dispatch');
     } catch (error) {
       console.log(error);
@@ -87,6 +109,7 @@ const recipeSlice = createSlice({
   initialState: {
     recipes: [],
     recipesByBases: [],
+    recipeIngridients: [],
     status: null,
     error: null,
   },
@@ -101,18 +124,17 @@ const recipeSlice = createSlice({
     // removeTodo(state, action) {
     //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     // },
+    removeRecipeIngridients(state, action) {
+      state.recipeIngridients = [];
+    },
     changeAmountComplete(state, action) {
-      console.log('Я здесь');
-      console.log(action.payload, 'Это пейлоад');
-      console.log(state.recipes, 'Это стейт');
-     const findedRecipe = state.recipes.find((store) => 
-      store.id === action.payload.id)
-      findedRecipe.Store.amount = action.payload.value
+      const findedRecipe = state.recipes.find((store) => store.id === action.payload.id);
+      findedRecipe.Store.amount = action.payload.value;
       console.log(state.recipes, 'Это стейт after');
       state.recipesByBases = getCategories(state.recipes);
-    }
+    },
   },
-  
+
   extraReducers: {
     [loadRecipes.pending]: (state) => {
       state.status = 'loading';
@@ -124,10 +146,20 @@ const recipeSlice = createSlice({
       state.recipesByBases = getCategories(action.payload);
     },
     [loadRecipes.rejected]: setError,
+    [loadRecipeById.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [loadRecipeById.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.recipeIngridients = action.payload;
+    },
+    [loadRecipeById.rejected]: setError,
     [updateStore.rejected]: setError,
   },
 });
-const {changeAmountComplete} =  recipeSlice.actions;
+const { changeAmountComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
-
+export const { removeRecipeIngridients } = recipeSlice.actions;
+// export { removeRecipeIngridients };
 export default recipeSlice.reducer;
