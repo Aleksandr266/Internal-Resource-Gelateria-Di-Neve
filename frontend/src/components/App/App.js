@@ -5,6 +5,7 @@ import './App.css';
 import Recipe from '../Recipe/Recipe';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
+import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/bases" element={<Bases />} />
       <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/todo" element={<Todo />} />
+      <Route path="/formAddIngridients" element={<FormAddIngridients />} />
     </Routes>
   );
 }
