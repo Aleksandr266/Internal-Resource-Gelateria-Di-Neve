@@ -1,21 +1,22 @@
 import React,{useState,useEffect} from 'react';
 import style from './QuestionCard.module.css';
-const prop = { milk: 0, sirop: 30}
+const prop = { milk: 0, sirop: 200}
 
 function Todo() {
   // количесто загрузок молочной базы
-  const [milks, setmilk] = useState()
+  const [milks, setmilk] = useState(0)
   // количесто загрузок сиропа
-  ///
-  const [sirops, setSirop] = useState()
-
+  const [sirops, setSirop] = useState(0);
+  /// модальное окно
+  const [isModalMilk, setisModalMilk] = useState(false);
+  const [isModalSirop, setisModalSirop] = useState(false);
   const [milkBase, setmilkBase] = useState()
-
   const [siropBase, setsiropBase] = useState()
 
-  console.log(milks);
+  console.log(isModalMilk)
 
   function plan (num) {
+    if (num === 0) return 0
     //считаем колличество раз загрузки фризера. К примеру 1,5 раза
     const coefficient = num / 60;
     /// считаем целые загрузки. К примеру 1 
@@ -66,7 +67,22 @@ function Todo() {
 
  function deleteMilk() {
   setmilk((state) => state.filter((el,i)=> i !== 0) )
+  setisModalMilk(false)
  }
+
+ function deleteSirop() {
+  setSirop((state) => state.filter((el,i)=> i !== 0) )
+  setisModalSirop(false)
+ }
+
+ function openModalMilk() {
+  setisModalMilk(true)
+ }
+
+ function openModalSirop() {
+  setisModalSirop(true)
+ }
+
 
 useEffect(() => {
   const resultMilk = plan(prop.milk)
@@ -87,7 +103,26 @@ useEffect(() => {
   return (
     <div>
         <h1>План производства</h1>
-      {milkBase &&
+         
+
+
+       <h4>Молочная база:</h4>
+        {milks &&
+        <>
+           {milks.map((el,i) => <button onClick={openModalMilk} key={i}>{el}</button>)} 
+        </>
+        }
+
+       <h4>Сироп:</h4>
+        {sirops &&
+        <>
+           {sirops.map((el,i) => <button  onClick={openModalSirop} key={i}>{el}</button>)} 
+        </>
+        }
+
+
+
+      {isModalMilk &&
         
           <>
              <div className={style.modal}>
@@ -110,8 +145,7 @@ useEffect(() => {
                  </>
          }
         <div>-----------------</div>
-        {/* {milkBase
-        ? 
+        {isModalSirop &&
           <>
              <div className={style.modal}>
              <div className={style.modalDialog}>
@@ -126,11 +160,11 @@ useEffect(() => {
                  <div className={style.modalDialog}>Стабилизатор {(((siropBase[4].weight)/10)*sirops[0]).toFixed(3)} </div>
                  <div className={style.modalDialog}>Лимонная кислота {(((siropBase[5].weight)/10)*sirops[0]).toFixed(3)}</div>
                  <div className={style.modalDialog}>Улучшитель {(((siropBase[6].weight)/10)*sirops[0]).toFixed(3)}</div>
-                 <button className={style.modalButton} onClick={deleteMilk}>Готово</button>
+                 <button className={style.modalButton} onClick={deleteSirop}>Готово</button>
                  </div> 
                  </div> 
                  </>
-         : 'Загрузка...'} */}
+        }
 
     </div>
   );
