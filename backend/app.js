@@ -18,6 +18,8 @@ const basesRouter = require('./routes/api/bases.routes');
 
 const storesRouter = require('./routes/api/stores.routes');
 
+const technologRouter = require('./routes/api/technolog.routes');
+
 const app = express();
 
 const PORT = process.env.PORT ?? 4000;
@@ -36,6 +38,8 @@ app.use('/ingridients', ingridientsRouter);
 app.use('/bases', basesRouter);
 
 app.use('/stores', storesRouter);
+
+app.use('/technolog', technologRouter); // возвращает market_price
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));

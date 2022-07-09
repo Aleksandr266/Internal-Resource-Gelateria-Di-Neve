@@ -90,6 +90,18 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      price: 77.9,
+      ingridient_id: 16,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 30.44,
+      ingridient_id: 17,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
     ], {});
   },
 
