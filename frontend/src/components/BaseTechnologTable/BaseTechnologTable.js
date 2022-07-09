@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { updateStore } from '../../store/recipes/reducer';
+import { addDataPrice } from '../../store/technolog/reducer';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -75,7 +75,7 @@ function BaseTechnologTable({ recipes }) {
     //   console.log('first');
     //   console.log(e);
     // }
-    dispatch(updateStore({ id, value }));
+    dispatch(addDataPrice({ id, value }));
   };
 
   return (
