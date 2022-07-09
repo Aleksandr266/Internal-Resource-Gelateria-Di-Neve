@@ -1,0 +1,15 @@
+.boxForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formAddIngridients {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+#btn {
+  margin-top: 10px;
+}
