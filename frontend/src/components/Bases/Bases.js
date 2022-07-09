@@ -19,8 +19,6 @@ function Bases() {
     dispatch(loadRecipes());
   }, [dispatch]);
 
-  console.log(recipesByBases);
-
   return (
     <Tabs>
       <TabList className="tablist">

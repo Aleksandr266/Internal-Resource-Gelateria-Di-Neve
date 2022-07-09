@@ -45,6 +45,30 @@ export const loadRecipes = createAsyncThunk(
   },
 );
 
+export const loadRecipeById = createAsyncThunk(
+  'recipes/loadRecipeById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`/recipes/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -55,6 +79,7 @@ const recipeSlice = createSlice({
   initialState: {
     recipes: [],
     recipesByBases: [],
+    recipeIngridients: [],
     status: null,
     error: null,
   },
@@ -69,6 +94,9 @@ const recipeSlice = createSlice({
     // removeTodo(state, action) {
     //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     // },
+    removeRecipeIngridients(state, action) {
+      state.recipeIngridients = [];
+    },
   },
   extraReducers: {
     [loadRecipes.pending]: (state) => {
@@ -81,9 +109,19 @@ const recipeSlice = createSlice({
       state.recipesByBases = getCategories(action.payload);
     },
     [loadRecipes.rejected]: setError,
+    [loadRecipeById.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [loadRecipeById.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.recipeIngridients = action.payload;
+    },
+    [loadRecipeById.rejected]: setError,
   },
 });
 
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
-
+export const { removeRecipeIngridients } = recipeSlice.actions;
+// export { removeRecipeIngridients };
 export default recipeSlice.reducer;
