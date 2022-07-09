@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve/issues"
   },
-  "homepage": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve#readme"
+  "homepage": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve#readme",
+  "dependencies": {
+    "@mui/x-data-grid": "^5.13.0"
+  }
 }
