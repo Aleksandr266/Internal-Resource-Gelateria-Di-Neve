@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import MainPage from '../MainPage/MainPage';
 import Recipe from '../Recipe/Recipe';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
@@ -12,17 +13,15 @@ import Container from '@mui/material/Container';
 
 function App() {
   return (
-    <Container maxWidth="xl">
-      <Routes>
-        <Route path="/" element={<Bases />} />
-        <Route path="/bases" element={<Bases />} />
+    <Routes>
+      <Route path="/" element={<MainPage />}>
+        <Route path="/" element={<Bases />} />        
         <Route path="/bases/technolog" element={<TechnologBases />} />
-        <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/recipes/:id" element={<Recipe />} />
         <Route path="/todo" element={<Todo />} />
-      </Routes>
-    </Container>
-
+        <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+      </Route>
+    </Routes>
   );
 }
 
