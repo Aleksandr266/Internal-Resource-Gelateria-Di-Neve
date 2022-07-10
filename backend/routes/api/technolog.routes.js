@@ -11,13 +11,18 @@ technologRouter
         // where: {
         //   id,
         // },
-        include: [Recipe.RecipePrices],
+        include: [Recipe.RecipePrices, Recipe.Base],
       });
-      // const titleAndPrice = recipesWithPrice.map((obj) => [obj.id, obj.title, obj.RecipePrices.market_price]);
-      console.log(recipesWithPrice[0].RecipePrices[market_price]);
+      const titleAndPrice = recipesWithPrice.map((obj) => (
+        {
+          id: obj.id,
+          title: obj.title,
+          base: obj.Base.title,
+          market_price: obj.RecipePrices[0].market_price,
+        }));
 
       res.status(200);
-      res.json(recipesWithPrice);
+      res.json(titleAndPrice);
     } catch (error) {
       console.log(error);
       res.status(500).end();

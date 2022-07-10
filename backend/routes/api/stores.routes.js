@@ -9,13 +9,12 @@ storesRouter
     } = req.body;
     console.log(req.body);
     try {
-  
       const sameStore = await Store.findOne({
         where: {
           id,
         },
       });
-   
+
       if (!sameStore) {
         res.status(406);
         return res.end();
