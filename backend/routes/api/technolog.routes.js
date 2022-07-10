@@ -1,6 +1,6 @@
 const technologRouter = require('express').Router();
 
-const { Recipe } = require('../../db/models');
+const { Recipe, RecipePrice } = require('../../db/models');
 
 technologRouter
   .route('/')
@@ -26,6 +26,31 @@ technologRouter
     } catch (error) {
       console.log(error);
       res.status(500).end();
+    }
+  })
+  .put(async (req, res) => {
+    const {
+      id, value,
+    } = req.body;
+    console.log(req.body);
+    try {
+      const sameRecipe = await RecipePrice.findOne({
+        where: {
+          recipe_id: id,
+        },
+      });
+
+      if (!sameRecipe) {
+        res.status(406);
+        return res.end();
+      }
+      if (value) sameRecipe.market_price = value;
+      await sameRecipe.save();
+      res.status(200);
+      res.end();
+    } catch (error) {
+      res.status(500);
+      res.end();
     }
   });
 
