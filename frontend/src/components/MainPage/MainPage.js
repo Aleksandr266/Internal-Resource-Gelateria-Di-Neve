@@ -2,12 +2,15 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
+import Container from '@mui/material/Container';
 
 function MainPage() {
   return (
     <div>
       <NavBar />
-      <Outlet />
+      <Container maxWidth="xl">
+        <Outlet />
+      </Container>
     </div>
   );
 }
