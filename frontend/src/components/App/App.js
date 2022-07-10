@@ -6,6 +6,7 @@ import Recipe from '../Recipe/Recipe';
 import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
+import Ingridients from '../Ingridients/ingridients';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/todo" element={<Todo />} />
       <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+      <Route path="/ingridients" element={<Ingridients />} />
     </Routes>
   );
 }
