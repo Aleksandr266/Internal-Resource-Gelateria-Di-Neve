@@ -5,6 +5,8 @@ import { DataGrid } from '@mui/x-data-grid';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { changeMarketPrice } from '../../store/technolog/reducer';
+
 
 // функция для изменения market price
 // import { addDataPrice } from '../../store/technolog/reducer';
@@ -69,20 +71,22 @@ const columns = [
 
 
 function BaseTechnologTable({ marketPrice }) { 
+  const dispatch = useDispatch();
   // console.log(marketPrice, 'Это стейт маркет прайс');
   // const dispatch = useDispatch();
 
   const handlerEditCommit = (e) => {
     const { id, value } = e;
-    console.log(e);
-    console.log(e.target);
+    // console.log(e, "Это е");
+    // console.log(e.id);
+    // console.log(e.value);
     // console.log('id', id);
     // console.log('value', value);
     // if (e.value) {
     //   console.log('first');
     //   console.log(e);
     // }
-    // dispatch(addDataPrice({ id, value }));
+    dispatch(changeMarketPrice({ id, value }));
   };
 
   return (
