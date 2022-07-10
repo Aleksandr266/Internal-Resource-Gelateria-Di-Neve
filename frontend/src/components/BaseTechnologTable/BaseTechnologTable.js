@@ -25,7 +25,7 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: false,
+    editable: true,
     valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, 
   },
   {
@@ -35,7 +35,7 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: true,
+    editable: false,
     valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, // ИЗМЕНИТЬ!
   },
   {
@@ -45,7 +45,7 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: true,
+    editable: false,
     valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, // ИЗМЕНИТЬ!
   },
   {
@@ -72,16 +72,18 @@ function BaseTechnologTable({ marketPrice }) {
   // console.log(marketPrice, 'Это стейт маркет прайс');
   // const dispatch = useDispatch();
 
-//   const handlerEditCommit = (e) => {
-//     const { id, value } = e;
-//     console.log('id', id);
-//     console.log('value', value);
-//     // if (e.value) {
-//     //   console.log('first');
-//     //   console.log(e);
-//     // }
-//     dispatch(addDataPrice({ id, value }));
-//   };
+  const handlerEditCommit = (e) => {
+    const { id, value } = e;
+    console.log(e);
+    console.log(e.target);
+    // console.log('id', id);
+    // console.log('value', value);
+    // if (e.value) {
+    //   console.log('first');
+    //   console.log(e);
+    // }
+    // dispatch(addDataPrice({ id, value }));
+  };
 
   return (
     <div style={{ height: 300, width: '100%' }}>
@@ -89,7 +91,7 @@ function BaseTechnologTable({ marketPrice }) {
         rows={marketPrice}
         columns={columns}
         // experimentalFeatures={{ newEditingApi: true }}
-        // onCellEditCommit={handlerEditCommit}
+        onCellEditCommit={handlerEditCommit}
         // pageSize={5}
         // rowsPerPageOptions={[5]}
         // checkboxSelection

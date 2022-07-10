@@ -14,7 +14,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { loadMarketPrice } from '../../store/technolog/reducer';
+import { loadRecipes } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
 import ProductionCard from '../ProductionCard/ProductionCard';
 
@@ -40,9 +40,10 @@ function Bases() {
   };
 
   React.useEffect(() => {
-    dispatch(loadMarketPrice());
+    console.log("мы в юс эффекте");
+    dispatch(loadRecipes());
   }, [dispatch]);
-
+console.log(recipesByBases, "мы в басес");
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>

@@ -15,7 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<MainPage />}>
         <Route path="/" element={<Bases />} />        
-        <Route path="/bases/technolog" element={<TechnologBases />} />
+        <Route path="/technolog" element={<TechnologBases />} />
         <Route path="/recipes/:id" element={<Recipe />} />
         <Route path="/todo" element={<Todo />} />
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
