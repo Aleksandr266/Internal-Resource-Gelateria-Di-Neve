@@ -5,9 +5,10 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
 import './style.css';
-// import { Outlet, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -15,9 +16,22 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { loadRecipes } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
+import ProductionCard from '../ProductionCard/ProductionCard';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  display: 'flex',
+  flexDirection: 'column',
+  height: 400,
+  flexGrow: 3,
+}));
 
 function Bases() {
-  const { recipesByBases, recipes } = useSelector((state) => state.recipes);
+  const { recipesByBases } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('0');
 
@@ -41,7 +55,16 @@ function Bases() {
         </Box>
         {recipesByBases.map((base, id) => (
           <TabPanel key={base.id} value={`${id}`}>
-            <BaseTable recipes={base.recipes} />
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={8}>
+                <Item>
+                  <BaseTable recipes={base.recipes} />
+                </Item>
+              </Grid>
+              <Grid item xs={6} md={4}>
+                <ProductionCard base={base.category} />
+              </Grid>
+            </Grid>
           </TabPanel>
         ))}
       </TabContext>
