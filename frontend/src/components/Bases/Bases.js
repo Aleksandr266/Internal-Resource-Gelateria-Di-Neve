@@ -62,7 +62,7 @@ function Bases() {
                 </Item>
               </Grid>
               <Grid item xs={6} md={4}>
-                <ProductionCard base={base.category} />
+                <ProductionCard base={base} />
               </Grid>
             </Grid>
           </TabPanel>

@@ -9,14 +9,33 @@ const getCategories = (recipes) => {
   console.log(recipes);
   recipes.forEach((recipe) => {
     if (categories.hasOwnProperty(recipe.Base.title)) {
-      categories[recipe.Base.title].push(recipe);
+      categories[recipe.Base.title].push({
+        ...recipe,
+        total_base:
+          Math.round(
+            (Math.round(Number(recipe.base_weight) * 10) / 100) * recipe.Store.plan * 100,
+          ) / 100,
+      });
     } else {
-      categories[recipe.Base.title] = [recipe];
+      categories[recipe.Base.title] = [
+        {
+          ...recipe,
+          total_base:
+            Math.round(
+              (Math.round(Number(recipe.base_weight) * 10) / 100) * recipe.Store.plan * 100,
+            ) / 100,
+        },
+      ];
     }
   });
   const bases = [];
   for (const category in categories) {
-    bases.push({ id: categories[category][0].base_id, category, recipes: categories[category] });
+    bases.push({
+      id: categories[category][0].base_id,
+      category,
+      recipes: categories[category],
+      plan: categories[category].reduce((acc, el) => acc + el.total_base, 0),
+    });
   }
   return bases;
 };
@@ -70,16 +89,11 @@ export const loadRecipeById = createAsyncThunk(
 );
 export const updateStore = createAsyncThunk(
   'recipes/updateStore',
-  async ({ value, id }, { rejectWithValue, dispatch }) => {
+  async ({ id, field, value }, { rejectWithValue, dispatch }) => {
     try {
-      console.log(value, 'Это значение');
-      console.log(id, 'Это id');
       const response = await fetch('/stores', {
         method: 'PUT',
-        body: JSON.stringify({
-          value,
-          id,
-        }),
+        body: JSON.stringify({ id, field, value }),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -90,7 +104,7 @@ export const updateStore = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Server Error!');
       }
-      dispatch(changeAmountComplete({ id, value }));
+      dispatch(changeStoreComplete({ id, field, value }));
       console.log('Сразу после dispatch');
     } catch (error) {
       console.log(error);
@@ -127,10 +141,10 @@ const recipeSlice = createSlice({
     removeRecipeIngridients(state, action) {
       state.recipeIngridients = [];
     },
-    changeAmountComplete(state, action) {
-      console.log('Мы попали в функцию в редьюсере');
-      const findedRecipe = state.recipes.find((store) => store.id === action.payload.id);
-      findedRecipe.Store.amount = action.payload.value;
+    changeStoreComplete(state, action) {
+      const { id, field, value } = action.payload;
+      const findedRecipe = state.recipes.find((store) => store.id === id);
+      findedRecipe.Store[field] = value;
       console.log(state.recipes, 'Это стейт after');
       state.recipesByBases = getCategories(state.recipes);
     },
@@ -159,7 +173,7 @@ const recipeSlice = createSlice({
     [updateStore.rejected]: setError,
   },
 });
-const { changeAmountComplete } = recipeSlice.actions;
+const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const { removeRecipeIngridients } = recipeSlice.actions;
 // export { removeRecipeIngridients };

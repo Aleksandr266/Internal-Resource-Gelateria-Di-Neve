@@ -8,14 +8,13 @@ import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 
-import TechnologBases from '../TechnologBases/TechnologBases'
-import Container from '@mui/material/Container';
+import TechnologBases from '../TechnologBases/TechnologBases';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<Bases />} />        
+        <Route path="/" element={<Bases />} />
         <Route path="/bases/technolog" element={<TechnologBases />} />
         <Route path="/recipes/:id" element={<Recipe />} />
         <Route path="/todo" element={<Todo />} />
