@@ -29,15 +29,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       amount: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
       },
       standart: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
       },
       plan: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
       },
       createdAt: {
         allowNull: false,

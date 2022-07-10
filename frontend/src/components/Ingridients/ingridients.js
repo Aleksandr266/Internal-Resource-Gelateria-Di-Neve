@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 
 function Ingridients() {
-  
-  const [rows, setRows] = useState('')
+  const [rows, setRows] = useState('');
 
   useEffect(() => {
     fetch('/ingridients', {
-      method: 'GET', 
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
-    .then((res) => res.json())
-    .then((res) => {
-      setRows(
-        res.map((el) => { 
-        return { 
-          id: el.id,
-          title: el.title,
-          price: el['IngridientPrices'][0].price,
-          fat: el.fat,
-          dry_matter: el.dry_matter,
-          dry_milk_remainder: el.dry_milk_remainder,
-          antifris: el.antifris,
-          sugar: el.sugar,
-          glycemic_index: el.glycemic_index
-        }
-      })
-      )
-    })
-  }, [])
+      .then((res) => res.json())
+      .then((res) => {
+        setRows(
+          res.map((el) => {
+            return {
+              id: el.id,
+              title: el.title,
+              price: el['IngridientPrices'][0].price,
+              fat: el.fat,
+              dry_matter: el.dry_matter,
+              dry_milk_remainder: el.dry_milk_remainder,
+              antifris: el.antifris,
+              sugar: el.sugar,
+              glycemic_index: el.glycemic_index,
+            };
+          }),
+        );
+      });
+  }, []);
 
   const columns = [
     {
@@ -60,7 +59,7 @@ function Ingridients() {
       field: 'fat',
       headerName: 'Содержание жира',
       type: 'number',
-      width: 200,     
+      width: 200,
       editable: true,
     },
     {
@@ -75,7 +74,7 @@ function Ingridients() {
       headerName: 'Сухое молоко',
       type: 'number',
       width: 200,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: true,
     },
     {
@@ -91,7 +90,7 @@ function Ingridients() {
       headerName: 'Сахар',
       type: 'number',
       width: 130,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: true,
     },
     {
@@ -99,22 +98,16 @@ function Ingridients() {
       headerName: 'Гликемический индекс',
       type: 'number',
       width: 250,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: true,
     },
   ];
 
   return (
     <div style={{ height: 500, width: '100%' }}>
-      { rows &&
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        disableSelectionOnClick
-      />
-      }
+      {rows && <DataGrid rows={rows} columns={columns} disableSelectionOnClick />}
     </div>
-  )
+  );
 }
 
 export default Ingridients;

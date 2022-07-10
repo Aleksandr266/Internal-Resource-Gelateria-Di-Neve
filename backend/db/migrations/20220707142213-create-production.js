@@ -25,7 +25,7 @@ module.exports = {
       },
       input_amount: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
       },
       out_amount: {
         allowNull: false,
