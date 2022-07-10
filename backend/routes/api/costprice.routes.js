@@ -14,9 +14,11 @@ function IngridientPrise(el) {
   for (let i = 0; i < el.IngridientPrices.length; i++) {
     if (el.IngridientPrices[i].updatedAt > result.updatedAt) result = el.IngridientPrices[i];
   }
-  
+
   return { id: el.id, price: result.price };
 }
+
+//
 
 function flavorList(els) {
   return { ingridient_id: els.ingridient_id, weight: els.weight };
@@ -108,7 +110,7 @@ costpriceRouter
     const collectResult = merdgCostPrice.map((el) => collector(el, lossesProd));
 
     res.json({ collectResult });
-  });
+  })
   // Создаем Тип у Юзеров
   // .post(async (req, res) => {
   //   const ing = await UserType.create({
@@ -132,9 +134,9 @@ costpriceRouter
   // .post(async (req, res) => {
   //   const ing = await Production.create({
   //     user_id: 1,
-  //     recipe_id: 4,
+  //     recipe_id: 3,
   //     input_amount: 2,
-  //     out_amount: 1.95,
+  //     out_amount: 1.8,
   //     });
   //   res.json({ ing });
   // });

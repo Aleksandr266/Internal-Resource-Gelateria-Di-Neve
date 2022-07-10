@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const getCategories = (recipes) => {
+  console.log(recipes, 1111111111111111111);
   const categories = {};
   console.log(recipes);
-  recipes.forEach((recipe) => {
+  recipes.collectResult.forEach((recipe) => {
     if (categories.hasOwnProperty(recipe.base)) {
       categories[recipe.base].push(recipe);
     } else {
@@ -21,6 +22,7 @@ export const loadMarketPrice = createAsyncThunk(
   'technolog/loadMarketPrice',
   async (_, { rejectWithValue, dispatch }) => {
     try {
+      console.log("привет");
       const response = await fetch('/technolog', {
         headers: {
           'Content-Type': 'application/json',

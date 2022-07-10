@@ -57,9 +57,12 @@ function lossCount(el) {
 
 function collector(el, lossesProd) {
   let loss = 0;
+  console.log(lossesProd);
   for (let i = 0; i < lossesProd.length; i++) {
     if (lossesProd[i].recipe_id === el.id) {
-      loss = lossesProd[i].production_losses;
+      if (lossesProd[i].production_losses < 0) {
+        loss = lossesProd[i].production_losses;
+      }
     }
   }
   el.production_losses = loss;
