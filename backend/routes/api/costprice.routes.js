@@ -29,7 +29,7 @@ function ResultSEBES(priceIngridient, el) {
     }
   }
   var rest = result / 10;
-  return { id: el.id, price: rest.toFixed(2) };
+  return { recipes_id: el.id, cost_price: rest.toFixed(2) };
 }
 
 costpriceRouter
@@ -43,8 +43,13 @@ costpriceRouter
     );
     const priceIngridient = ingidients.map((el) => IngridientPrise(el));
     const recepesIng = recipes.map((el) => RecipesINgridient(el));
+    console.log(recepesIng);
     const result = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
-    res.json({ result });
+    res.json({ ingidients });
+  })
+  .post(async (req, res) => {
+    const ing = await IngridientPrices.create({});
+    res.json({ ingidients });
   });
 
 module.exports = costpriceRouter;
