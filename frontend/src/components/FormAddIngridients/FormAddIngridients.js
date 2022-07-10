@@ -35,12 +35,12 @@ function FormAddIngridients() {
       <form onSubmit={addIngridient} className='formAddIngridients'>
         <TextField name='title' id="standard-basic" label="Название ингридиента" />
         <TextField inputProps={{ step: "0.01" }} type="number" name='price' id="standard-basic" label="Цена" />
-        <TextField inputProps={{ step: "0.01" }} name='fat' id="standard-basic" label="Содержание жира" />
-        <TextField inputProps={{ step: "0.01" }} name='dryMatter' id="standard-basic" label="Сухая смесь" />
-        <TextField inputProps={{ step: "0.01" }} name='dryMilkMatter' id="standard-basic" label="Сухое молоко" />
-        <TextField inputProps={{ step: "0.01" }} name='antifris' id="standard-basic" label="Антифриз" />
-        <TextField inputProps={{ step: "0.01" }} name='sugar' id="standard-basic" label="Сахар" />
-        <TextField inputProps={{ step: "0.01" }} name='glycemicIndex' id="standard-basic" label="Гликемический индекс" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='fat' id="standard-basic" label="Содержание жира" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='dryMatter' id="standard-basic" label="Сухая смесь" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='dryMilkMatter' id="standard-basic" label="Сухое молоко" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='antifris' id="standard-basic" label="Антифриз" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='sugar' id="standard-basic" label="Сахар" />
+        <TextField inputProps={{ step: "0.01" }} type="number" name='glycemicIndex' id="standard-basic" label="Гликемический индекс" />
         <Button type='submit' id='btn' variant="outlined">Добавить Ингридиент</Button>
       </form>
     </div>
