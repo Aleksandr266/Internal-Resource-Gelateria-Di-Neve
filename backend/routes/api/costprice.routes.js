@@ -14,6 +14,7 @@ function IngridientPrise(el) {
   for (let i = 0; i < el.IngridientPrices.length; i++) {
     if (el.IngridientPrices[i].updatedAt > result.updatedAt) result = el.IngridientPrices[i];
   }
+  
   return { id: el.id, price: result.price };
 }
 
