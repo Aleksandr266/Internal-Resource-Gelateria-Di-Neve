@@ -30,7 +30,7 @@ module.exports = {
       },
       out_amount: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL,
       },
       createdAt: {
         allowNull: false,
