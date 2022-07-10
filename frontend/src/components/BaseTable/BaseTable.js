@@ -1,24 +1,9 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateStore } from '../../store/recipes/reducer';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  display: 'flex',
-  flexDirection: 'column',
-  height: 400,
-  flexGrow: 3,
-}));
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -70,26 +55,21 @@ function BaseTable({ recipes }) {
   const dispatch = useDispatch();
 
   const handlerEditCommit = (e) => {
-    const { id, value } = e;
-    dispatch(updateStore({ id, value }));
+    console.log(e);
+    const { id, field, value } = e;
+    if (field === 'amount') dispatch(updateStore({ id, value }));
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6} md={8}>
-        <Item>
-          <DataGrid
-            rows={recipes}
-            columns={columns}
-            // experimentalFeatures={{ newEditingApi: true }}
-            onCellEditCommit={handlerEditCommit}
-            components={{
-              Toolbar: GridToolbar,
-            }}
-          />
-        </Item>
-      </Grid>
-    </Grid>
+    <DataGrid
+      rows={recipes}
+      columns={columns}
+      // experimentalFeatures={{ newEditingApi: true }}
+      onCellEditCommit={handlerEditCommit}
+      components={{
+        Toolbar: GridToolbar,
+      }}
+    />
   );
 }
 
