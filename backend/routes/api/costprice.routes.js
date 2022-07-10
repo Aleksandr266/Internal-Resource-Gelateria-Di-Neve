@@ -19,8 +19,6 @@ function RecipesINgridient(el) {
   return { id: el.id, compound: result };
 }
 
-///
-
 function ResultSEBES(priceIngridient, el) {
   var result = 0;
   for (let i = 0; i < el.compound.length; i++) {
