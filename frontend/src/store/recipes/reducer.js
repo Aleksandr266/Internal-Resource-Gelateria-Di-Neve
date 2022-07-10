@@ -128,6 +128,7 @@ const recipeSlice = createSlice({
       state.recipeIngridients = [];
     },
     changeAmountComplete(state, action) {
+      console.log('Мы попали в функцию в редьюсере');
       const findedRecipe = state.recipes.find((store) => store.id === action.payload.id);
       findedRecipe.Store.amount = action.payload.value;
       console.log(state.recipes, 'Это стейт after');
