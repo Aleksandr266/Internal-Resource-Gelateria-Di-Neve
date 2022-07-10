@@ -35,7 +35,7 @@ app.use('/bases', basesRouter);
 
 app.use('/stores', storesRouter);
 
-app.use('/technolog', technologRouter); // возвращает market_price
+app.use('/technolog', technologRouter); // метод GET возвращает id, title, market_price
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
