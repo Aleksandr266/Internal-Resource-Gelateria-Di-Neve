@@ -40,9 +40,10 @@ function Bases() {
   };
 
   React.useEffect(() => {
+    console.log("мы в юс эффекте");
     dispatch(loadRecipes());
   }, [dispatch]);
-
+console.log(recipesByBases, "мы в басес");
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>

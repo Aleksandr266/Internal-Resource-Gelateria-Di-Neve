@@ -5,7 +5,11 @@ import { DataGrid } from '@mui/x-data-grid';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addDataPrice } from '../../store/technolog/reducer';
+import { changeMarketPrice } from '../../store/technolog/reducer';
+
+
+// функция для изменения market price
+// import { addDataPrice } from '../../store/technolog/reducer';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -15,7 +19,7 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    renderCell: (recipes) => <Link to={`/recipes/${recipes.row.id}`}>{recipes.row.title}</Link>,
+    renderCell: (marketPrice) => <Link to={`/recipes/${marketPrice.row.id}`}>{marketPrice.row.title}</Link>,
   },
   {
     field: 'market_price',
@@ -23,18 +27,18 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: false,
-    valueGetter: (recipes) => `${recipes.row.base_weight}`, // ИЗМЕНИТЬ!
+    editable: true,
+    valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, 
   },
   {
     field: 'cost_price',
-    headerName: 'Себестоимсоть',
+    headerName: 'Себестоимость',
     type: 'number',
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: true,
-    valueGetter: (recipes) => `${recipes.row.Store.amount}`,// ИЗМЕНИТЬ!
+    editable: false,
+    valueGetter: (marketPrice) => `${marketPrice.row.cost_price}`, 
   },
   {
     field: 'age',
@@ -43,8 +47,8 @@ const columns = [
     width: 250,
     minWidth: 200,
     maxWidth: 500,
-    editable: true,
-    valueGetter: (recipes) => `${recipes.row.Store.standart - recipes.row.Store.amount}`,// ИЗМЕНИТЬ!
+    editable: false,
+    valueGetter: (marketPrice) => `${(marketPrice.row.market_price/marketPrice.row.cost_price).toFixed(2)}`, 
   },
   {
     field: 'fullName',
@@ -53,35 +57,34 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     // width: 160,
-    valueGetter: (recipes) =>// ИЗМЕНИТЬ!
-      `${
-        Math.round(
-          (Math.round(Number(recipes.row.base_weight) * 10) / 100) *
-            (recipes.row.Store.standart - recipes.row.Store.amount) *
-            100,
-        ) / 100
-      }`,
+    valueGetter: (marketPrice) => `${(marketPrice.row.production_losses)*100}%`, 
   },
 ];
 
-function BaseTechnologTable({ recipes }) {
+
+function BaseTechnologTable({ marketPrice }) { 
   const dispatch = useDispatch();
+  // console.log(marketPrice, 'Это стейт маркет прайс');
+  // const dispatch = useDispatch();
 
   const handlerEditCommit = (e) => {
     const { id, value } = e;
-    console.log('id', id);
-    console.log('value', value);
+    // console.log(e, "Это е");
+    // console.log(e.id);
+    // console.log(e.value);
+    // console.log('id', id);
+    // console.log('value', value);
     // if (e.value) {
     //   console.log('first');
     //   console.log(e);
     // }
-    dispatch(addDataPrice({ id, value }));
+    dispatch(changeMarketPrice({ id, value }));
   };
 
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid
-        rows={recipes}
+        rows={marketPrice}
         columns={columns}
         // experimentalFeatures={{ newEditingApi: true }}
         onCellEditCommit={handlerEditCommit}

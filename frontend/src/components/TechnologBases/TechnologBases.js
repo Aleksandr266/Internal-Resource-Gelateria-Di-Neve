@@ -12,11 +12,11 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { loadRecipes } from '../../store/recipes/reducer';
+import { loadMarketPrice } from '../../store/technolog/reducer';
 import BaseTechnologTable from '../BaseTechnologTable/BaseTechnologTable';
 
 function TechnologBases() {
-  const { recipesByBases, recipes } = useSelector((state) => state.recipes);
+  const { marketPriceByBases } = useSelector((state) => state.technolog);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('0');
 
@@ -24,8 +24,9 @@ function TechnologBases() {
     setValue(newValue);
   };
 
+
   React.useEffect(() => {
-    dispatch(loadRecipes());
+    dispatch(loadMarketPrice());
   }, [dispatch]);
 
   return (
@@ -33,14 +34,14 @@ function TechnologBases() {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="Вкладки по основам">
-            {recipesByBases.map((base, id) => (
-              <Tab label={base.category} value={`${id}`} key={base.id} />
+            {marketPriceByBases.map((base, id) => (
+              <Tab label={base.category} value={`${id}`} key={id} />
             ))}
           </TabList>
         </Box>
-        {recipesByBases.map((base, id) => (
-          <TabPanel key={base.id} value={`${id}`}>
-            <BaseTechnologTable recipes={base.recipes} />
+        {marketPriceByBases.map((base, id) => (
+          <TabPanel key={id} value={`${id}`}>
+            <BaseTechnologTable  marketPrice={base.recipes} />
           </TabPanel>
         ))}
       </TabContext>
