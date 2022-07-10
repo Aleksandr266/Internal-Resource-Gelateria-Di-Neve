@@ -19,7 +19,7 @@ function Ingridients() {
         return { 
           id: el.id,
           title: el.title,
-          price: el['IngridientPrices'][0].price,
+          price: el['IngridientPrices'].sort((a, b) => +b.id - +a.id)[0].price,
           fat: el.fat,
           dry_matter: el.dry_matter,
           dry_milk_remainder: el.dry_milk_remainder,
@@ -39,14 +39,14 @@ function Ingridients() {
       type: 'number',
       width: 100,
       maxWidth: 500,
-      editable: true,
+      editable: false,
     },
     {
       field: 'title',
       headerName: 'Ингридиент',
       width: 160,
       maxWidth: 500,
-      editable: true,
+      editable: false,
     },
     {
       field: 'price',
@@ -61,14 +61,14 @@ function Ingridients() {
       headerName: 'Содержание жира',
       type: 'number',
       width: 200,     
-      editable: true,
+      editable: false,
     },
     {
       field: 'dry_matter',
       headerName: 'Сухая смесь',
       type: 'number',
       width: 200,
-      editable: true,
+      editable: false,
     },
     {
       field: 'dry_milk_remainder',
@@ -76,7 +76,7 @@ function Ingridients() {
       type: 'number',
       width: 200,
       maxWidth: 500,      
-      editable: true,
+      editable: false,
     },
     {
       field: 'antifris',
@@ -84,7 +84,7 @@ function Ingridients() {
       type: 'number',
       width: 150,
       maxWidth: 500,
-      editable: true,
+      editable: false,
     },
     {
       field: 'sugar',
@@ -92,7 +92,7 @@ function Ingridients() {
       type: 'number',
       width: 130,
       maxWidth: 500,      
-      editable: true,
+      editable: false,
     },
     {
       field: 'glycemic_index',
@@ -100,9 +100,19 @@ function Ingridients() {
       type: 'number',
       width: 250,
       maxWidth: 500,      
-      editable: true,
+      editable: false,
     },
   ];
+
+  const handlerEditCommit = (e) => {
+    fetch('/ingridients/editPriceIngridients', {
+      method: 'POST', 
+      body: JSON.stringify({ id: e.row.id, price: e.value }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+  }
 
   return (
     <div style={{ height: 500, width: '100%' }}>
@@ -111,6 +121,7 @@ function Ingridients() {
         rows={rows}
         columns={columns}
         disableSelectionOnClick
+        onCellEditCommit={handlerEditCommit}
       />
       }
     </div>
