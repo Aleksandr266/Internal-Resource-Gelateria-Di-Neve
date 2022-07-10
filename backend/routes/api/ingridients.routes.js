@@ -6,7 +6,14 @@ ingridientsRouter
   .route('/')
   .get(async (req, res) => {
     try {
-      const ingridients = await Ingridient.findAll();
+      const ingridients = await Ingridient.findAll(
+        {
+          include: [Ingridient.IngridientPrices],
+          order: [
+            ['updatedAt', 'DESC'],
+          ],
+        },
+      );
       res.status(200);
       res.json(ingridients);
     } catch (error) {
@@ -15,8 +22,9 @@ ingridientsRouter
     }
   })
   .post(async (req, res) => {
-    const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
-      req.body;
+    const {
+      title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index,
+    } = req.body;
     try {
       const sameIngridient = await Ingridient.findOne({
         where: {
@@ -58,8 +66,9 @@ ingridientsRouter
     }
   })
   .put(async (req, res) => {
-    const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
-      req.body;
+    const {
+      title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index,
+    } = req.body;
     try {
       const sameIngridient = await Ingridient.findOne({
         where: {
