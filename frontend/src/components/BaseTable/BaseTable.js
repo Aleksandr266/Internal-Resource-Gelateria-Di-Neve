@@ -1,6 +1,6 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 // import { useSelector } from 'react-redux';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
@@ -85,6 +85,9 @@ function BaseTable({ recipes }) {
         columns={columns}
         // experimentalFeatures={{ newEditingApi: true }}
         onCellEditCommit={handlerEditCommit}
+        components={{
+          Toolbar: GridToolbar,
+        }}
         // pageSize={5}
         // rowsPerPageOptions={[5]}
         // checkboxSelection
