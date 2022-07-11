@@ -1,6 +1,6 @@
 /* eslint-disable operator-linebreak */
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 // import { useSelector } from 'react-redux';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
@@ -98,6 +98,10 @@ function BaseTechnologTable({ marketPrice }) {
         columns={columns}
         // experimentalFeatures={{ newEditingApi: true }}
         onCellEditCommit={handlerEditCommit}
+        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+        components={{
+          Toolbar: GridToolbar,
+        }}
         // pageSize={5}
         // rowsPerPageOptions={[5]}
         // checkboxSelection

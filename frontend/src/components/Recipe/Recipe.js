@@ -22,15 +22,18 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Recipe() {
-  const { id } = useParams();
+function Recipe({id}) {
+  // const { id } = useParams();
+  console.log(id);
   const { recipeIngridients } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
+console.log(recipeIngridients);
+
 
   React.useEffect(() => {
     dispatch(loadRecipeById(id));
     return () => dispatch(removeRecipeIngridients());
-  }, [dispatch, id]);
+  }, [dispatch]);
 
   return (
     <div className="boxRecipe">
@@ -52,7 +55,7 @@ function Recipe() {
                       <StyledTableCell align="center">
                         {ingridient['Ingridient.title']}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{ingridient.weight}</StyledTableCell>
+                      <StyledTableCell align="center">{(ingridient.weight/10*4).toFixed(3)} кг</StyledTableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -65,4 +68,4 @@ function Recipe() {
   );
 }
 
-export default Recipe;
+export default React.memo(Recipe);
