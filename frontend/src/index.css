@@ -1,3 +1,8 @@
+html, body, header, #root {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,4 +16,53 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.auth-section {
+  min-height: 100%;
+  background: center/cover url('../public/img/milkshake_illustration_page-0001.jpg') no-repeat;
+}
+.form-login{
+display: flex;
+flex-direction: column;
+width: 20%;
+padding-left: 42%;
+padding-top: 12%;
+align-items: center;
+}
+
+#standard-password-input1 {
+padding-top: 10px;
+  }
+ #standard-password-input2 {
+
+}
+
+#btn-login{
+  color: white;
+  margin-right: 10px;
+}
+#standard-password-input1-label {
+  color: white;
+  padding-left: 10px;
+  padding-top: -20px;
+}
+#standard-password-input2-label {
+  color: white;
+  padding-left: 10px;
+}
+
+.input-password .MuiOutlinedInput-notchedOutline.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: 1px solid white!important;
+  border-radius: 52px;
+  /* padding: 5px; */
+  height: 40px;
+  margin-top: 10px
+}
+
+.input-login .MuiOutlinedInput-notchedOutline.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: 1px solid white!important;
+  border-radius: 52px;
+  height: 40px;
+  margin-top: 10px
 }

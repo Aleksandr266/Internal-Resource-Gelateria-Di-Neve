@@ -4,8 +4,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUsers',
   async ({login, password}, { rejectWithValue, dispatch }) => {
     try {
-      console.log("привет");
-      const response = await fetch('/auth', {
+      const response = await fetch('/auth/log', {
         method: 'POST',
         body: JSON.stringify({
           login,
@@ -21,7 +20,7 @@ export const loginUser = createAsyncThunk(
         throw new Error('Server Error!');
       }
       const data = await response.json();
-      console.log(data, " Это данные с сервера");
+      // console.log(data, " Это данные с сервера");
 
       return data; // записывает в action.payload
     } catch (error) {
@@ -29,6 +28,38 @@ export const loginUser = createAsyncThunk(
     }
   },
 )
+
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async ({role, fullname, login, password}, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/auth/reg', {
+        method: 'POST',
+        body: JSON.stringify({
+          role, 
+          fullname,
+          login,
+          password,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      console.log(data, " Это данные с сервера с зарегистрированным юзером");
+
+      //return data; // записывает в action.payload
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
