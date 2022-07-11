@@ -35,6 +35,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL,
       },
+      plan: {
+        type: Sequelize.DECIMAL,
+      },
+      stock: {
+        type: Sequelize.DECIMAL,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

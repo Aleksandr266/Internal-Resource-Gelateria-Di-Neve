@@ -38,7 +38,7 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     editable: false,
-    valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, // ИЗМЕНИТЬ!
+    valueGetter: (marketPrice) => `${marketPrice.row.cost_price}`, 
   },
   {
     field: 'age',
@@ -48,7 +48,7 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     editable: false,
-    valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, // ИЗМЕНИТЬ!
+    valueGetter: (marketPrice) => `${(marketPrice.row.market_price/marketPrice.row.cost_price).toFixed(2)}`, 
   },
   {
     field: 'fullName',
@@ -57,15 +57,7 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     // width: 160,
-    valueGetter: (marketPrice) => `${marketPrice.row.market_price}`, 
-    // valueGetter: (recipes) =>// ИЗМЕНИТЬ!
-    //   `${
-    //     Math.round(
-    //       (Math.round(Number(recipes.row.base_weight) * 10) / 100) *
-    //         (recipes.row.Store.standart - recipes.row.Store.amount) *
-    //         100,
-    //     ) / 100
-    //   }`,
+    valueGetter: (marketPrice) => `${(marketPrice.row.production_losses)*100}%`, 
   },
 ];
 

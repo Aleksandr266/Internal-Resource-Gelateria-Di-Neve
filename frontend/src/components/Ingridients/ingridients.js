@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 
 function Ingridients() {
-  
-  const [rows, setRows] = useState('')
+  const [rows, setRows] = useState('');
 
   useEffect(() => {
     fetch('/ingridients', {
-      method: 'GET', 
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
     .then((res) => res.json())
     .then((res) => {
@@ -125,7 +124,7 @@ function Ingridients() {
       />
       }
     </div>
-  )
+  );
 }
 
 export default Ingridients;
