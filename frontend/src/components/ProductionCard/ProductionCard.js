@@ -40,7 +40,7 @@ export default function BasicCard({ base }) {
           <Button size="small">показать рецепт</Button>
         </Typography>
         <Typography variant="h5" component="div">
-          {base.plan} кг
+          {Math.round(base.plan * 100) / 100} кг
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           всего в производство на сегодня
