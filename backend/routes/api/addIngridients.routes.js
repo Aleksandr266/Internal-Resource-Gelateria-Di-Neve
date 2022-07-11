@@ -16,8 +16,9 @@ addIngridientsRouter
         glycemic_index: +req.body.glycemicIndex,
       });
       IngridientPrice.create({ price: +req.body.price, ingridient_id: +newIngridient.id });
-      res.json('true');
+      res.json({ status: true });
     } catch (error) {
+      res.json({ status: false });
       console.log(error.message);
     }
   });
