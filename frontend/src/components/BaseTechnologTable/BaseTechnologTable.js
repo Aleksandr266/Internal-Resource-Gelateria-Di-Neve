@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 // import RecipeRow from '../RecipeRow/RecipeRow';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changeMarketPrice } from '../../store/technolog/reducer';
+import { changeMarketPrice, changeStandartStore } from '../../store/technolog/reducer';
 
 
 // функция для изменения market price
@@ -16,7 +16,7 @@ const columns = [
   {
     field: 'title',
     headerName: 'Наименование',
-    width: 250,
+    width: 215,
     minWidth: 200,
     maxWidth: 500,
     renderCell: (marketPrice) => <Link to={`/recipes/${marketPrice.row.id}`}>{marketPrice.row.title}</Link>,
@@ -24,7 +24,7 @@ const columns = [
   {
     field: 'market_price',
     headerName: 'Рыночная стоимость',
-    width: 250,
+    width: 215,
     minWidth: 200,
     maxWidth: 500,
     editable: true,
@@ -34,7 +34,7 @@ const columns = [
     field: 'cost_price',
     headerName: 'Себестоимость',
     type: 'number',
-    width: 250,
+    width: 215,
     minWidth: 200,
     maxWidth: 500,
     editable: false,
@@ -44,21 +44,30 @@ const columns = [
     field: 'age',
     headerName: 'Коэффициент прибыли',
     type: 'number',
-    width: 250,
+    width: 215,
     minWidth: 200,
     maxWidth: 500,
     editable: false,
     valueGetter: (marketPrice) => `${(marketPrice.row.market_price/marketPrice.row.cost_price).toFixed(2)}`, 
+  },{
+    field: 'standartStore',
+    headerName: 'Стандарт наличия',
+    width: 215,
+    minWidth: 200,
+    maxWidth: 500,
+    editable: true,
+    // width: 160,
+    valueGetter: (marketPrice) => `${marketPrice.row.standart_store}`, 
   },
   {
     field: 'fullName',
     headerName: 'Потери при производстве',
-    width: 250,
+    width: 215,
     minWidth: 200,
     maxWidth: 500,
     // width: 160,
     valueGetter: (marketPrice) => `${(marketPrice.row.production_losses)*100}%`, 
-  },
+  }, 
 ];
 
 
@@ -68,17 +77,18 @@ function BaseTechnologTable({ marketPrice }) {
   // const dispatch = useDispatch();
 
   const handlerEditCommit = (e) => {
-    const { id, value } = e;
-    // console.log(e, "Это е");
-    // console.log(e.id);
-    // console.log(e.value);
-    // console.log('id', id);
-    // console.log('value', value);
-    // if (e.value) {
-    //   console.log('first');
-    //   console.log(e);
-    // }
-    dispatch(changeMarketPrice({ id, value }));
+
+    if (e.field === 'market_price') {
+      const { id, value } = e;
+      dispatch(changeMarketPrice({ id, value }));
+    } 
+    if (e.field === 'standartStore') {
+      const { id, value } = e;
+      console.log(id, value);
+      dispatch(changeStandartStore({ id, value }));
+    }
+   
+
   };
 
   return (

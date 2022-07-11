@@ -110,7 +110,7 @@ costpriceRouter
     const collectResult = merdgCostPrice.map((el) => collector(el, lossesProd));
 
     res.json({ collectResult });
-  })
+  });
   // Создаем Тип у Юзеров
   // .post(async (req, res) => {
   //   const ing = await UserType.create({

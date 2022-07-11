@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const getCategories = (recipes) => {
-  console.log(recipes, 1111111111111111111);
   const categories = {};
-  console.log(recipes);
-  recipes.collectResult.forEach((recipe) => {
+  recipes.forEach((recipe) => {
     if (categories.hasOwnProperty(recipe.base)) {
       categories[recipe.base].push(recipe);
     } else {
@@ -46,7 +44,6 @@ export const changeMarketPrice = createAsyncThunk(
   'technolog/changeMarketPrice',
   async ({ value, id }, { rejectWithValue, dispatch }) => {
     try {
-      console.log("Мы попали в редьюсер технолога функцию changeMarketPrice");
       const response = await fetch('/technolog', {
         method: 'PUT',
         body: JSON.stringify({
@@ -64,6 +61,34 @@ export const changeMarketPrice = createAsyncThunk(
         throw new Error('Server Error!');
       }
       dispatch(changeMarketPriceComplete({ id, value }));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+)
+
+
+/// изменение стандарта наличия
+export const changeStandartStore = createAsyncThunk(
+  'technolog/changeStandartStore',
+  async ({ value, id }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/technolog/store', {
+        method: 'PUT',
+        body: JSON.stringify({
+          value,
+          id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      dispatch(changeStandartStoreComplete({ id, value }));
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -99,8 +124,15 @@ const recipeSlice = createSlice({
     //   state.marketPrice = [action.payload];
     // },
     changeMarketPriceComplete(state, action) {
-      const findedRecipe = state.marketPriceByBases.find((store) => store.recipes.id === action.payload.id);
+      console.log(state,9999999999999999999)
+      const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
       findedRecipe.market_price = action.payload.value;
+      state.marketPriceByBases = getCategories(state.marketPrice);
+    },
+    changeStandartStoreComplete(state, action) {
+      const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
+      findedRecipe.standart_store = action.payload.value;
+      state.marketPriceByBases = getCategories(state.marketPrice);
     },
   },
 
@@ -111,10 +143,10 @@ const recipeSlice = createSlice({
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.marketPrice = action.payload;
-      console.log(state.marketPrice, "это стейт marketPrice");
-      state.marketPriceByBases = getCategories(action.payload);
-      console.log(state.marketPriceByBases,  "это стейт marketPriceByBases");
+      state.marketPrice = action.payload.collectResult;
+  
+      state.marketPriceByBases = getCategories(action.payload.collectResult);
+   
       //не знаю, нужна ли эта строка?
       // state.recipesByBases = getCategories(action.payload);
     },
@@ -131,7 +163,9 @@ const recipeSlice = createSlice({
     // [loadMarketPrice.rejected]: setError,
   },
 });
-const { changeMarketPriceComplete } = recipeSlice.actions;
+
+const { changeMarketPriceComplete, changeStandartStoreComplete } = recipeSlice.actions;
+// const { changeStandartStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 // export const { marketPriceComplete } = recipeSlice.actions;
 // export { removeRecipeIngridients };

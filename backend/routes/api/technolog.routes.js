@@ -1,7 +1,7 @@
 const technologRouter = require('express').Router();
 
 const {
-  Recipe, RecipePrice, RecipeIngridient, Ingridient, IngridientPrice, Production, UserType, User,
+  Recipe, RecipePrice, RecipeIngridient, Ingridient, IngridientPrice, Production, UserType, User, Store,
 } = require('../../db/models');
 
 function IngridientPrise(el) {
@@ -68,6 +68,15 @@ function collector(el, lossesProd) {
   return el;
 }
 
+function storeStandart(el, stores) {
+  for (let i = 0; i < stores.length; i++) {
+    if (stores[i].recipe_id === el.id) {
+      el.standart_store = stores[i].standart;
+    }
+  }
+  return el;
+}
+
 technologRouter
   .route('/')
   .get(async (req, res) => {
@@ -88,6 +97,9 @@ technologRouter
     const recipes = await Recipe.findAll(
       { include: [Recipe.RecipeIngridients] },
     );
+
+    const stores = await Store.findAll({ raw: true });
+
     const ingidients = await Ingridient.findAll(
       {
         include: [Ingridient.IngridientPrices],
@@ -101,7 +113,8 @@ technologRouter
     const resultCostPrise = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
     const lossesProd = losses.map((el) => lossCount(el));
     const merdgCostPrice = titleAndPrice.map((el) => receivedCostPrice(resultCostPrise, el));
-    const collectResult = merdgCostPrice.map((el) => collector(el, lossesProd));
+    const merdgStoreStandart = merdgCostPrice.map((el) => storeStandart(el, stores));
+    const collectResult = merdgStoreStandart.map((el) => collector(el, lossesProd));
 
     res.json({ collectResult });
   })
@@ -122,6 +135,34 @@ technologRouter
       }
       if (value) sameRecipe.market_price = value;
       await sameRecipe.save();
+      res.status(200);
+      res.end();
+    } catch (error) {
+      res.status(500);
+      res.end();
+    }
+  });
+
+technologRouter.route('/store')
+  .put(async (req, res) => {
+    const {
+      id, value,
+    } = req.body;
+    console.log(req.body);
+    try {
+      const sameStore = await Store.findOne({
+        where: {
+          recipe_id: id,
+        },
+      });
+
+      if (!sameStore) {
+        res.status(406);
+        return res.end();
+      }
+      if (value) sameStore.standart = value;
+      await sameStore.save();
+      console.log(sameStore);
       res.status(200);
       res.end();
     } catch (error) {
