@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useEffect } from 'react';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { useSelector, useDispatch } from 'react-redux';
+import { editIngridient } from '../../store/ingridients/reducer'
 
 function Ingridients() {
   
-  const [rows, setRows] = useState('')
+  const dispatch = useDispatch();
+  const { ingridients } = useSelector((state) => state.ingridients)
 
   useEffect(() => {
-    fetch('/ingridients', {
-      method: 'GET', 
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      setRows(
-        res.map((el) => { 
-        return { 
-          id: el.id,
-          title: el.title,
-          price: el['IngridientPrices'][0].price,
-          fat: el.fat,
-          dry_matter: el.dry_matter,
-          dry_milk_remainder: el.dry_milk_remainder,
-          antifris: el.antifris,
-          sugar: el.sugar,
-          glycemic_index: el.glycemic_index
-        }
-      })
-      )
-    })
+    dispatch(editIngridient())
   }, [])
 
   const columns = [
@@ -105,12 +85,15 @@ function Ingridients() {
   ];
 
   return (
-    <div style={{ height: 500, width: '100%' }}>
-      { rows &&
+    <div style={{ marginTop: 20, height: 500, width: '100%' }}>
+      { ingridients &&
       <DataGrid
-        rows={rows}
+        rows={ingridients}
         columns={columns}
         disableSelectionOnClick
+        components={{
+          Toolbar: GridToolbar,
+        }}
       />
       }
     </div>

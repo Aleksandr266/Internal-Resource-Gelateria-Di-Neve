@@ -1,5 +1,4 @@
-import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './style.css'
@@ -8,7 +7,6 @@ function FormAddIngridients() {
 
   function addIngridient(e) {
     e.preventDefault()
-    // console.log(e.target.title.value)
     fetch('/addIngridients', {
       method: 'POST',
       body: JSON.stringify({
@@ -27,6 +25,7 @@ function FormAddIngridients() {
     })
     .then((res) => res.json())
     .then((res) => console.log(res))
+    document.querySelector('.formAddIngridients').reset()
   }
 
   return (
