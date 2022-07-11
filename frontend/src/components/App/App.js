@@ -10,13 +10,13 @@ import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
 
-import TechnologBases from '../TechnologBases/TechnologBases'
+import TechnologBases from '../TechnologBases/TechnologBases';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<Bases />} />        
+        <Route path="/" element={<Bases />} />
         <Route path="/technolog" element={<TechnologBases />} />
         <Route path="/recipes/:id" element={<Recipe />} />
         <Route path="/todo" element={<Todo />} />
