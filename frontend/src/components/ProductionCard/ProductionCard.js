@@ -35,18 +35,21 @@ export default function BasicCard({ base }) {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {base.category}
+        <Typography sx={{ fontSize: 20, fontWeight: 900 }} gutterBottom>
+          {base.category} {'        '}
+          <Button size="small">показать рецепт</Button>
         </Typography>
         <Typography variant="h5" component="div">
-          {base.plan} кг
+          {Math.round(base.plan * 100) / 100} кг
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           всего в производство на сегодня
         </Typography>
         <Typography variant="h5" component="div">
-          {base.stock ? base.stock : 0} кг
-          <Button onClick={handleClickReset}>сброс</Button>
+          {base.stock ? base.stock : 0} {'кг      '}
+          <Button variant="outlined" size="small" onClick={handleClickReset}>
+            сброс
+          </Button>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           произведено сегодня

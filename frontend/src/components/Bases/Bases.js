@@ -45,7 +45,7 @@ function Bases() {
     dispatch(setTodoToggle({ baseId, id }));
   };
 
-  console.log(basesTodos);
+  console.log('recipesByBases', recipesByBases);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
