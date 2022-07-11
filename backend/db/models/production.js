@@ -38,11 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       input_amount: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
       },
       out_amount: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
       },
       createdAt: {
         allowNull: false,

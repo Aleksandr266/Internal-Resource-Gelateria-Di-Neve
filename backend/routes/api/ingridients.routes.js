@@ -1,6 +1,6 @@
 const ingridientsRouter = require('express').Router();
 
-const { Ingridient } = require('../../db/models');
+const { Ingridient, IngridientPrice } = require('../../db/models');
 
 ingridientsRouter
   .route('/')
@@ -95,6 +95,16 @@ ingridientsRouter
       res.status(500);
       res.end();
     }
+  });
+
+ingridientsRouter
+  .route('/editPriceIngridients')
+  // делаю пост запросом потому что пут не работает
+  .post(async (req, res) => {
+    await IngridientPrice.create({
+      ingridient_id: req.body.id,
+      price: req.body.price,
+    });
   });
 
 module.exports = ingridientsRouter;

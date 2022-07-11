@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Base extends Model {
@@ -15,52 +13,61 @@ module.exports = (sequelize, DataTypes) => {
       Base.BasePrices = Base.hasMany(BasePrice, { foreignKey: 'base_id' });
     }
   }
-  Base.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
+  Base.init(
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      title: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      fat: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      dry_matter: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      dry_milk_remainder: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      antifris: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      sugar: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      glycemic_index: {
+        allowNull: false,
+        type: DataTypes.DECIMAL,
+      },
+      plan: {
+        type: DataTypes.DECIMAL,
+      },
+      stock: {
+        type: DataTypes.DECIMAL,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
-    title: {
-      allowNull: false,
-      type: DataTypes.TEXT,
+    {
+      sequelize,
+      modelName: 'Base',
     },
-    fat: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    dry_matter: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    dry_milk_remainder: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    antifris: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    sugar: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    glycemic_index: {
-      allowNull: false,
-      type: DataTypes.DECIMAL,
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-  }, {
-    sequelize,
-    modelName: 'Base',
-  });
+  );
   return Base;
 };
