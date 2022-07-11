@@ -12,10 +12,20 @@ import Paper from '@material-ui/core/Paper';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadRecipeById, removeRecipeIngridients } from '../../store/recipes/reducer';
 
+const useStyles = makeStyles({
+  sticky: {
+    position: "sticky",
+    left: 0,
+    background: "white",
+    boxShadow: "5px 2px 5px grey",
+  }
+ });
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
+    padding: "0px 12px 0px 0px"
   },
   body: {
     fontSize: 15,
@@ -36,7 +46,7 @@ function Recipe({ id }) {
   return (
     <div className="boxRecipe">
       {recipeIngridients.length && (
-        <div className="boxTableRecipe">
+        <div className={classes.sticky} >
           <h1 className="titleRecipes">{recipeIngridients[0]['Recipe.title']}</h1>
           <div>
             <TableContainer component={Paper}>
