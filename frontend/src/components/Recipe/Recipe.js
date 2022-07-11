@@ -24,10 +24,10 @@ const StyledTableCell = withStyles((theme) => ({
 
 function Recipe({id}) {
   // const { id } = useParams();
-  console.log(id);
+
   const { recipeIngridients } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
-console.log(recipeIngridients);
+
 
 
   React.useEffect(() => {

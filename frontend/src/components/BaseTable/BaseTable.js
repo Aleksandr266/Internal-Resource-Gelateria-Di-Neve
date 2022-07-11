@@ -1,5 +1,5 @@
 /* eslint-disable operator-linebreak */
-import React, { useState } from 'react';
+import React, { useState,useCallback } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -32,13 +32,13 @@ function BaseTable({ recipes }) {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
+  },[ open ]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  },[ open ]);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -137,4 +137,4 @@ function BaseTable({ recipes }) {
   );
 }
 
-export default BaseTable;
+export default React.memo(BaseTable);

@@ -84,7 +84,9 @@ const getCategories = (recipes) => {
       id: categories[category][0].base_id,
       category,
       recipes: categories[category],
+      base_plan: categories[category][0].Base.plan,
       plan: categories[category].reduce((acc, el) => acc + el.total_base, 0),
+      stock: categories[category][0].Base.stock,
     });
   }
   return bases;
@@ -118,6 +120,7 @@ export const loadRecipeById = createAsyncThunk(
   'recipes/loadRecipeById',
   async (id, { rejectWithValue }) => {
     try {
+      console.log(id,"99999999999999999999999999999")
       const response = await fetch(`/recipes/${id}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -130,6 +133,7 @@ export const loadRecipeById = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log(data,"000000000000000000");
 
       return data;
     } catch (error) {
@@ -187,6 +191,56 @@ export const putBasesPlan = createAsyncThunk(
   },
 );
 
+export const productBase = createAsyncThunk(
+  'recipes/productBase',
+  async ({ baseId, value }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/bases/product', {
+        method: 'PUT',
+        body: JSON.stringify({ baseId, value }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const base = await response.json();
+      console.log('base ProductBase', base);
+      dispatch(upDateBasesPlanStock(base));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const resetStock = createAsyncThunk(
+  'recipes/reset',
+  async ({ id }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/bases/reset', {
+        method: 'PUT',
+        body: JSON.stringify({ id }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const base = await response.json();
+      console.log('base ProductBase', base);
+      dispatch(upDateBasesPlanStock(base));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -199,28 +253,48 @@ const recipeSlice = createSlice({
     recipesByBases: [],
     recipeIngridients: [],
     basesTodos: [],
+    stockVisibles: {},
     status: null,
     error: null,
   },
   reducers: {
-    // addTodo(state, action) {
-    //   state.todos.push(action.payload);
-    // },
-    // toggleComplete(state, action) {
-    //   const toggledTodo = state.todos.find((todo) => todo.id === action.payload.id);
-    //   toggledTodo.completed = !toggledTodo.completed;
-    // },
-    // removeTodo(state, action) {
-    //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
-    // },
     putBasesPlanComplete(state, action) {
       const { id, plan } = action.payload;
       const findedBasesTodos = state.basesTodos.find((todos) => todos.id === id);
       if (findedBasesTodos) {
-        findedBasesTodos.todos = createTodos(plan);
+        findedBasesTodos.todos = createTodos(plan).map((todo) => ({ value: todo, isDone: false }));
       } else {
-        state.basesTodos.push({ id, todos: createTodos(plan) });
+        state.basesTodos.push({
+          id,
+          todos: createTodos(plan).map((todo) => ({ value: todo, isDone: false })),
+        });
       }
+    },
+    resetTodos(state, action) {
+      const { id } = action.payload;
+      state.basesTodos.splice(
+        state.basesTodos.findIndex((todos) => todos.id === id),
+        1,
+      );
+    },
+    upDateBasesPlanStock(state, action) {
+      const { id, stock } = action.payload;
+      const findedBase = state.recipesByBases.find((store) => store.id === id);
+      findedBase.stock = stock;
+    },
+    setStockVisibles(state, action) {
+      const { id } = action.payload;
+      state.stockVisibles[id] = !state.stockVisibles[id];
+    },
+    setTodoToggle(state, action) {
+      const { baseId, id } = action.payload;
+      const findedBase = state.basesTodos.find((base) => base.id === baseId);
+      findedBase.todos = findedBase.todos.map((todo, todoId) => {
+        if (Number(todoId) === Number(id)) {
+          todo.isDone = !todo.isDone;
+        }
+        return todo;
+      });
     },
     removeRecipeIngridients(state, action) {
       state.recipeIngridients = [];
@@ -229,7 +303,6 @@ const recipeSlice = createSlice({
       const { id, field, value } = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.Store[field] = value;
-      console.log(state.recipes, 'Это стейт after');
       state.recipesByBases = getCategories(state.recipes);
     },
   },
@@ -243,6 +316,12 @@ const recipeSlice = createSlice({
       state.status = 'resolved';
       state.recipes = action.payload;
       state.recipesByBases = getCategories(action.payload);
+      console.log(state.recipesByBases.map((el) => ({ [el.id]: false })));
+      // state.stockVisibles = { ...state.recipesByBases.map((el) => ({ [el.id]: false })) };
+      state.stockVisibles = state.recipesByBases.reduce((acc, el) => {
+        acc[el.id] = false;
+        return acc;
+      }, {});
     },
     [loadRecipes.rejected]: setError,
     [loadRecipeById.pending]: (state) => {
@@ -259,6 +338,14 @@ const recipeSlice = createSlice({
 });
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
-export const { putBasesPlanComplete, removeRecipeIngridients } = recipeSlice.actions;
+export const {
+  resetTodos,
+  resetStockComplete,
+  upDateBasesPlanStock,
+  setTodoToggle,
+  setStockVisibles,
+  putBasesPlanComplete,
+  removeRecipeIngridients,
+} = recipeSlice.actions;
 // export { removeRecipeIngridients };
 export default recipeSlice.reducer;
