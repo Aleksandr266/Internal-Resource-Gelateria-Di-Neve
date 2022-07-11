@@ -4,14 +4,33 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useDispatch } from 'react-redux';
-import { putBasesPlan } from '../../store/recipes/reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  putBasesPlan,
+  setStockVisibles,
+  resetStock,
+  resetTodos,
+} from '../../store/recipes/reducer';
 
 export default function BasicCard({ base }) {
   const dispatch = useDispatch();
+  const { stockVisibles } = useSelector((state) => state.recipes);
   const handleClick = React.useCallback(() => {
-    dispatch(putBasesPlan({ id: base.id, plan: base.plan }));
+    dispatch(setStockVisibles({ id: base.id }));
+    dispatch(
+      putBasesPlan({ id: base.id, plan: base.plan - base.stock < 0 ? 0 : base.plan - base.stock }),
+    );
   }, [dispatch, base]);
+
+  console.log('Before stockVisibles[base.id]', stockVisibles[base.id]);
+
+  const handleClickReset = React.useCallback(() => {
+    dispatch(resetStock({ id: base.id }));
+    dispatch(resetTodos({ id: base.id }));
+    if (stockVisibles[base.id]) {
+      dispatch(setStockVisibles({ id: base.id }));
+    }
+  }, [dispatch, base, stockVisibles]);
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -20,18 +39,32 @@ export default function BasicCard({ base }) {
           {base.category}
         </Typography>
         <Typography variant="h5" component="div">
-          {base.plan}
+          {base.plan} кг
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          кг, всего в производство на сегодня
+          всего в производство на сегодня
         </Typography>
-        <Typography variant="body2">Удачной работы!</Typography>
+        <Typography variant="h5" component="div">
+          {base.stock ? base.stock : 0} кг
+          <Button onClick={handleClickReset}>сброс</Button>
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          произведено сегодня
+        </Typography>
+        <Typography variant="h5" component="div">
+          {base.plan - base.stock < 0 ? 0 : Math.round((base.plan - base.stock) * 100) / 100} кг
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          осталось произвести
+        </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleClick}>
-          Начать производство базы
-        </Button>
-      </CardActions>
+      {!stockVisibles[base.id] && (
+        <CardActions>
+          <Button size="small" onClick={handleClick}>
+            Начать производство базы
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
 }
