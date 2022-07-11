@@ -8,6 +8,7 @@ import Bases from '../Bases/Bases';
 import Todo from '../Todo/Todo';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
+import Auth from '../Auth/Auth';
 
 import TechnologBases from '../TechnologBases/TechnologBases';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/ingridients" element={<Ingridients />} />
       </Route>
+        <Route path="/auth" element={<Auth />} />
     </Routes>
   );
 }

@@ -57,7 +57,6 @@ function lossCount(el) {
 
 function collector(el, lossesProd) {
   let loss = 0;
-  console.log(lossesProd);
   for (let i = 0; i < lossesProd.length; i++) {
     if (lossesProd[i].recipe_id === el.id) {
       if (lossesProd[i].production_losses < 0) {
@@ -110,7 +109,6 @@ technologRouter
     const {
       id, value,
     } = req.body;
-    console.log(req.body);
     try {
       const sameRecipe = await RecipePrice.findOne({
         where: {

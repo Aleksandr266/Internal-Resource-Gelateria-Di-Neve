@@ -7,7 +7,7 @@ const { sequelize } = require('./db/models');
 
 // Отдает себестоимость рецептов
 const costpriceRouter = require('./routes/api/costprice.routes');
-// const authRouter = require('./routes/api/auth.routes');
+const authRouter = require('./routes/api/auth.routes');
 const recipesRouter = require('./routes/api/recipes.routes');
 
 const addIngridientsRouter = require('./routes/api/addIngridients.routes');
@@ -28,7 +28,7 @@ expressConfig(app);
 // Отдает себестоимость рецептов
 app.use('/costprice', costpriceRouter);
 
-// app.use('/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/recipes', recipesRouter);
 
 app.use('/addIngridients', addIngridientsRouter);
