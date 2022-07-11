@@ -32,14 +32,11 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Recipe({id}) {
+function Recipe({ id }) {
   // const { id } = useParams();
 
   const { recipeIngridients } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
-
-	
-  const classes = useStyles();
 
   React.useEffect(() => {
     dispatch(loadRecipeById(id));
@@ -66,7 +63,9 @@ function Recipe({id}) {
                       <StyledTableCell align="center">
                         {ingridient['Ingridient.title']}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{(ingridient.weight/10*4).toFixed(3)} кг</StyledTableCell>
+                      <StyledTableCell align="center">
+                        {((ingridient.weight / 10) * 4).toFixed(3)} кг
+                      </StyledTableCell>
                     </TableRow>
                   ))}
                 </TableBody>

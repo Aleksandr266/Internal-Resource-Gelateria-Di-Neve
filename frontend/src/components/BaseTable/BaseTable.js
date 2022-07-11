@@ -1,5 +1,5 @@
 /* eslint-disable operator-linebreak */
-import React, { useState,useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -13,15 +13,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
+import { toggleRecipe } from '../../store/recipes/reducer';
 
 import Recipe from '../Recipe/Recipe';
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
   );
@@ -30,15 +28,13 @@ function PaperComponent(props) {
 function BaseTable({ recipes }) {
   const dispatch = useDispatch();
 
-  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = useCallback((id) => {
+    dispatch(toggleRecipe(id));
+  }, []);
 
-  const handleClickOpen = useCallback(() => {
-    setOpen(true);
-  },[ open ]);
-
-  const handleClose = useCallback(() => {
-    setOpen(false);
-  },[ open ]);
+  const handleClose = useCallback((id) => {
+    dispatch(toggleRecipe(id));
+  }, []);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -71,10 +67,29 @@ function BaseTable({ recipes }) {
           <Button autoFocus onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+          <Dialog
+            open={recipes.row.isOpen}
+            onClose={() => handleClose(recipes.row.id)}
+            PaperComponent={PaperComponent}
+            aria-labelledby="draggable-dialog-title">
+            <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+              Subscribe
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <Recipe id={recipes.row.id} />
+                {/* {'dfsdfs'} */}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={() => handleClose(recipes.row.id)}>
+                Cancel
+              </Button>
+              <Button onClick={() => handleClose(recipes.row.id)}>Subscribe</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      ),
     },
     {
       field: 'base_weight',
@@ -122,9 +137,6 @@ function BaseTable({ recipes }) {
     dispatch(updateStore({ id, field, value }));
   };
 
-
-
-
   return (
     <DataGrid
       rows={recipes}
@@ -139,4 +151,4 @@ function BaseTable({ recipes }) {
   );
 }
 
-export default React.memo(BaseTable);
+export default BaseTable;
