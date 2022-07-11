@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const getCategories = (recipes) => {
-  console.log(recipes, 1111111111111111111);
   const categories = {};
-  console.log(recipes);
-  recipes.collectResult.forEach((recipe) => {
+  recipes.forEach((recipe) => {
     if (categories.hasOwnProperty(recipe.base)) {
       categories[recipe.base].push(recipe);
     } else {
@@ -46,7 +44,6 @@ export const changeMarketPrice = createAsyncThunk(
   'technolog/changeMarketPrice',
   async ({ value, id }, { rejectWithValue, dispatch }) => {
     try {
-      console.log("Мы попали в редьюсер технолога функцию changeMarketPrice");
       const response = await fetch('/technolog', {
         method: 'PUT',
         body: JSON.stringify({
@@ -77,7 +74,6 @@ export const changeStandartStore = createAsyncThunk(
   'technolog/changeStandartStore',
   async ({ value, id }, { rejectWithValue, dispatch }) => {
     try {
-      console.log("Мы попали в редьюсер технолога функцию changeStandartStore");
       const response = await fetch('/technolog/store', {
         method: 'PUT',
         body: JSON.stringify({
@@ -89,8 +85,6 @@ export const changeStandartStore = createAsyncThunk(
           Accept: 'application/json',
         },
       });
-      console.log('это перед респонсом');
-      console.log(response, 'Это респонс');
       if (!response.ok) {
         throw new Error('Server Error!');
       }
@@ -130,13 +124,15 @@ const recipeSlice = createSlice({
     //   state.marketPrice = [action.payload];
     // },
     changeMarketPriceComplete(state, action) {
-      const findedRecipe = state.marketPriceByBases.find((store) => store.recipes.id === action.payload.id);
+      console.log(state,9999999999999999999)
+      const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
       findedRecipe.market_price = action.payload.value;
+      state.marketPriceByBases = getCategories(state.marketPrice);
     },
     changeStandartStoreComplete(state, action) {
-      const findedRecipe = state.marketPriceByBases.find((store) => store.recipes.id === action.payload.id);
-      console.log(action.payload.id);
-      findedRecipe.standart_stores = action.payload.value;
+      const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
+      findedRecipe.standart_store = action.payload.value;
+      state.marketPriceByBases = getCategories(state.marketPrice);
     },
   },
 
@@ -147,10 +143,10 @@ const recipeSlice = createSlice({
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.marketPrice = action.payload;
-      console.log(state.marketPrice, "это стейт marketPrice");
-      state.marketPriceByBases = getCategories(action.payload);
-      console.log(state.marketPriceByBases,  "это стейт marketPriceByBases");
+      state.marketPrice = action.payload.collectResult;
+  
+      state.marketPriceByBases = getCategories(action.payload.collectResult);
+   
       //не знаю, нужна ли эта строка?
       // state.recipesByBases = getCategories(action.payload);
     },

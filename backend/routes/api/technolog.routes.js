@@ -122,7 +122,6 @@ technologRouter
     const {
       id, value,
     } = req.body;
-    console.log(req.body);
     try {
       const sameRecipe = await RecipePrice.findOne({
         where: {
