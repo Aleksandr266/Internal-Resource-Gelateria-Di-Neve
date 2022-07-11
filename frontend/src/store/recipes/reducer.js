@@ -120,6 +120,7 @@ export const loadRecipeById = createAsyncThunk(
   'recipes/loadRecipeById',
   async (id, { rejectWithValue }) => {
     try {
+      console.log(id,"99999999999999999999999999999")
       const response = await fetch(`/recipes/${id}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -132,6 +133,7 @@ export const loadRecipeById = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log(data,"000000000000000000");
 
       return data;
     } catch (error) {
