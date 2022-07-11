@@ -4,8 +4,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
+import { putBasesPlan } from '../../store/recipes/reducer';
 
 export default function BasicCard({ base }) {
+  const dispatch = useDispatch();
+  const handleClick = React.useCallback(() => {
+    dispatch(putBasesPlan({ id: base.id, plan: base.plan }));
+  }, [dispatch, base]);
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -21,7 +28,9 @@ export default function BasicCard({ base }) {
         <Typography variant="body2">Удачной работы!</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Начать производство базы</Button>
+        <Button size="small" onClick={handleClick}>
+          Начать производство базы
+        </Button>
       </CardActions>
     </Card>
   );

@@ -21,6 +21,7 @@ function BaseTable({ recipes }) {
       headerName: 'Кол.Мол.Базы на Кг',
       width: 150,
       editable: false,
+      hide: true,
       valueGetter: (recipes) => `${Math.round(Number(recipes.row.base_weight) * 10) / 100}`,
     },
     {
