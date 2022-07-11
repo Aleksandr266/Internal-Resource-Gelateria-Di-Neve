@@ -14,6 +14,11 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
 import { loadRecipes } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
 import ProductionCard from '../ProductionCard/ProductionCard';
@@ -21,7 +26,7 @@ import ProductionCard from '../ProductionCard/ProductionCard';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  // padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
   display: 'flex',
@@ -31,7 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Bases() {
-  const { recipesByBases } = useSelector((state) => state.recipes);
+  const { recipesByBases, basesTodos } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('0');
 
@@ -40,10 +45,10 @@ function Bases() {
   };
 
   React.useEffect(() => {
-    console.log("мы в юс эффекте");
+    console.log('мы в юс эффекте');
     dispatch(loadRecipes());
   }, [dispatch]);
-console.log(recipesByBases, "мы в басес");
+  console.log(recipesByBases, 'мы в басес');
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
@@ -56,14 +61,44 @@ console.log(recipesByBases, "мы в басес");
         </Box>
         {recipesByBases.map((base, id) => (
           <TabPanel key={base.id} value={`${id}`}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} justify="center">
               <Grid item xs={12} md={8}>
                 <Item>
                   <BaseTable recipes={base.recipes} />
                 </Item>
               </Grid>
-              <Grid item xs={6} md={4}>
-                <ProductionCard base={base} />
+              <Grid item container direction="column" spacing={2} xs={12} md={4}>
+                <Grid item>
+                  <ProductionCard base={base} />
+                </Grid>
+                <Grid item>
+                  {basesTodos.filter((baseTodo) => baseTodo.id === base.id) &&
+                    basesTodos
+                      .filter((baseTodo) => baseTodo.id === base.id)
+                      .map((baseTodo, id) => (
+                        <List
+                          key={id}
+                          sx={{
+                            width: '100%',
+                            bgcolor: 'background.paper',
+                            border: '1px solid #e5c1c1',
+                          }}>
+                          {baseTodo.todos.map((todo, id) => (
+                            <ListItem key={id} disablePadding>
+                              <ListItemButton role={undefined} dense>
+                                <Checkbox
+                                  edge="start"
+                                  // checked={checked.indexOf(value) !== -1}
+                                  tabIndex={-1}
+                                  disableRipple
+                                />
+                                <ListItemText primary={`Произвести ${todo} кг базы`} />
+                              </ListItemButton>
+                            </ListItem>
+                          ))}
+                        </List>
+                      ))}
+                </Grid>
               </Grid>
             </Grid>
           </TabPanel>

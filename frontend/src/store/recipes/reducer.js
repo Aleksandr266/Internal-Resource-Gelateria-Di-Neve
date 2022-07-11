@@ -4,6 +4,56 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+function createTodos(num) {
+  if (num === 0) return 0;
+  //считаем колличество раз загрузки фризера. К примеру 1,5 раза
+  const coefficient = num / 60;
+  /// считаем целые загрузки. К примеру 1
+  var integer = Math.trunc(coefficient);
+  /// считаем не целые загрузки. К примеру 0,5
+  var fraction = coefficient - integer;
+  /// результирующий массив
+  var result = [];
+  /// проверка на целое число
+  if (integer > 0) {
+    /// если дробное чило меньше 0.58
+    if (fraction !== 0) {
+      if (fraction < 0.58) {
+        integer = integer - 1;
+
+        for (let index = 0; index < integer; index++) {
+          result.push(60);
+        }
+        var intermediateValue = (fraction + 1) / 2;
+        for (let index = 0; index <= 1; index++) {
+          var rounding = Math.round(intermediateValue * 60);
+          result.push(rounding);
+        }
+        return result;
+      }
+    }
+    /// если дробное чило больше 0.58
+    for (let index = 0; index < integer; index++) {
+      result.push(60);
+    }
+
+    for (let index = 0; index < 1; index++) {
+      var rounding = Math.round(fraction * 60);
+      result.push(rounding);
+    }
+    return result;
+  }
+  /// если загрузка меньше 1.00 но больше 0.58
+
+  if (coefficient > 0.58) {
+    var rounding = Math.round(coefficient * 60);
+    result.push(rounding);
+    return result;
+  }
+  result.push(35);
+  return result;
+}
+
 const getCategories = (recipes) => {
   const categories = {};
   console.log(recipes);
@@ -87,6 +137,7 @@ export const loadRecipeById = createAsyncThunk(
     }
   },
 );
+
 export const updateStore = createAsyncThunk(
   'recipes/updateStore',
   async ({ id, field, value }, { rejectWithValue, dispatch }) => {
@@ -113,6 +164,29 @@ export const updateStore = createAsyncThunk(
   },
 );
 
+export const putBasesPlan = createAsyncThunk(
+  'recipes/putBasesPlan',
+  async ({ id, plan }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/bases', {
+        method: 'PUT',
+        body: JSON.stringify({ id, plan }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      dispatch(putBasesPlanComplete({ id, plan }));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -124,6 +198,7 @@ const recipeSlice = createSlice({
     recipes: [],
     recipesByBases: [],
     recipeIngridients: [],
+    basesTodos: [],
     status: null,
     error: null,
   },
@@ -138,6 +213,15 @@ const recipeSlice = createSlice({
     // removeTodo(state, action) {
     //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     // },
+    putBasesPlanComplete(state, action) {
+      const { id, plan } = action.payload;
+      const findedBasesTodos = state.basesTodos.find((todos) => todos.id === id);
+      if (findedBasesTodos) {
+        findedBasesTodos.todos = createTodos(plan);
+      } else {
+        state.basesTodos.push({ id, todos: createTodos(plan) });
+      }
+    },
     removeRecipeIngridients(state, action) {
       state.recipeIngridients = [];
     },
@@ -175,6 +259,6 @@ const recipeSlice = createSlice({
 });
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
-export const { removeRecipeIngridients } = recipeSlice.actions;
+export const { putBasesPlanComplete, removeRecipeIngridients } = recipeSlice.actions;
 // export { removeRecipeIngridients };
 export default recipeSlice.reducer;
