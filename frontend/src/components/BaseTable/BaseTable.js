@@ -45,19 +45,21 @@ function BaseTable({ recipes }) {
     {
       field: 'title',
       headerName: 'Наименование',
-      width: 150,
+      width: 250,
       renderCell: (recipes) => //<Link to={`/recipes/${recipes.row.id}`}>{recipes.row.title}</Link>,
       <div>
       <Button variant="outlined" onClick={handleClickOpen}>
       {recipes.row.title}
       </Button>
       <Dialog
+       style={{ cursor: 'move', backgroundColor: "transparent" }}
         open={open}
         onClose={handleClose}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
+        aria-labelledby="simple-dialog-title"
+ 
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move', backgroundColor: 'white' }} id="draggable-dialog-title">
           Subscribe
         </DialogTitle>
         <DialogContent>
