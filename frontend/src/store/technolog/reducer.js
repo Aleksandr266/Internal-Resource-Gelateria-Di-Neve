@@ -71,6 +71,37 @@ export const changeMarketPrice = createAsyncThunk(
   },
 )
 
+
+/// изменение стандарта наличия
+export const changeStandartStore = createAsyncThunk(
+  'technolog/changeStandartStore',
+  async ({ value, id }, { rejectWithValue, dispatch }) => {
+    try {
+      console.log("Мы попали в редьюсер технолога функцию changeStandartStore");
+      const response = await fetch('/technolog/store', {
+        method: 'PUT',
+        body: JSON.stringify({
+          value,
+          id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      console.log('это перед респонсом');
+      console.log(response, 'Это респонс');
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      dispatch(changeStandartStoreComplete({ id, value }));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+)
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -102,6 +133,11 @@ const recipeSlice = createSlice({
       const findedRecipe = state.marketPriceByBases.find((store) => store.recipes.id === action.payload.id);
       findedRecipe.market_price = action.payload.value;
     },
+    changeStandartStoreComplete(state, action) {
+      const findedRecipe = state.marketPriceByBases.find((store) => store.recipes.id === action.payload.id);
+      console.log(action.payload.id);
+      findedRecipe.standart_stores = action.payload.value;
+    },
   },
 
   extraReducers: {
@@ -131,7 +167,9 @@ const recipeSlice = createSlice({
     // [loadMarketPrice.rejected]: setError,
   },
 });
-const { changeMarketPriceComplete } = recipeSlice.actions;
+
+const { changeMarketPriceComplete, changeStandartStoreComplete } = recipeSlice.actions;
+// const { changeStandartStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 // export const { marketPriceComplete } = recipeSlice.actions;
 // export { removeRecipeIngridients };
