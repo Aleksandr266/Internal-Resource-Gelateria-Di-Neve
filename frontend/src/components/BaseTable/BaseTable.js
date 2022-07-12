@@ -1,7 +1,6 @@
 /* eslint-disable operator-linebreak */
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateStore } from '../../store/recipes/reducer';
 
@@ -28,13 +27,16 @@ function PaperComponent(props) {
 function BaseTable({ recipes }) {
   const dispatch = useDispatch();
 
-  const handleClickOpen = useCallback((id) => {
-    dispatch(toggleRecipe(id));
-  }, []);
+  const handleToggle = useCallback(
+    (id) => {
+      dispatch(toggleRecipe(id));
+    },
+    [dispatch],
+  );
 
-  const handleClose = useCallback((id) => {
-    dispatch(toggleRecipe(id));
-  }, []);
+  // const handleClose = useCallback((id) => {
+  //   dispatch(toggleRecipe(id));
+  // }, []);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -42,34 +44,16 @@ function BaseTable({ recipes }) {
       field: 'title',
       headerName: 'Наименование',
       width: 250,
-      renderCell: (recipes) => //<Link to={`/recipes/${recipes.row.id}`}>{recipes.row.title}</Link>,
-      <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-      {recipes.row.title}
-      </Button>
-      <Dialog
-       style={{ cursor: 'move', backgroundColor: "transparent" }}
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="simple-dialog-title"
- 
-      >
-        <DialogTitle style={{ cursor: 'move', backgroundColor: 'white' }} id="draggable-dialog-title">
-          Subscribe
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-          <Recipe id={recipes.row.id}/>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Cancel
+      renderCell: (
+        recipes, //<Link to={`/recipes/${recipes.row.id}`}>{recipes.row.title}</Link>,
+      ) => (
+        <div>
+          <Button variant="outlined" onClick={() => handleToggle(recipes.row.id)}>
+            {recipes.row.title}
           </Button>
           <Dialog
             open={recipes.row.isOpen}
-            onClose={() => handleClose(recipes.row.id)}
+            onClose={() => handleToggle(recipes.row.id)}
             PaperComponent={PaperComponent}
             aria-labelledby="draggable-dialog-title">
             <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
@@ -77,15 +61,18 @@ function BaseTable({ recipes }) {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                <Recipe id={recipes.row.id} />
-                {/* {'dfsdfs'} */}
+                <Recipe
+                  style={{ cursor: 'move' }}
+                  id="draggable-dialog-title"
+                  recipeId={recipes.row.id}
+                />
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={() => handleClose(recipes.row.id)}>
+              <Button autoFocus onClick={() => handleToggle(recipes.row.id)}>
                 Cancel
               </Button>
-              <Button onClick={() => handleClose(recipes.row.id)}>Subscribe</Button>
+              <Button onClick={() => handleToggle(recipes.row.id)}>Subscribe</Button>
             </DialogActions>
           </Dialog>
         </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import './style.css';
-import { useParams } from 'react-router-dom';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,39 +13,38 @@ import { loadRecipeById, removeRecipeIngridients } from '../../store/recipes/red
 
 const useStyles = makeStyles({
   sticky: {
-    position: "sticky",
+    position: 'sticky',
     left: 0,
-    background: "white",
-    boxShadow: "5px 2px 5px grey",
-  }
- });
+    background: 'white',
+    boxShadow: '5px 2px 5px grey',
+  },
+});
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-    padding: "0px 12px 0px 0px"
+    padding: '0px 12px 0px 0px',
   },
   body: {
     fontSize: 15,
   },
 }))(TableCell);
 
-function Recipe({ id }) {
-  // const { id } = useParams();
-
+function Recipe({ recipeId }) {
   const { recipeIngridients } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   React.useEffect(() => {
-    dispatch(loadRecipeById(id));
+    dispatch(loadRecipeById(recipeId));
     return () => dispatch(removeRecipeIngridients());
   }, [dispatch]);
 
   return (
     <div className="boxRecipe">
       {recipeIngridients.length && (
-        <div className={classes.sticky} >
+        <div>
           <h1 className="titleRecipes">{recipeIngridients[0]['Recipe.title']}</h1>
           <div>
             <TableContainer component={Paper}>
