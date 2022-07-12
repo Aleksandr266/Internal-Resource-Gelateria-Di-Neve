@@ -39,3 +39,8 @@
   border: 1px solid red;
   background: yellow;
 }
+
+.handle {
+  /* position: absolute; */
+  max-width: 350px;
+}
