@@ -12,7 +12,6 @@ import Auth from '../Auth/Auth';
 import BossMainPage from '../BossMainPage/BossMainPage'
 import BossAddUser from '../BossAddUser/BossAddUser'
 import BossStatistic from '../Statistics/LineStat/LineStat'
-
 import TechnologBases from '../TechnologBases/TechnologBases';
 
 function App() {
