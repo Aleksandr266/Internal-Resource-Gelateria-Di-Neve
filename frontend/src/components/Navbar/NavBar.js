@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,11 +14,12 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from './logo_2_red.svg'
 import avatarPovar from './avatar-povar.jpeg'
 import avatarBoss from './avatar-boss.jpeg'
 import avatarTechnolog from './avatar-technolog.jpeg'
+import {logoutUser} from '../../store/auth/reducer'
 import './style.css'
 
 // const pages = ['Products', 'Pricing', 'Blog'];
@@ -29,6 +30,8 @@ import './style.css'
 
 const ResponsiveAppBar = () => {
   const login = useSelector((state) => state.auth.login)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // console.log(login, "Это стейт логин в навбаре");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -47,6 +50,11 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logout = () => {
+    dispatch(logoutUser());
+    navigate('/auth')
+  }
 
   return (
     // NavBar директора
@@ -164,11 +172,10 @@ const ResponsiveAppBar = () => {
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}>
-              <MenuItem key={"Выйти"} onClick={handleCloseUserMenu}>
-              <Link className="btn-logout" to="/auth/logout">
-                <Typography textAlign="center">Выйти</Typography>
-                </Link>
-              </MenuItem>
+             <MenuItem key={"Выйти"} onClick={logout}>
+            {/* <Link className="btn-logout" to="/auth/logout"> */}
+              <Typography textAlign="center">Выйти</Typography>
+            </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
@@ -238,10 +245,9 @@ const ResponsiveAppBar = () => {
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}>
-            <MenuItem key={"Выйти"} onClick={handleCloseUserMenu}>
-            <Link className="btn-logout" to="/auth/logout">
+            <MenuItem key={"Выйти"} onClick={logout}>
+            {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
-              </Link>
             </MenuItem>
         </Menu>
       </Box>
@@ -368,11 +374,10 @@ const ResponsiveAppBar = () => {
            }}
            open={Boolean(anchorElUser)}
            onClose={handleCloseUserMenu}>
-             <MenuItem key={"Выйти"} onClick={handleCloseUserMenu}>
-             <Link className="btn-logout" to="/auth/logout">
-               <Typography textAlign="center">Выйти</Typography>
-               </Link>
-             </MenuItem>
+             <MenuItem key={"Выйти"} onClick={logout}>
+            {/* <Link className="btn-logout" to="/auth/logout"> */}
+              <Typography textAlign="center">Выйти</Typography>
+            </MenuItem>
          </Menu>
        </Box>
      </Toolbar>
