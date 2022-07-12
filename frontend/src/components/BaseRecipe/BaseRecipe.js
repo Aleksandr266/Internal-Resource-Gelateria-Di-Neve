@@ -8,11 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@material-ui/core/TextField';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
-import { closeRecipe } from '../../store/recipes/reducer';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   sticky: {
@@ -34,27 +30,10 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Recipe({ recipeId }) {
-  const { recipeIngridients } = useSelector((state) => state.recipes);
-  const dispatch = useDispatch();
-
-  const recipeIngridient = React.useMemo(() => {
-    console.log('MEMO', recipeIngridients);
-    return recipeIngridients.find((el) => el[0].recipe_id === recipeId);
-  }, [recipeIngridients]);
-
-  function close() {
-    dispatch(closeRecipe(recipeId))
-  }
-
-  function a(e) {
-    e.preventDefault()
-    console.log(11111111111)
-  }
-
+function BaseRecipe({ recipeList }) {
   return (
     <div className="boxRecipe">
-      {recipeIngridient && (
+      {recipeList && (
         <div>
           {/* <h1 className="titleRecipes">{recipeIngridient[0]['Recipe.title']}</h1> */}
           <div>
@@ -62,13 +41,8 @@ function Recipe({ recipeId }) {
               <Table size="small" aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <TableCell className="tableHeader" align="left">
-                      {recipeIngridient[0]['Recipe.title']}
-                    </TableCell>
-                    <TableCell align='right'>
-                    <Button onClick={close}>
-                      <CloseIcon />
-                    </Button>
+                    <TableCell className="tableBaseHeader" align="left" colSpan={2}>
+                      {recipeList[0]['Base.title']}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -77,7 +51,7 @@ function Recipe({ recipeId }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {recipeIngridient.map((ingridient) => (
+                  {recipeList.map((ingridient) => (
                     <TableRow key={ingridient.ingridient_id}>
                       <StyledTableCell align="left">
                         {ingridient['Ingridient.title']}
@@ -89,11 +63,6 @@ function Recipe({ recipeId }) {
                   ))}
                 </TableBody>
               </Table>
-              <form onSubmit={a} className='formInputs'>
-                <TextField name='dryMilkMatter' id="standard-basic" label="инпут раз" />
-                <TextField name='dryMilkMatter' id="standard-basic" label="инпут два" />
-                <Button type='submit' variant="contained">Применить</Button>
-              </form>
             </TableContainer>
           </div>
         </div>
@@ -102,4 +71,4 @@ function Recipe({ recipeId }) {
   );
 }
 
-export default React.memo(Recipe);
+export default React.memo(BaseRecipe);
