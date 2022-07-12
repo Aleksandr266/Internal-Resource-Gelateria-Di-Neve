@@ -74,8 +74,15 @@ authRouter.route('/reg').post(
     }
   },
 );
-
-// const isSame = await bcrypt.compare(password, checkedUser.password);
-// переделать с использованием bcrypt
+authRouter.route('/logout').get(
+  (req, res) => {
+    console.log('Мы попали в логаут на бэк');
+    req.session.destroy();
+    res.clearCookie('user_sid');
+    delete res.locals.userId;
+    res.status(200);
+    res.json({ sucsess: true });
+  },
+);
 
 module.exports = authRouter;
