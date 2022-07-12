@@ -12,5 +12,6 @@ export default configureStore({
     recipes: recipeReducer,
     technolog: technologReducer,
     ingridients: ingridientsReducer,
+    // boss: bossReducer,
   },
 });
