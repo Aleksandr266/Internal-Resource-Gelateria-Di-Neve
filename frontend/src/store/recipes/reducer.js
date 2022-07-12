@@ -326,6 +326,12 @@ const recipeSlice = createSlice({
       state.recipesByBases = getCategories(state.recipes);
       // state.openedRecipes.push(action.payload);
     },
+    closeRecipe(state, action) {
+      const id = action.payload;
+      const findedRecipe = state.recipes.find((store) => store.id === id);
+      findedRecipe.isOpen = false;
+      state.recipesByBases = getCategories(state.recipes);
+    },
     setTodoToggle(state, action) {
       const { baseId, id } = action.payload;
       const findedBase = state.basesTodos.find((base) => base.id === baseId);
@@ -378,6 +384,7 @@ const recipeSlice = createSlice({
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
+  closeRecipe,
   openBaseRecipe,
   openRecipe,
   resetTodos,
