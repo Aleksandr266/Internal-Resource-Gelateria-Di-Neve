@@ -115,7 +115,7 @@ function Bases() {
             {base.recipes.map((recipe) => (
               <div key={recipe.id}>
                 {recipe.isOpen && (
-                  <Draggable handle=".handle">
+                  <Draggable handle=".handle" defaultPosition={{ x: 0, y: -300 }}>
                     <div className="handle">
                       {/* <h1 className="titleRecipes">{recipe.title}</h1> */}
                       <Recipe recipeId={recipe.id} />
