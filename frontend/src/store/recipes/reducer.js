@@ -141,6 +141,32 @@ export const loadRecipeById = createAsyncThunk(
   },
 );
 
+export const loadBaseRecipeById = createAsyncThunk(
+  'recipes/loadBaseRecipeById',
+  async (id, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch(`/bases/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+
+      const data = await response.json();
+      console.log(data);
+      dispatch(openBaseRecipe(data));
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 export const updateStore = createAsyncThunk(
   'recipes/updateStore',
   async ({ id, field, value }, { rejectWithValue, dispatch }) => {
@@ -251,6 +277,7 @@ const recipeSlice = createSlice({
     recipes: [],
     recipesByBases: [],
     recipeIngridients: [],
+    openedBaseRecipes: [],
     basesTodos: [],
     stockVisibles: {},
     status: null,
@@ -284,6 +311,12 @@ const recipeSlice = createSlice({
     setStockVisibles(state, action) {
       const { id } = action.payload;
       state.stockVisibles[id] = !state.stockVisibles[id];
+    },
+    openBaseRecipe(state, action) {
+      if (!state.openedBaseRecipes.find((el) => el[0].base_id === action.payload[0].base_id)) {
+        state.openedBaseRecipes.push(action.payload);
+      }
+      // state.openedRecipes.push(action.payload);
     },
     openRecipe(state, action) {
       console.log('sdfsdf', action.payload);
@@ -352,6 +385,7 @@ const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
   closeRecipe,
+  openBaseRecipe,
   openRecipe,
   resetTodos,
   resetStockComplete,

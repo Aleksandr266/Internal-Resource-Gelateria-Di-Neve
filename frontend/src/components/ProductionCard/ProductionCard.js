@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  loadBaseRecipeById,
   putBasesPlan,
   setStockVisibles,
   resetStock,
@@ -24,6 +25,10 @@ export default function BasicCard({ base }) {
 
   console.log('Before stockVisibles[base.id]', stockVisibles[base.id]);
 
+  const handleOpenRecipe = React.useCallback(() => {
+    dispatch(loadBaseRecipeById(base.id));
+  }, [dispatch]);
+
   const handleClickReset = React.useCallback(() => {
     dispatch(resetStock({ id: base.id }));
     dispatch(resetTodos({ id: base.id }));
@@ -37,7 +42,9 @@ export default function BasicCard({ base }) {
       <CardContent>
         <Typography sx={{ fontSize: 20, fontWeight: 900 }} gutterBottom>
           {base.category} {'        '}
-          <Button size="small">показать рецепт</Button>
+          <Button size="small" onClick={handleOpenRecipe}>
+            показать рецепт
+          </Button>
         </Typography>
         <Typography variant="h5" component="div">
           {Math.round(base.plan * 100) / 100} кг
