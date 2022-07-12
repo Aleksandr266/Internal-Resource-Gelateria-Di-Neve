@@ -33,6 +33,10 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async ({role, fullname, login, password}, { rejectWithValue, dispatch }) => {
     try {
+      console.log(role, 111111111111111111111111111);
+      console.log(fullname);
+      console.log(login);
+      console.log(password);
       const response = await fetch('/auth/reg', {
         method: 'POST',
         body: JSON.stringify({
@@ -50,8 +54,8 @@ export const registerUser = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Server Error!');
       }
-      const data = await response.json();
-      console.log(data, " Это данные с сервера с зарегистрированным юзером");
+      // const data = await response.json();
+      // console.log(data, " Это данные с сервера с зарегистрированным юзером");
 
       //return data; // записывает в action.payload
     } catch (error) {

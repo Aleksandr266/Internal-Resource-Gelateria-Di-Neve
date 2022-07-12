@@ -30,6 +30,38 @@ basesRouter
       res.status(500).end();
     }
   });
+
+basesRouter.route('/product').put(async (req, res) => {
+  const { baseId, value } = req.body;
+  try {
+    const base = await Base.findByPk(baseId);
+    if (value) {
+      base.stock = Math.round((Number(base.stock) + Number(value)) * 100) / 100;
+      // base.plan = base.plan - Number(value) < 0 ? 0 : base.plan - Number(value);
+    }
+    await base.save();
+    res.status(200);
+    res.json(base);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
+basesRouter.route('/reset').put(async (req, res) => {
+  const { id } = req.body;
+  try {
+    const base = await Base.findByPk(id);
+    base.stock = 0;
+    await base.save();
+    res.status(200);
+    res.json(base);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
 // .post(async (req, res) => {
 //   const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
 //     req.body;

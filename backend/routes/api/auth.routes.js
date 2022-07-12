@@ -49,26 +49,29 @@ authRouter.route('/reg').post(
       res.json({ success: false, message });
       return;
     }
-    const {
-      role, fullname, login, password,
-    } = req.body;
+    let { role } = req.body;
+    const { fullname, login, password } = req.body;
+    try {
+      const existingUser = await User.findOne({ where: { login } });
+      if (existingUser) {
+        res.json({ success: false, message: 'Пользователь с такой почтой уже есть' });
+        return;
+      }
+      if (role === 'Повар') role = '2';
+      if (role === 'Технолог') role = '3';
 
-    const existingUser = await User.findOne({ where: { login } });
-
-    if (existingUser) {
-      res.json({ success: false, message: 'Пользователь с такой почтой уже есть' });
-      return;
+      const user = await User.create({
+        fullname,
+        userType_id: role,
+        login,
+        password: await bcrypt.hash(password, 10),
+      });
+      res.status(200);
+      res.end();
+    } catch (error) {
+      res.status(500);
+      res.end();
     }
-
-    const user = await User.create({
-      fullname,
-      userType_id: role,
-      login,
-      password: await bcrypt.hash(password, 10),
-    });
-    req.session.userId = user.id;
-    res.status(200);
-    res.json({ role, fullname: user.fullname });
   },
 );
 

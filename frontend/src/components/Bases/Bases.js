@@ -19,7 +19,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { loadRecipes } from '../../store/recipes/reducer';
+import { loadRecipes, setTodoToggle, productBase } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
 import ProductionCard from '../ProductionCard/ProductionCard';
 
@@ -40,15 +40,21 @@ function Bases() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('0');
 
+  const handleToggle = (baseId, id, value) => () => {
+    dispatch(productBase({ baseId, value }));
+    dispatch(setTodoToggle({ baseId, id }));
+  };
+
+  console.log('recipesByBases', recipesByBases);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   React.useEffect(() => {
-    console.log('мы в юс эффекте');
     dispatch(loadRecipes());
   }, [dispatch]);
-  console.log(recipesByBases, 'мы в басес');
+
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
@@ -84,15 +90,18 @@ function Bases() {
                             border: '1px solid #e5c1c1',
                           }}>
                           {baseTodo.todos.map((todo, id) => (
-                            <ListItem key={id} disablePadding>
+                            <ListItem
+                              key={id}
+                              onClick={handleToggle(base.id, id, todo.value)}
+                              disablePadding>
                               <ListItemButton role={undefined} dense>
                                 <Checkbox
                                   edge="start"
-                                  // checked={checked.indexOf(value) !== -1}
+                                  checked={todo.isDone}
                                   tabIndex={-1}
                                   disableRipple
                                 />
-                                <ListItemText primary={`Произвести ${todo} кг базы`} />
+                                <ListItemText primary={`Произвести ${todo.value} кг базы`} />
                               </ListItemButton>
                             </ListItem>
                           ))}

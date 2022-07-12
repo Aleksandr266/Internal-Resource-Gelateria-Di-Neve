@@ -34,9 +34,6 @@ align-items: center;
 #standard-password-input1 {
 padding-top: 10px;
   }
- #standard-password-input2 {
-
-}
 
 #btn-login{
   color: white;
@@ -65,4 +62,7 @@ padding-top: 10px;
   border-radius: 52px;
   height: 40px;
   margin-top: 10px
+}
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop{
+background-color: transparent!important;
 }
