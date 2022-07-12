@@ -118,7 +118,7 @@ export const loadRecipes = createAsyncThunk(
 
 export const loadRecipeById = createAsyncThunk(
   'recipes/loadRecipeById',
-  async (id, { rejectWithValue }) => {
+  async (id, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(`/recipes/${id}`, {
         headers: {
@@ -132,6 +132,7 @@ export const loadRecipeById = createAsyncThunk(
       }
 
       const data = await response.json();
+      dispatch(openRecipe(id));
 
       return data;
     } catch (error) {
@@ -284,11 +285,11 @@ const recipeSlice = createSlice({
       const { id } = action.payload;
       state.stockVisibles[id] = !state.stockVisibles[id];
     },
-    toggleRecipe(state, action) {
+    openRecipe(state, action) {
       console.log('sdfsdf', action.payload);
       const id = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
-      findedRecipe.isOpen = !findedRecipe.isOpen;
+      findedRecipe.isOpen = true;
       state.recipesByBases = getCategories(state.recipes);
       // state.openedRecipes.push(action.payload);
     },
@@ -334,7 +335,8 @@ const recipeSlice = createSlice({
     },
     [loadRecipeById.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.recipeIngridients = action.payload;
+      console.log('action.payload', action.payload);
+      state.recipeIngridients.push(action.payload);
     },
     [loadRecipeById.rejected]: setError,
     [updateStore.rejected]: setError,
@@ -343,7 +345,7 @@ const recipeSlice = createSlice({
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
-  toggleRecipe,
+  openRecipe,
   resetTodos,
   resetStockComplete,
   upDateBasesPlanStock,
