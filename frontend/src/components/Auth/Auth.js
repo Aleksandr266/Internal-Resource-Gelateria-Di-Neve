@@ -42,7 +42,7 @@ const loginForm = (e) => {
         <TextField
           className="input-login"
           id="standard-password-input1"
-          label="Login"
+          label="Логин"
           autoComplete="current-password"
           variant="outlined"
           name='login'
@@ -51,7 +51,7 @@ const loginForm = (e) => {
          <TextField sx={{ borderRadius: '50%' }}
            className="input-password"
           id="standard-password-input2"
-          label="Password"
+          label="Пароль"
           type="password"
           autoComplete="current-password"
           variant="outlined"
