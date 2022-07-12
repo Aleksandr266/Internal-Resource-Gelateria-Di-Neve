@@ -1,22 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const editIngridient = createAsyncThunk(
-  'ingridients/editIngridient',
+export const getIngridients = createAsyncThunk(
+  'ingridients/getIngridients',
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch('/ingridients', {
         headers: {
           'Content-Type': 'application/json',
-        }
-      })
-      const data = await response.json()
-      console.log(data)
-      return data
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
-)
+  },
+);
 
 export const addIngridient = createAsyncThunk(
   'ingridients/addIngridient',
@@ -37,15 +37,14 @@ export const addIngridient = createAsyncThunk(
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      const data = await response.json()
-      return data
+      });
+      const data = await response.json();
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
-  
-)
+  },
+);
 
 const ingridientsSlice = createSlice({
   name: 'ingridients',
@@ -54,14 +53,14 @@ const ingridientsSlice = createSlice({
     addIngridientStatus: [],
   },
   extraReducers: {
-    [editIngridient.pending]: (state) => {
+    [getIngridients.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
-    [editIngridient.fulfilled]: (state, action) => {
+    [getIngridients.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.ingridients = action.payload.map((el) => { 
-        return { 
+      state.ingridients = action.payload.map((el) => {
+        return {
           id: el.id,
           title: el.title,
           price: el['IngridientPrices'][0].price,
@@ -70,8 +69,8 @@ const ingridientsSlice = createSlice({
           dry_milk_remainder: el.dry_milk_remainder,
           antifris: el.antifris,
           sugar: el.sugar,
-          glycemic_index: el.glycemic_index
-        }
+          glycemic_index: el.glycemic_index,
+        };
       });
     },
     [addIngridient.pending]: (state) => {
@@ -81,8 +80,8 @@ const ingridientsSlice = createSlice({
     [addIngridient.fulfilled]: (state, action) => {
       state.status = 'resolved';
       state.addIngridientStatus = action.payload;
-    }
+    },
   },
-})
+});
 
 export default ingridientsSlice.reducer;

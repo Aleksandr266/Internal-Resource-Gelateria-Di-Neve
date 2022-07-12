@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { editIngridient } from '../../store/ingridients/reducer'
+import { getIngridients } from '../../store/ingridients/reducer';
 
 function Ingridients() {
-  
   const dispatch = useDispatch();
-  const { ingridients } = useSelector((state) => state.ingridients)
+  const { ingridients } = useSelector((state) => state.ingridients);
 
   useEffect(() => {
-    dispatch(editIngridient())
-  }, [])
+    dispatch(getIngridients());
+  }, [dispatch]);
 
   const columns = [
     {
@@ -40,7 +39,7 @@ function Ingridients() {
       field: 'fat',
       headerName: 'Содержание жира',
       type: 'number',
-      width: 200,     
+      width: 200,
       editable: false,
     },
     {
@@ -55,7 +54,7 @@ function Ingridients() {
       headerName: 'Сухое молоко',
       type: 'number',
       width: 200,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
     },
     {
@@ -71,7 +70,7 @@ function Ingridients() {
       headerName: 'Сахар',
       type: 'number',
       width: 130,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
     },
     {
@@ -79,33 +78,23 @@ function Ingridients() {
       headerName: 'Гликемический индекс',
       type: 'number',
       width: 250,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
     },
   ];
 
-  const handlerEditCommit = (e) => {
-    fetch('/ingridients/editPriceIngridients', {
-      method: 'POST', 
-      body: JSON.stringify({ id: e.row.id, price: e.value }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-  }
-
   return (
     <div style={{ marginTop: 20, height: 500, width: '100%' }}>
-      { ingridients &&
-      <DataGrid
-        rows={ingridients}
-        columns={columns}
-        disableSelectionOnClick
-        components={{
-          Toolbar: GridToolbar,
-        }}
-      />
-      }
+      {ingridients && (
+        <DataGrid
+          rows={ingridients}
+          columns={columns}
+          disableSelectionOnClick
+          components={{
+            Toolbar: GridToolbar,
+          }}
+        />
+      )}
     </div>
   );
 }
