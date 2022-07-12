@@ -24,6 +24,7 @@ import BaseTable from '../BaseTable/BaseTable';
 import ProductionCard from '../ProductionCard/ProductionCard';
 import Draggable from 'react-draggable';
 import Recipe from '../Recipe/Recipe';
+import BaseRecipe from '../BaseRecipe/BaseRecipe';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,7 +39,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Bases() {
-  const { recipesByBases, basesTodos } = useSelector((state) => state.recipes);
+  const { recipesByBases, basesTodos, openedBaseRecipes } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('0');
 
@@ -47,7 +48,7 @@ function Bases() {
     dispatch(setTodoToggle({ baseId, id }));
   };
 
-  console.log('recipesByBases', recipesByBases);
+  console.log('openedBaseRecipes', openedBaseRecipes);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -117,14 +118,26 @@ function Bases() {
                 {recipe.isOpen && (
                   <Draggable handle=".handle" defaultPosition={{ x: 0, y: -300 }}>
                     <div className="handle">
-                      {/* <h1 className="titleRecipes">{recipe.title}</h1> */}
                       <Recipe recipeId={recipe.id} />
-                      {/* {JSON.stringify(recipe.id)} */}
                     </div>
                   </Draggable>
                 )}
               </div>
             ))}
+            {openedBaseRecipes.map((recipeList) => {
+              if (recipeList[0].base_id === base.id) {
+                return (
+                  <Draggable
+                    key={recipeList[0].base_id}
+                    handle=".handle"
+                    defaultPosition={{ x: 500, y: -300 }}>
+                    <div className="handle">
+                      <BaseRecipe recipeList={recipeList} />
+                    </div>
+                  </Draggable>
+                );
+              }
+            })}
           </TabPanel>
         ))}
       </TabContext>
