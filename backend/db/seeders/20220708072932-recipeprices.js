@@ -24,6 +24,54 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      market_price: 410,
+      recipe_id: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 550,
+      recipe_id: 6,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 410,
+      recipe_id: 7,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 410,
+      recipe_id: 8,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 410,
+      recipe_id: 9,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 460,
+      recipe_id: 10,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 550,
+      recipe_id: 11,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 520,
+      recipe_id: 12,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
     ], {});
   },
 
