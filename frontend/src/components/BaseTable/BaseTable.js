@@ -5,38 +5,19 @@ import { useDispatch } from 'react-redux';
 import { updateStore } from '../../store/recipes/reducer';
 
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import { toggleRecipe } from '../../store/recipes/reducer';
-
-import Recipe from '../Recipe/Recipe';
-
-function PaperComponent(props) {
-  return (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper {...props} />
-    </Draggable>
-  );
-}
+import { loadRecipeById } from '../../store/recipes/reducer';
 
 function BaseTable({ recipes }) {
   const dispatch = useDispatch();
 
   const handleToggle = useCallback(
     (id) => {
-      dispatch(toggleRecipe(id));
+      dispatch(loadRecipeById(id));
     },
     [dispatch],
   );
-
-  // const handleClose = useCallback((id) => {
-  //   dispatch(toggleRecipe(id));
-  // }, []);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90, valueGetter: (recipes) => `${recipes.row.id}` },
@@ -51,30 +32,6 @@ function BaseTable({ recipes }) {
           <Button variant="outlined" onClick={() => handleToggle(recipes.row.id)}>
             {recipes.row.title}
           </Button>
-          <Dialog
-            open={recipes.row.isOpen}
-            onClose={() => handleToggle(recipes.row.id)}
-            PaperComponent={PaperComponent}
-            aria-labelledby="draggable-dialog-title">
-            <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-              Subscribe
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <Recipe
-                  style={{ cursor: 'move' }}
-                  id="draggable-dialog-title"
-                  recipeId={recipes.row.id}
-                />
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={() => handleToggle(recipes.row.id)}>
-                Cancel
-              </Button>
-              <Button onClick={() => handleToggle(recipes.row.id)}>Subscribe</Button>
-            </DialogActions>
-          </Dialog>
         </div>
       ),
     },

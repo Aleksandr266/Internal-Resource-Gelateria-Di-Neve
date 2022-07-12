@@ -36,16 +36,21 @@ function Recipe({ recipeId }) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  React.useEffect(() => {
-    dispatch(loadRecipeById(recipeId));
-    return () => dispatch(removeRecipeIngridients());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(loadRecipeById(recipeId));
+  //   return () => dispatch(removeRecipeIngridients());
+  // }, [dispatch, recipeId]);
+
+  const recipeIngridient = React.useMemo(() => {
+    console.log('MEMO', recipeIngridients);
+    return recipeIngridients.find((el) => el[0].recipe_id === recipeId);
+  }, [recipeIngridients]);
 
   return (
     <div className="boxRecipe">
-      {recipeIngridients.length && (
+      {recipeIngridient && (
         <div>
-          <h1 className="titleRecipes">{recipeIngridients[0]['Recipe.title']}</h1>
+          <h1 className="titleRecipes">{recipeIngridient[0]['Recipe.title']}</h1>
           <div>
             <TableContainer component={Paper}>
               <Table aria-label="customized table">
@@ -56,7 +61,7 @@ function Recipe({ recipeId }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {recipeIngridients.map((ingridient) => (
+                  {recipeIngridient.map((ingridient) => (
                     <TableRow key={ingridient.ingridient_id}>
                       <StyledTableCell align="center">
                         {ingridient['Ingridient.title']}

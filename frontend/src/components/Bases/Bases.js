@@ -22,6 +22,8 @@ import Checkbox from '@mui/material/Checkbox';
 import { loadRecipes, setTodoToggle, productBase } from '../../store/recipes/reducer';
 import BaseTable from '../BaseTable/BaseTable';
 import ProductionCard from '../ProductionCard/ProductionCard';
+import Draggable from 'react-draggable';
+import Recipe from '../Recipe/Recipe';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -110,6 +112,19 @@ function Bases() {
                 </Grid>
               </Grid>
             </Grid>
+            {base.recipes.map((recipe) => (
+              <div key={recipe.id}>
+                {recipe.isOpen && (
+                  <Draggable handle=".handle">
+                    <div className="handle">
+                      {/* <h1 className="titleRecipes">{recipe.title}</h1> */}
+                      <Recipe recipeId={recipe.id} />
+                      {/* {JSON.stringify(recipe.id)} */}
+                    </div>
+                  </Draggable>
+                )}
+              </div>
+            ))}
           </TabPanel>
         ))}
       </TabContext>
