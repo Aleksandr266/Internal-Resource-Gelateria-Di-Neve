@@ -30,17 +30,10 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Recipe({ recipeId }) {
-  const { recipeIngridients } = useSelector((state) => state.recipes);
-
-  const recipeIngridient = React.useMemo(() => {
-    console.log('MEMO', recipeIngridients);
-    return recipeIngridients.find((el) => el[0].recipe_id === recipeId);
-  }, [recipeIngridients]);
-
+function BaseRecipe({ recipeList }) {
   return (
     <div className="boxRecipe">
-      {recipeIngridient && (
+      {recipeList && (
         <div>
           {/* <h1 className="titleRecipes">{recipeIngridient[0]['Recipe.title']}</h1> */}
           <div>
@@ -48,8 +41,8 @@ function Recipe({ recipeId }) {
               <Table size="small" aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <TableCell className="tableHeader" align="left" colSpan={2}>
-                      {recipeIngridient[0]['Recipe.title']}
+                    <TableCell className="tableBaseHeader" align="left" colSpan={2}>
+                      {recipeList[0]['Base.title']}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -58,7 +51,7 @@ function Recipe({ recipeId }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {recipeIngridient.map((ingridient) => (
+                  {recipeList.map((ingridient) => (
                     <TableRow key={ingridient.ingridient_id}>
                       <StyledTableCell align="left">
                         {ingridient['Ingridient.title']}
@@ -78,4 +71,4 @@ function Recipe({ recipeId }) {
   );
 }
 
-export default React.memo(Recipe);
+export default React.memo(BaseRecipe);
