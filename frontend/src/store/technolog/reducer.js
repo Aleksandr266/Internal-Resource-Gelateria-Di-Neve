@@ -124,7 +124,6 @@ const recipeSlice = createSlice({
     //   state.marketPrice = [action.payload];
     // },
     changeMarketPriceComplete(state, action) {
-      console.log(state,9999999999999999999)
       const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
       findedRecipe.market_price = action.payload.value;
       state.marketPriceByBases = getCategories(state.marketPrice);
