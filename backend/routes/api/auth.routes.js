@@ -43,7 +43,7 @@ authRouter.route('/reg').post(
 
   async (req, res) => {
     const { errors } = validationResult(req);
-    console.log(errors);
+    // console.log(errors);
     if (errors.length) {
       const message = errors.map((error) => error.msg).join('\n');
       res.json({ success: false, message });
