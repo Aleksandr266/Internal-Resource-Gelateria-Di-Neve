@@ -11,6 +11,7 @@ import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
 import BossMainPage from '../BossMainPage/BossMainPage'
 import BossAddUser from '../BossAddUser/BossAddUser'
+import BossStatistic from '../BossAddUser/BossAddUser'
 
 import TechnologBases from '../TechnologBases/TechnologBases';
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/ingridients" element={<Ingridients />} />
         <Route path="/boss" element={<BossMainPage />} />
         <Route path="/boss/addUser" element={<BossAddUser />} />
+        <Route path="/boss/statistic" element={<BossStatistic />} />
       </Route>
         <Route path="/auth" element={<Auth />} />
     </Routes>

@@ -46,6 +46,7 @@ const loginForm = (e) => {
           autoComplete="current-password"
           variant="outlined"
           name='login'
+          // autoComplete="off"
         />
          <TextField sx={{ borderRadius: '50%' }}
            className="input-password"
@@ -55,6 +56,7 @@ const loginForm = (e) => {
           autoComplete="current-password"
           variant="outlined"
           name='password'
+          // autoComplete="off"
         />
         <Button 
        id='btn-login'
