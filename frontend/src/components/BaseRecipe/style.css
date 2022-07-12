@@ -14,14 +14,8 @@
   min-width: 70%;
 }
 
-.tableHeader {
-  color: rgb(248, 94, 222) !important;
+.tableBaseHeader {
+  color: rgb(29, 96, 240) !important;
   font-weight: 900 !important;
   font-size: 1.6em !important;
-}
-
-.formInputs {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px 10px 10px;
 }

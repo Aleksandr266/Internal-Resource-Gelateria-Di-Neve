@@ -62,6 +62,22 @@ basesRouter.route('/reset').put(async (req, res) => {
   }
 });
 
+basesRouter.route('/:id').get(async (req, res) => {
+  try {
+    const recipe = await BaseIngridient.findAll({
+      // получаем все рецепты, включая ингридиенты
+      raw: true,
+      where: { base_id: Number(req.params.id) },
+      include: [BaseIngridient.Base, BaseIngridient.Ingridient],
+    });
+    res.status(200);
+    res.json(recipe);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
 // .post(async (req, res) => {
 //   const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
 //     req.body;
