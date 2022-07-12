@@ -101,6 +101,7 @@ function Ingridients() {
         rows={ingridients}
         columns={columns}
         disableSelectionOnClick
+        onCellEditCommit={handlerEditCommit}
         components={{
           Toolbar: GridToolbar,
         }}
