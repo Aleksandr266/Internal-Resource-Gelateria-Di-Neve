@@ -4,6 +4,7 @@ import authReducer from './auth/reducer';
 import recipeReducer from './recipes/reducer';
 import technologReducer from './technolog/reducer'
 import ingridientsReducer from './ingridients/reducer'
+import bossReduserReducer from './boss/reducer'
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,6 @@ export default configureStore({
     recipes: recipeReducer,
     technolog: technologReducer,
     ingridients: ingridientsReducer,
-    // boss: bossReducer,
+    boss: bossReduserReducer ,
   },
 });
