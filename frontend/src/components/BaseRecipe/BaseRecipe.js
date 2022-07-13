@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.css';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { withStyles, makeStyles } from '@mui/styles';
+import { Table } from '@mui/material';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableContainer';
+import { TableRow } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({

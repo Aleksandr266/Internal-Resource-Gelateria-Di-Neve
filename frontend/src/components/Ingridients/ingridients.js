@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngridients } from '../../store/ingridients/reducer'
-import Paper from '@material-ui/core/Paper';
-import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,16 @@ function Ingridients() {
   useEffect(() => {
     dispatch(getIngridients());
   }, [dispatch]);
+
+  const handlerEditCommit = (e) => {
+    fetch('/ingridients/editPriceIngridients', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.row.id, price: e.value }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
 
   const columns = [
     {

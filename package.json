@@ -22,7 +22,5 @@
   },
   "homepage": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve#readme",
   "dependencies": {
-    "@mui/icons-material": "^5.8.4",
-    "@mui/x-data-grid": "^5.13.0"
   }
 }
