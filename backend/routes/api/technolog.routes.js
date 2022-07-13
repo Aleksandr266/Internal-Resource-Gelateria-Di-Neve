@@ -1,7 +1,7 @@
 const technologRouter = require('express').Router();
 
 const {
-  Recipe, RecipePrice, RecipeIngridient, Ingridient, IngridientPrice, Production, UserType, User, Store,
+  Recipe, RecipePrice, Ingridient, Store,
 } = require('../../db/models');
 
 function IngridientPrise(el) {

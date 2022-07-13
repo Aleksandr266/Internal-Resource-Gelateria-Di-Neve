@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-
-
 const getCategories = (recipes) => {
   const categories = { title:[], market_price:[], cost_price:[]};
   recipes.forEach((recipe) => {
@@ -14,7 +12,7 @@ const getCategories = (recipes) => {
 };
 
 export const loadMarketPrice = createAsyncThunk(
-  'technolog/loadMarketPrice',
+  'boss/loadMarketPrice',
   async (_, { rejectWithValue, dispatch }) => {
     try {
       console.log("привет");
@@ -38,6 +36,29 @@ export const loadMarketPrice = createAsyncThunk(
   },
 );
 
+export const loadREmployees = createAsyncThunk(
+  'boss/loadMarketPrice',
+  async(_, {rejectWithValue}) => {
+    try {
+      console.log("Мы попали в в редьюсер функцию loadREmployees");
+      
+      const response = await fetch('/employees', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 
 const setError = (state, action) => {
   state.status = 'rejected';
@@ -45,26 +66,44 @@ const setError = (state, action) => {
 };
 
 const bossSlice = createSlice({
-  name: 'technolog',
+  name: 'boss',
   initialState: {
     marketPrice: [], // Отчет по рыночной цене и себестоимости
- 
+    employees: [], //все сотрудники
+    status:null,
+    error:null,
   },
   reducers: {
 
   },
 
   extraReducers: {
+    // reducer для загрузки market price
     [loadMarketPrice.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.marketPrice = getCategories(action.payload.collectResult);
-      // state.marketPriceByBases = getCategories(action.payload.collectResult);
+
+      //!!!!!!!!!!!! ВОЗМОЖНО ЭТО НУЖНО !!!!!!"
+      // state.marketPrice = getCategories(action.payload.collectResult);
     },
     [loadMarketPrice.rejected]: setError,
+    
+
+     //   reducer для загрузки employees
+    [loadREmployees.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [loadREmployees.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.employees = action.payload;
+      console.log(state.employees, 'Это наполненный стейт с сотрудниками');
+      // state.marketPriceByBases = getCategories(action.payload.collectResult);
+    },
+    [loadREmployees.rejected]: setError,
     [loadMarketPrice.pending]: (state) => {
       state.status = 'loading';
       state.error = null;

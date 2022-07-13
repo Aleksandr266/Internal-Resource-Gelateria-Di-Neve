@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({UserType, Production }) {
-      User.UserType = User.belongsTo(UserType, {foreignKey: 'userType_id'})
-      User.Productions = User.hasMany(Production, {foreignKey: 'user_id'})
+    static associate({ UserType, Production }) {
+      User.UserType = User.belongsTo(UserType, { foreignKey: 'userType_id' });
+      User.Productions = User.hasMany(Production, { foreignKey: 'user_id' });
     }
   }
   User.init({
@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     fullname: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     userType_id: {
       allowNull: false,
@@ -35,20 +35,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     login: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     password: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+    },
+    works: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE
-    }
+      type: DataTypes.DATE,
+    },
   }, {
     sequelize,
     modelName: 'User',

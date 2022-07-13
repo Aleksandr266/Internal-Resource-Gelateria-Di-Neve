@@ -14,6 +14,16 @@ function Ingridients() {
   const dispatch = useDispatch();
   const { ingridients } = useSelector((state) => state.ingridients);
 
+  const handlerEditCommit = (e) => {
+    fetch('/ingridients/editPriceIngridients', {
+      method: 'POST',
+      body: JSON.stringify({ id: e.row.id, price: e.value }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   useEffect(() => {
     dispatch(getIngridients());
   }, [dispatch]);
