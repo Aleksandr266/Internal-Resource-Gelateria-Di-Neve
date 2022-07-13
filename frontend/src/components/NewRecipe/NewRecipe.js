@@ -9,7 +9,9 @@ import {
   FormControl,
   Grid,
   IconButton,
+  InputAdornment,
   InputLabel,
+  ListSubheader,
   MenuItem,
   OutlinedInput,
   Paper,
@@ -20,11 +22,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngridients } from '../../store/ingridients/reducer';
+// import { getIngridients } from '../../store/ingridients/reducer';
 import {
   getBases,
   setBase,
@@ -34,18 +38,29 @@ import {
   changeIngridientWeight,
   deleteIngridient,
   normalizeRecipe,
+  getIngridients,
 } from '../../store/newrecipes/reducer';
+
+const containsText = (text, searchText) =>
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 
 function NewRecipe() {
   const dispatch = useDispatch();
-  const { ingridients } = useSelector((state) => state.ingridients);
+  // const { ingridients } = useSelector((state) => state.ingridients);
   const {
     base,
     bases,
     recipe,
+    allIngridients: ingridients,
     ingridients: currIngridients,
   } = useSelector((state) => state.newrecipes);
   const [selectValue, setSelectValue] = React.useState('');
+  const [searchText, setSearchText] = React.useState('');
+
+  const displayedIngridients = React.useMemo(
+    () => ingridients.filter((option) => containsText(option.title, searchText)),
+    [searchText, ingridients],
+  );
 
   React.useEffect(() => {
     dispatch(getIngridients());
@@ -95,6 +110,7 @@ function NewRecipe() {
       dispatch(addIngridient(choiseIngridient));
     }
     setSelectValue('');
+    setSearchText('');
   }, [dispatch, selectValue, ingridients]);
 
   const handleClickDeleteIngridient = React.useCallback(
@@ -198,11 +214,35 @@ function NewRecipe() {
                         value={selectValue}
                         label="Выбрать"
                         onChange={handleChooseBase}>
+                        <ListSubheader>
+                          <TextField
+                            size="small"
+                            // Autofocus on textfield
+                            autoFocus
+                            placeholder="Вводи для поиска..."
+                            value={searchText}
+                            fullWidth
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <SearchIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key !== 'Escape') {
+                                // Prevents autoselecting item while typing (default Select behaviour)
+                                e.stopPropagation();
+                              }
+                            }}
+                          />
+                        </ListSubheader>
                         <MenuItem value="0">
                           <em>Не выбрано</em>
                         </MenuItem>
                         {base
-                          ? ingridients.map((ingridient) => (
+                          ? displayedIngridients.map((ingridient) => (
                               <MenuItem key={ingridient.id} value={ingridient.id}>
                                 {ingridient.title}
                               </MenuItem>

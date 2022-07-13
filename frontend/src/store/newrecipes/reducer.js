@@ -41,6 +41,24 @@ export const getBases = createAsyncThunk(
   },
 );
 
+export const getIngridients = createAsyncThunk(
+  'ingridients/getIngridients',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('/ingridients', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -51,6 +69,7 @@ const newRecipes = createSlice({
   initialState: {
     bases: [],
     base: null,
+    allIngridients: [],
     ingridients: [],
     recipe: {},
   },
@@ -67,11 +86,16 @@ const newRecipes = createSlice({
       state.ingridients = [];
     },
     addIngridient(state, action) {
+      state.allIngridients.splice(
+        state.allIngridients.findIndex((ingridient) => ingridient.id === action.payload.id),
+        1,
+      );
       state.ingridients.push({ ...action.payload, weight: 0, total_price: 0 });
     },
     deleteIngridient(state, action) {
       const id = action.payload;
       console.log('reducer id', id);
+      state.allIngridients.push(state.ingridients.find((ingridient) => ingridient.id === id));
       state.ingridients.splice(
         state.ingridients.findIndex((ingridient) => ingridient.id === id),
         1,
@@ -121,6 +145,26 @@ const newRecipes = createSlice({
       }));
     },
     [getBases.rejected]: setError,
+    [getIngridients.pending]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [getIngridients.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.allIngridients = action.payload.map((el) => {
+        return {
+          id: el.id,
+          title: el.title,
+          price: el['IngridientPrices'].sort((a, b) => b.createdAt - a.createdAt)[0].price,
+          fat: el.fat,
+          dry_matter: el.dry_matter,
+          dry_milk_remainder: el.dry_milk_remainder,
+          antifris: el.antifris,
+          sugar: el.sugar,
+          glycemic_index: el.glycemic_index,
+        };
+      });
+    },
   },
 });
 export const {
