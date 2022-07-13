@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { editIngridient } from '../../store/ingridients/reducer'
+import { getIngridients } from '../../store/ingridients/reducer'
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
 import { Button } from '@mui/material';
@@ -10,13 +10,13 @@ import { useNavigate } from 'react-router-dom';
 
 function Ingridients() {
   
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { ingridients } = useSelector((state) => state.ingridients)
+  const { ingridients } = useSelector((state) => state.ingridients);
 
   useEffect(() => {
-    dispatch(editIngridient())
-  }, [])
+    dispatch(getIngridients());
+  }, [dispatch]);
 
   const columns = [
     {
@@ -46,7 +46,7 @@ function Ingridients() {
       field: 'fat',
       headerName: 'Содержание жира',
       type: 'number',
-      width: 200,     
+      width: 200,
       editable: false,
     },
     {
@@ -61,7 +61,7 @@ function Ingridients() {
       headerName: 'Сухое молоко',
       type: 'number',
       width: 200,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
     },
     {
@@ -77,7 +77,7 @@ function Ingridients() {
       headerName: 'Сахар',
       type: 'number',
       width: 130,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
     },
     {
@@ -85,21 +85,11 @@ function Ingridients() {
       headerName: 'Гликемический индекс',
       type: 'number',
       width: 250,
-      maxWidth: 500,      
+      maxWidth: 500,
       editable: false,
       hide: true,
     },
   ];
-
-  const handlerEditCommit = (e) => {
-    fetch('/ingridients/editPriceIngridients', {
-      method: 'POST', 
-      body: JSON.stringify({ id: e.row.id, price: e.value }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-  }
 
   return (
     <div >

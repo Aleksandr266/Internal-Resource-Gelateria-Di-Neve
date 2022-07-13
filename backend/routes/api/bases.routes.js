@@ -7,11 +7,9 @@ basesRouter
   .route('/')
   .get(async (req, res) => {
     try {
-      const BaseIngridients = await BaseIngridient.findAll({
-        include: [BaseIngridient.Ingridient],
-      });
+      const bases = await Base.findAll();
       res.status(200);
-      res.json(BaseIngridients);
+      res.json(bases);
     } catch (error) {
       console.log(error);
       res.status(500).end();
