@@ -46,6 +46,23 @@ export const addIngridient = createAsyncThunk(
   },
 );
 
+export const editIngridients = createAsyncThunk(
+  'ingridients/editPriceIngridients', 
+  async (e, {rejectWithValue}) => {
+    try {
+      fetch('/ingridients/editPriceIngridients', {
+        method: 'POST',
+        body: JSON.stringify({ id: e.row.id, price: e.value }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
 const ingridientsSlice = createSlice({
   name: 'ingridients',
   initialState: {
@@ -63,7 +80,7 @@ const ingridientsSlice = createSlice({
         return {
           id: el.id,
           title: el.title,
-          price: el['IngridientPrices'].sort((a, b) => +b.id - +a.id)[0].price,
+          price: el['IngridientPrices'].sort((a, b) => b.createdAt - a.createdAt)[0].price,
           fat: el.fat,
           dry_matter: el.dry_matter,
           dry_milk_remainder: el.dry_milk_remainder,

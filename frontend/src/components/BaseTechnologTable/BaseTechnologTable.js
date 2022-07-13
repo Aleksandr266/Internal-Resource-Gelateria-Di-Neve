@@ -6,6 +6,8 @@ import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changeMarketPrice, changeStandartStore } from '../../store/technolog/reducer';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
 
 
 // функция для изменения market price
@@ -92,21 +94,24 @@ function BaseTechnologTable({ marketPrice }) {
   };
 
   return (
-    <div style={{ height: 300, width: '100%' }}>
-      <DataGrid
-        rows={marketPrice}
-        columns={columns}
-        // experimentalFeatures={{ newEditingApi: true }}
-        onCellEditCommit={handlerEditCommit}
-        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-        components={{
-          Toolbar: GridToolbar,
-        }}
-        // pageSize={5}
-        // rowsPerPageOptions={[5]}
-        // checkboxSelection
-        // disableSelectionOnClick
-      />
+    <div>
+      <TableContainer style={{ height: 400, width: '100%' }} component={Paper}>
+        <DataGrid
+          rows={marketPrice}
+          columns={columns}
+          // experimentalFeatures={{ newEditingApi: true }}
+          onCellEditCommit={handlerEditCommit}
+          localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          pageSize='5'
+          // pageSize={5}
+          // rowsPerPageOptions={[5]}
+          // checkboxSelection
+          // disableSelectionOnClick
+        />
+      </TableContainer>
     </div>
     // <table className="tableRecipelist" cellSpacing={3} cellPadding={1}>
     //   <tbody>
