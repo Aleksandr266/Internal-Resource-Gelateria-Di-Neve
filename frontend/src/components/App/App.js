@@ -8,10 +8,11 @@ import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
 import BossMainPage from '../BossMainPage/BossMainPage'
-import BossAddUser from '../BossAddUser/BossAddUser'
+import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees'
 import BossStatistic from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
+import Employees from '../Employees/Employees'
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/ingridients" element={<Ingridients />} />
         <Route path="/boss" element={<BossMainPage />} />
-        <Route path="/boss/addUser" element={<BossAddUser />} />
+        <Route path="/boss/employees" element={<Employees />} />
+        <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
         <Route path="/boss/statistic" element={<BossStatistic />} />
       </Route>
       <Route path="/auth" element={<Auth />} />

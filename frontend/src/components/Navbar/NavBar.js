@@ -108,7 +108,7 @@ const ResponsiveAppBar = () => {
               display: { xs: 'block', md: 'none' },
             }}>
               <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
-              <Link to="/boss/addUser">
+              <Link to="/boss/employees">
                 <Typography  className="btn-navBar" textAlign="center">Сотрудники</Typography>
                 </Link>
               </MenuItem>
@@ -139,7 +139,7 @@ const ResponsiveAppBar = () => {
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
         <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
-           <Link to="/boss/addUser">
+           <Link to="/boss/employees">
                 <Typography  textAlign="center">Сотрудники</Typography>
                </Link>
               </MenuItem>
@@ -255,7 +255,7 @@ const ResponsiveAppBar = () => {
   </Container>
 </AppBar> 
 
-  :   
+  :   login.role === 'Технолог' ?
   
    // навбар технолога
    <AppBar position="static">
@@ -383,6 +383,8 @@ const ResponsiveAppBar = () => {
      </Toolbar>
    </Container>
  </AppBar> 
+ : 
+ ''
     )
   );
 };

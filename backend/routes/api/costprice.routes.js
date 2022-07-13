@@ -77,40 +77,47 @@ return el;
 costpriceRouter
   .route('/')
   .get(async (req, res) => {
-    const recipesWithPrice = await Recipe.findAll({
-      include: [Recipe.RecipePrices, Recipe.Base],
-    });
-    const titleAndPrice = recipesWithPrice.map((obj) => (
-      {
-        id: obj.id,
-        title: obj.title,
-        base: obj.Base.title,
-        market_price: obj.RecipePrices[0].market_price,
-      }));
-    const losses = await Recipe.findAll(
-        { include: [Recipe.Productions] },
+    try {
+      const recipesWithPrice = await Recipe.findAll({
+        include: [Recipe.RecipePrices, Recipe.Base],
+      });
+      const titleAndPrice = recipesWithPrice.map((obj) => (
+        {
+          id: obj.id,
+          title: obj.title,
+          base: obj.Base.title,
+          market_price: obj.RecipePrices[0].market_price,
+        }));
+      const losses = await Recipe.findAll(
+          { include: [Recipe.Productions] },
+        );
+
+      const recipes = await Recipe.findAll(
+        { include: [Recipe.RecipeIngridients] },
       );
+      const ingidients = await Ingridient.findAll(
+        {
+   include: [Ingridient.IngridientPrices],
+            order: [
+        ['updatedAt', 'DESC'],
+      ],
+  },
+  );
+      const priceIngridient = ingidients.map((el) => IngridientPrise(el));
+      const recepesIng = recipes.map((el) => RecipesINgridient(el));
+      const resultCostPrise = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
+      const lossesProd = losses.map((el) => lossCount(el));
+      const merdgCostPrice = titleAndPrice.map((el) => receivedCostPrice(resultCostPrise, el));
+      const collectResult = merdgCostPrice.map((el) => collector(el, lossesProd));
 
-    const recipes = await Recipe.findAll(
-      { include: [Recipe.RecipeIngridients] },
-    );
-    const ingidients = await Ingridient.findAll(
-      {
- include: [Ingridient.IngridientPrices],
-          order: [
-      ['updatedAt', 'DESC'],
-    ],
-},
-);
-    const priceIngridient = ingidients.map((el) => IngridientPrise(el));
-    const recepesIng = recipes.map((el) => RecipesINgridient(el));
-    const resultCostPrise = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
-    const lossesProd = losses.map((el) => lossCount(el));
-    const merdgCostPrice = titleAndPrice.map((el) => receivedCostPrice(resultCostPrise, el));
-    const collectResult = merdgCostPrice.map((el) => collector(el, lossesProd));
-
-    res.json({ collectResult });
+      res.json({ collectResult });
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+      res.end();
+    }
   });
+
   // Создаем Тип у Юзеров
   // .post(async (req, res) => {
   //   const ing = await UserType.create({
