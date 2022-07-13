@@ -45,9 +45,9 @@ app.use('/technolog', technologRouter); // метод GET возвращает i
 
 app.use('/employees', employeesRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+// });
 
 app.listen(PORT, async () => {
   /* eslint-disable no-console */
