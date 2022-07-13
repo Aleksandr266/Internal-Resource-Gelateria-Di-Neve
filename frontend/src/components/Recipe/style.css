@@ -19,3 +19,9 @@
   font-weight: 900 !important;
   font-size: 1.6em !important;
 }
+
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 10px;
+}

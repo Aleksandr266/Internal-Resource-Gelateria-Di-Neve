@@ -23,11 +23,11 @@ const loginForm = (e) => {
   dispatch(loginUser({login:log, password:pass}))
   if (login.role === 'Технолог') navigate('/technolog')
   if (login.role === 'Повар') navigate('/')
-  if (login.role === 'Директор') navigate('/')
+  if (login.role === 'Директор') navigate('/boss')
 }
 
   return (
-    <>
+    <section className='auth-section'>
     <Box
       component="form"
       onSubmit={loginForm}
@@ -36,31 +36,34 @@ const loginForm = (e) => {
       }}
       noValidate
       autoComplete="off"
+      className="box-form"
     >
-      <div>
+      <div className='form-login'>
         <TextField
+          className="input-login"
           id="standard-password-input1"
-          label="Login"
+          label="Логин"
           autoComplete="current-password"
-          variant="standard"
+          variant="outlined"
           name='login'
+          // autoComplete="off"
         />
-         <TextField
+         <TextField sx={{ borderRadius: '50%' }}
+           className="input-password"
           id="standard-password-input2"
-          label="Password"
+          label="Пароль"
           type="password"
           autoComplete="current-password"
-          variant="standard"
+          variant="outlined"
           name='password'
+          // autoComplete="off"
         />
         <Button 
-        // style={{
-        //  color: "white"
-        // }}
+       id='btn-login'
         size="small" type="Submit">Войти</Button>
        
       </div>
     </Box>
-     </>
+     </section>
   );
 }

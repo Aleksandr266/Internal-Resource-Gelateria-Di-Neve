@@ -102,6 +102,54 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      price: 1335.00,
+      ingridient_id: 18,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 2252.00,
+      ingridient_id: 19,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 410.00,
+      ingridient_id: 20,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 1000.00,
+      ingridient_id: 21,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 1000.00,
+      ingridient_id: 22,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 2240.00,
+      ingridient_id: 23,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 160.00,
+      ingridient_id: 24,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 1460.00,
+      ingridient_id: 25,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
     ], {});
   },
 

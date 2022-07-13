@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngridients } from '../../store/ingridients/reducer';
+import { getIngridients } from '../../store/ingridients/reducer'
+import Paper from '@material-ui/core/Paper';
+import TableContainer from '@material-ui/core/TableContainer';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 function Ingridients() {
+  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ingridients } = useSelector((state) => state.ingridients);
 
@@ -80,21 +87,27 @@ function Ingridients() {
       width: 250,
       maxWidth: 500,
       editable: false,
+      hide: true,
     },
   ];
 
   return (
-    <div style={{ marginTop: 20, height: 500, width: '100%' }}>
-      {ingridients && (
+    <div >
+       <Button style={{marginTop: 10}} onClick={() => navigate('/formAddIngridients')} variant="outlined">Добавить ингридиент</Button>
+      { ingridients &&
+      <TableContainer style={{ marginTop: 10, height: 500, width: '100%' }} component={Paper}>
         <DataGrid
           rows={ingridients}
           columns={columns}
           disableSelectionOnClick
+          localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+          onCellEditCommit={handlerEditCommit}
           components={{
             Toolbar: GridToolbar,
           }}
         />
-      )}
+      </TableContainer>
+      }
     </div>
   );
 }

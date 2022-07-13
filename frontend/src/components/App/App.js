@@ -7,7 +7,9 @@ import Bases from '../Bases/Bases';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
-
+import BossMainPage from '../BossMainPage/BossMainPage'
+import BossAddUser from '../BossAddUser/BossAddUser'
+import BossStatistic from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 
@@ -21,6 +23,9 @@ function App() {
         <Route path="/technolog" element={<TechnologBases />} />
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/ingridients" element={<Ingridients />} />
+        <Route path="/boss" element={<BossMainPage />} />
+        <Route path="/boss/addUser" element={<BossAddUser />} />
+        <Route path="/boss/statistic" element={<BossStatistic />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
     </Routes>
