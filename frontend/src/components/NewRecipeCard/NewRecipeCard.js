@@ -4,15 +4,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 export default function NewRecipeCard(base) {
@@ -48,7 +40,11 @@ export default function NewRecipeCard(base) {
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography
+                      sx={{ color: param.isNorm ? 'black' : 'red' }}
+                      gutterBottom
+                      variant="h5"
+                      component="div">
                       {Math.round(recipe[param.key] * 100) / 100 || 0}
                     </Typography>
                   </TableCell>
