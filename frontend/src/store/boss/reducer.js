@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const getCategories = (recipes) => {
-  const categories = { title:[], market_price:[], cost_price:[]};
-  recipes.forEach((recipe) => {
-      categories.title.push(recipe.title);
-      categories.market_price.push(recipe.market_price);
-      categories.cost_price.push(recipe.cost_price);
-  });
+// const getCategories = (recipes) => {
+//   const categories = { title:[], market_price:[], cost_price:[]};
+//   recipes.forEach((recipe) => {
+//       categories.title.push(recipe.title);
+//       categories.market_price.push(recipe.market_price);
+//       categories.cost_price.push(recipe.cost_price);
+//   });
 
-  return categories;  // записывает в action.payload
-};
+//   return categories;  // записывает в action.payload
+// };
 
 export const loadMarketPrice = createAsyncThunk(
   'boss/loadMarketPrice',
@@ -40,8 +40,6 @@ export const loadREmployees = createAsyncThunk(
   'boss/loadMarketPrice',
   async(_, {rejectWithValue}) => {
     try {
-      console.log("Мы попали в в редьюсер функцию loadREmployees");
-      
       const response = await fetch('/employees', {
         headers: {
           'Content-Type': 'application/json',
@@ -58,6 +56,30 @@ export const loadREmployees = createAsyncThunk(
     }
   },
 );
+
+export const changeStatusEmployee = createAsyncThunk(
+  'boss/changeStatusEmployees',
+  async(id, {rejectWithValue}) => {
+    try {
+      const response = await fetch('/employees', {
+        method: 'PUT',
+        body: JSON.stringify({ id }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      console.log(data, "Получили ответ с сервера 1111111111111111");
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
 
 
 const setError = (state, action) => {
@@ -101,14 +123,21 @@ const bossSlice = createSlice({
       state.status = 'resolved';
       state.employees = action.payload;
       console.log(state.employees, 'Это наполненный стейт с сотрудниками');
-      // state.marketPriceByBases = getCategories(action.payload.collectResult);
     },
     [loadREmployees.rejected]: setError,
-    [loadMarketPrice.pending]: (state) => {
+
+
+
+     //   reducer для обновления state employees после изменения isWorks
+     [changeStatusEmployee.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
-
+    [changeStatusEmployee.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.employees.map((obj) => obj.id === action.payload.id ? obj.isWorks = !obj.isWorks : obj)
+    },
+    [changeStatusEmployee.rejected]: setError,
   },
 });
 

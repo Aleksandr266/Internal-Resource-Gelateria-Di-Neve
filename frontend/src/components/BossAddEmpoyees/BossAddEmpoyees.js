@@ -10,10 +10,11 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { registerUser } from '../../store/auth/reducer'
 import './style.css'
+import { useNavigate } from 'react-router-dom';
 
 function BossAddEmpoyees() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [role, setRole] = React.useState('');
 
@@ -30,6 +31,7 @@ function BossAddEmpoyees() {
     const  password  = e.target.password.value;
     console.log(role, fullname, login, password);
     dispatch(registerUser({role, fullname, login, password}))
+    navigate('/boss/employees')
   }
 
   return (

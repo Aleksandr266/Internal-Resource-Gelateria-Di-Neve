@@ -80,44 +80,53 @@ function storeStandart(el, stores) {
 technologRouter
   .route('/')
   .get(async (req, res) => {
-    const recipesWithPrice = await Recipe.findAll({
-      include: [Recipe.RecipePrices, Recipe.Base],
-    });
-    const titleAndPrice = recipesWithPrice.map((obj) => (
-      {
-        id: obj.id,
-        title: obj.title,
-        base: obj.Base.title,
-        market_price: obj.RecipePrices[0].market_price,
-      }));
-    const losses = await Recipe.findAll(
-      { include: [Recipe.Productions] },
-    );
+    try {
+      const recipesWithPrice = await Recipe.findAll({
+        include: [Recipe.RecipePrices, Recipe.Base],
+      });
+      const titleAndPrice = recipesWithPrice.map((obj) => (
+        {
+          id: obj.id,
+          title: obj.title,
+          base: obj.Base.title,
+          market_price: obj.RecipePrices[0].market_price,
+        }));
+      const losses = await Recipe.findAll(
+        { include: [Recipe.Productions] },
+      );
 
-    const recipes = await Recipe.findAll(
-      { include: [Recipe.RecipeIngridients] },
-    );
+      const recipes = await Recipe.findAll(
+        { include: [Recipe.RecipeIngridients] },
+      );
 
-    const stores = await Store.findAll({ raw: true });
+      const stores = await Store.findAll({ raw: true });
 
-    const ingidients = await Ingridient.findAll(
-      {
-        include: [Ingridient.IngridientPrices],
-        order: [
-          ['updatedAt', 'DESC'],
-        ],
-      },
-    );
-    const priceIngridient = ingidients.map((el) => IngridientPrise(el));
-    const recepesIng = recipes.map((el) => RecipesINgridient(el));
-    const resultCostPrise = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
-    const lossesProd = losses.map((el) => lossCount(el));
-    const merdgCostPrice = titleAndPrice.map((el) => receivedCostPrice(resultCostPrise, el));
-    const merdgStoreStandart = merdgCostPrice.map((el) => storeStandart(el, stores));
-    const collectResult = merdgStoreStandart.map((el) => collector(el, lossesProd));
+      const ingidients = await Ingridient.findAll(
+        {
+          include: [Ingridient.IngridientPrices],
+          order: [
+            ['updatedAt', 'DESC'],
+          ],
+        },
+      );
+      const priceIngridient = ingidients.map((el) => IngridientPrise(el));
+      const recepesIng = recipes.map((el) => RecipesINgridient(el));
+      const resultCostPrise = recepesIng.map((el) => ResultSEBES(priceIngridient, el));
+      const lossesProd = losses.map((el) => lossCount(el));
+      const merdgCostPrice = titleAndPrice.map((el) => receivedCostPrice(resultCostPrise, el));
+      const merdgStoreStandart = merdgCostPrice.map((el) => storeStandart(el, stores));
+      const collectResult = merdgStoreStandart.map((el) => collector(el, lossesProd));
 
-    res.json({ collectResult });
-  })
+      res.json({ collectResult });
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+      res.end();
+    }
+  });
+
+technologRouter
+  .route('/')
   .put(async (req, res) => {
     const {
       id, value,
@@ -138,6 +147,7 @@ technologRouter
       res.status(200);
       res.end();
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }
@@ -166,6 +176,7 @@ technologRouter.route('/store')
       res.status(200);
       res.end();
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }

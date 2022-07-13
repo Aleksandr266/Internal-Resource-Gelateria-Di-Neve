@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT,
     },
-    works: {
+    isWorks: {
       allowNull: false,
       type: DataTypes.BOOLEAN,
     },

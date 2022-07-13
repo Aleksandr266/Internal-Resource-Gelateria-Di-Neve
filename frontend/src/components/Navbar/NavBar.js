@@ -255,7 +255,7 @@ const ResponsiveAppBar = () => {
   </Container>
 </AppBar> 
 
-  :   
+  :   login.role === 'Технолог' ?
   
    // навбар технолога
    <AppBar position="static">
@@ -383,6 +383,8 @@ const ResponsiveAppBar = () => {
      </Toolbar>
    </Container>
  </AppBar> 
+ : 
+ ''
     )
   );
 };

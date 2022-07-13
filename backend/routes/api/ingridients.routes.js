@@ -48,6 +48,7 @@ ingridientsRouter
       res.status(200);
       res.json(ingridient);
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }
@@ -92,6 +93,7 @@ ingridientsRouter
       res.status(200);
       res.json(ingridient);
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }
