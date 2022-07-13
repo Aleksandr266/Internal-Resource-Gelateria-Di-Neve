@@ -23,12 +23,25 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngridients } from '../../store/ingridients/reducer';
-import { getBases, setBase, addIngridient } from '../../store/newrecipes/reducer';
+import {
+  getBases,
+  setBase,
+  addIngridient,
+  changeBaseWeight,
+  changeIngridientWeight,
+  changeBasePrice,
+  normalizeRecipe,
+} from '../../store/newrecipes/reducer';
 
 function NewRecipe() {
   const dispatch = useDispatch();
   const { ingridients } = useSelector((state) => state.ingridients);
-  const { base, bases, ingridients: currIngridients } = useSelector((state) => state.newrecipes);
+  const {
+    base,
+    bases,
+    recipe,
+    ingridients: currIngridients,
+  } = useSelector((state) => state.newrecipes);
   const [selectValue, setSelectValue] = React.useState('');
 
   React.useEffect(() => {
@@ -40,21 +53,48 @@ function NewRecipe() {
     setSelectValue(event.target.value);
   }, []);
 
-  console.log('currIngridients', currIngridients);
-
   const handleClickBase = React.useCallback(() => {
     dispatch(setBase(selectValue));
     setSelectValue('');
     console.log(selectValue);
   }, [selectValue]);
 
+  const handleChangeBaseWeight = React.useCallback(
+    (event) => {
+      dispatch(changeBaseWeight(event.target.value));
+    },
+    [dispatch, changeBaseWeight],
+  );
+
+  const handleClickNormalize = React.useCallback(() => {
+    if (recipe.weight) {
+      console.log('first');
+      dispatch(normalizeRecipe());
+    }
+  }, [recipe.weight]);
+
+  const handleChangeIngridientWeight = React.useCallback(
+    (event, id) => {
+      dispatch(changeIngridientWeight({ value: event.target.value, id }));
+    },
+    [dispatch, changeIngridientWeight],
+  );
+
+  const handleChangePrice = React.useCallback(
+    (event) => {
+      dispatch(changeBasePrice(event.target.value));
+    },
+    [dispatch, changeBaseWeight],
+  );
+
+  console.log('currIngridients', currIngridients);
+
   const handleClickIngridient = React.useCallback(() => {
-    const choiseIngridient = ingridients.find((ingridient) => ingridient.id === selectValue);
-    console.log(choiseIngridient);
-    dispatch(addIngridient(choiseIngridient));
+    if (selectValue !== '') {
+      const choiseIngridient = ingridients.find((ingridient) => ingridient.id === selectValue);
+      dispatch(addIngridient(choiseIngridient));
+    }
     setSelectValue('');
-    console.log(selectValue);
-    console.log('first');
   }, [selectValue, ingridients]);
 
   return (
@@ -67,7 +107,7 @@ function NewRecipe() {
                 <TableRow>
                   <TableCell align="left">Ингридиент</TableCell>
                   <TableCell align="center">Масса на 10 кг продукта, кг</TableCell>
-                  <TableCell align="center">Цена, руб</TableCell>
+                  <TableCell align="center">Цена за 1 кг, руб</TableCell>
                   <TableCell align="center">Стоимость, руб</TableCell>
                 </TableRow>
               </TableHead>
@@ -80,8 +120,9 @@ function NewRecipe() {
                         size="small"
                         type="number"
                         sx={{ maxWidth: 120 }}
-                        defaultValue="0"
-                        id="outlined-adornment-weight"
+                        value={base.weight}
+                        onChange={handleChangeBaseWeight}
+                        Base // defaultValue="0"
                         aria-describedby="outlined-weight-helper-text"
                         inputProps={{
                           'aria-label': 'weight',
@@ -90,22 +131,8 @@ function NewRecipe() {
                         }}
                       />
                     </TableCell>
-                    <TableCell align="center">
-                      <OutlinedInput
-                        size="small"
-                        type="number"
-                        sx={{ maxWidth: 120 }}
-                        defaultValue="0"
-                        id="outlined-adornment-weight"
-                        aria-describedby="outlined-weight-helper-text"
-                        inputProps={{
-                          'aria-label': 'weight',
-                          step: '0.01',
-                          min: '0',
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="center">500</TableCell>
+                    <TableCell align="center">{base.price}</TableCell>
+                    <TableCell align="center">{Math.round(base.total_price * 100) / 100}</TableCell>
                   </TableRow>
                 )}
                 {!!currIngridients.length && (
@@ -118,8 +145,10 @@ function NewRecipe() {
                             size="small"
                             type="number"
                             sx={{ maxWidth: 120 }}
-                            defaultValue="0"
-                            id="outlined-adornment-weight"
+                            value={currIngridient.weight}
+                            onChange={(event) =>
+                              handleChangeIngridientWeight(event, currIngridient.id)
+                            }
                             aria-describedby="outlined-weight-helper-text"
                             inputProps={{
                               'aria-label': 'weight',
@@ -128,22 +157,10 @@ function NewRecipe() {
                             }}
                           />
                         </TableCell>
+                        <TableCell align="center">{currIngridient.price}</TableCell>
                         <TableCell align="center">
-                          <OutlinedInput
-                            size="small"
-                            type="number"
-                            sx={{ maxWidth: 120 }}
-                            defaultValue="0"
-                            id="outlined-adornment-weight"
-                            aria-describedby="outlined-weight-helper-text"
-                            inputProps={{
-                              'aria-label': 'weight',
-                              step: '0.01',
-                              min: '0',
-                            }}
-                          />
+                          {Math.round(currIngridient.total_price * 100) / 100}
                         </TableCell>
-                        <TableCell align="center">500</TableCell>
                       </TableRow>
                     ))}
                   </>
@@ -181,6 +198,18 @@ function NewRecipe() {
                         +
                       </Button>
                     </FormControl>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="right">Итого</TableCell>
+                  <TableCell align="center">
+                    <Button onClick={handleClickNormalize}>
+                      {Math.round(recipe.weight * 100) / 100 || 0} кг
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">-</TableCell>
+                  <TableCell align="center">
+                    {Math.round(recipe.total_price * 100) / 100 || 0} руб
                   </TableCell>
                 </TableRow>
               </TableBody>

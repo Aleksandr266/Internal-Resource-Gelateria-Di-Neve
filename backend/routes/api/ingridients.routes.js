@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const ingridientsRouter = require('express').Router();
 
 const { Ingridient, IngridientPrice } = require('../../db/models');
@@ -6,14 +7,10 @@ ingridientsRouter
   .route('/')
   .get(async (req, res) => {
     try {
-      const ingridients = await Ingridient.findAll(
-        {
-          include: [Ingridient.IngridientPrices],
-          order: [
-            ['updatedAt', 'DESC'],
-          ],
-        },
-      );
+      const ingridients = await Ingridient.findAll({
+        include: [Ingridient.IngridientPrices],
+        order: [['updatedAt', 'DESC']],
+      });
       res.status(200);
       res.json(ingridients);
     } catch (error) {
@@ -22,9 +19,8 @@ ingridientsRouter
     }
   })
   .post(async (req, res) => {
-    const {
-      title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index,
-    } = req.body;
+    const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
+      req.body;
     try {
       const sameIngridient = await Ingridient.findOne({
         where: {
@@ -66,9 +62,8 @@ ingridientsRouter
     }
   })
   .put(async (req, res) => {
-    const {
-      title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index,
-    } = req.body;
+    const { title, price, fat, dry_matter, dry_milk_remainder, antifris, sugar, glycemic_index } =
+      req.body;
     try {
       const sameIngridient = await Ingridient.findOne({
         where: {
@@ -97,14 +92,11 @@ ingridientsRouter
     }
   });
 
-ingridientsRouter
-  .route('/editPriceIngridients')
-  // делаю пост запросом потому что пут не работает
-  .post(async (req, res) => {
-    await IngridientPrice.create({
-      ingridient_id: req.body.id,
-      price: req.body.price,
-    });
+ingridientsRouter.route('/editPriceIngridients').post(async (req, res) => {
+  await IngridientPrice.create({
+    ingridient_id: req.body.id,
+    price: req.body.price,
   });
+});
 
 module.exports = ingridientsRouter;
