@@ -150,7 +150,66 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
-    ], {});
+    {
+      price: 600.00,
+      ingridient_id: 26,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 120.00,
+      ingridient_id: 27,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 190.00,
+      ingridient_id: 28,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 443.00,
+      ingridient_id: 29,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 350.00,
+      ingridient_id: 30,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 360.00,
+      ingridient_id: 31,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 140.00,
+      ingridient_id: 32,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 235.00,
+      ingridient_id: 33,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 423.00,
+      ingridient_id: 34,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      price: 200.00,
+      ingridient_id: 35,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }], {});
   },
 
   async down(queryInterface, Sequelize) {

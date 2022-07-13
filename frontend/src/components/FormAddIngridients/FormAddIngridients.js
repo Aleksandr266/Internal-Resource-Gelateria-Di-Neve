@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addIngridient } from '../../store/ingridients/reducer'
-import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Alert from '@mui/material/Alert';
+import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
 import './style.css'
 
 function FormAddIngridients() {
