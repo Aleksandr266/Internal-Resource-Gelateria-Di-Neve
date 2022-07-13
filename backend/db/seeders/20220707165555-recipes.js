@@ -78,13 +78,68 @@ module.exports = {
       updatedAt: new Date(),
     },
     {
-      title: 'Печенье и Карамель ',
+      title: 'Печенье и Карамель',
       base_id: 1,
       base_weight: 8.80,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
-    ], {});
+    {
+      title: 'Ананас',
+      base_id: 2,
+      base_weight: 5.1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Банан',
+      base_id: 2,
+      base_weight: 5.8,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Вишня',
+      base_id: 2,
+      base_weight: 5.2,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Гранат',
+      base_id: 2,
+      base_weight: 5.2,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Грейпфрут',
+      base_id: 2,
+      base_weight: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Клубника',
+      base_id: 2,
+      base_weight: 4.7,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Малина',
+      base_id: 2,
+      base_weight: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      title: 'Киви',
+      base_id: 2,
+      base_weight: 5.1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }], {});
   },
 
   async down(queryInterface, Sequelize) {
