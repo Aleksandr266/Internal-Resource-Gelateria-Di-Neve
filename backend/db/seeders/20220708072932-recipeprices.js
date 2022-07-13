@@ -72,7 +72,54 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
-    ], {});
+    {
+      market_price: 885,
+      recipe_id: 13,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 410,
+      recipe_id: 14,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 465,
+      recipe_id: 15,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 890,
+      recipe_id: 16,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 475,
+      recipe_id: 17,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 435,
+      recipe_id: 18,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 525,
+      recipe_id: 19,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      market_price: 410,
+      recipe_id: 20,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }], {});
   },
 
   async down(queryInterface, Sequelize) {
