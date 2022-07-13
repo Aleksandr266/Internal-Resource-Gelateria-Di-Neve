@@ -41,6 +41,7 @@ import {
   deleteIngridient,
   normalizeRecipe,
   getIngridients,
+  addIngridientsFromPattern,
 } from '../../store/newrecipes/reducer';
 import NewRecipeCard from '../NewRecipeCard/NewRecipeCard';
 
@@ -84,6 +85,7 @@ function NewRecipe() {
 
   const handleClickBase = React.useCallback(() => {
     dispatch(setBase(selectValue));
+    dispatch(addIngridientsFromPattern());
     setSelectValue('');
   }, [dispatch, selectValue]);
 
@@ -113,7 +115,8 @@ function NewRecipe() {
     [dispatch],
   );
 
-  console.log('base', base);
+  console.log('ingridients', ingridients);
+  console.log('recipe', recipe);
 
   const handleClickIngridient = React.useCallback(() => {
     if (selectValue !== '') {

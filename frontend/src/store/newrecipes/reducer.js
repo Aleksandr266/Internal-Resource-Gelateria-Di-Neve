@@ -57,6 +57,20 @@ const normalizer = (recipe, base, ingridients) => {
   return { base: newBase, ingridients: newIngridients };
 };
 
+const testNorm = (recipe, norms) => {
+  return norms.map((norm) => {
+    if (norm.base_id === recipe.base_id) {
+      norm.params = norm.params.map((param) => {
+        param.isNorm = param.min
+          ? Number(recipe[param.key]) >= param.min && Number(recipe[param.key]) <= param.max
+          : true;
+        return param;
+      });
+    }
+    return norm;
+  });
+};
+
 export const getBases = createAsyncThunk(
   'newrecipes/getIngridients',
   async (_, { rejectWithValue }) => {
@@ -105,6 +119,10 @@ const newRecipes = createSlice({
     base: null,
     allIngridients: [],
     ingridients: [],
+    patterns: {
+      1: [1, 2, 3, 4, 5, 6, 8],
+      2: [3, 4, 5, 6, 10],
+    },
     recipe: {},
     norms: [
       {
@@ -115,34 +133,40 @@ const newRecipes = createSlice({
             key: 'fat',
             min: 3,
             max: 9,
+            isNorm: false,
           },
           {
             title: 'Сухие вещества',
             key: 'dry_matter',
             min: 35,
             max: 42,
+            isNorm: false,
           },
           {
             title: 'Сахар',
             key: 'sugar',
             min: 18,
             max: 25,
+            isNorm: false,
           },
           {
             title: 'Антифриз',
             key: 'antifris',
             min: 26,
             max: 34,
+            isNorm: false,
           },
           {
             title: 'Сухой молочный остаток',
             key: 'dry_milk_remainder',
             min: 5,
             max: 12,
+            isNorm: false,
           },
           {
             title: 'Гликимический индекс',
             key: 'glycemic_index',
+            isNorm: true,
           },
         ],
       },
@@ -152,28 +176,33 @@ const newRecipes = createSlice({
           {
             title: 'Жирность',
             key: 'fat',
+            isNorm: true,
           },
           {
             title: 'Сухие вещества',
             key: 'dry_matter',
             min: 32,
             max: 45,
+            isNorm: false,
           },
           {
             title: 'Сахар',
             key: 'sugar',
             min: 25,
             max: 30,
+            isNorm: false,
           },
           {
             title: 'Антифриз',
             key: 'antifris',
             min: 26,
             max: 34,
+            isNorm: false,
           },
           {
             title: 'Гликимический индекс',
             key: 'glycemic_index',
+            isNorm: true,
           },
         ],
       },
@@ -184,11 +213,13 @@ const newRecipes = createSlice({
       state.base = state.bases.find((base) => base.id === action.payload);
       state.base.weight = 0;
       state.base.total_price = state.base.weight * state.base.price;
+      state.recipe.base_id = action.payload;
       state.recipe.weight = 0;
       state.recipe.total_price = 0;
     },
     deleteBase(state, action) {
       state.base = null;
+      state.allIngridients = [...state.allIngridients, ...state.ingridients];
       state.ingridients = [];
     },
     addIngridient(state, action) {
@@ -197,6 +228,16 @@ const newRecipes = createSlice({
         1,
       );
       state.ingridients.push({ ...action.payload, weight: 0, total_price: 0 });
+    },
+    addIngridientsFromPattern(state, action) {
+      for (let item of state.patterns[state.base.id]) {
+        console.log(item);
+        const [currentIngridient] = state.allIngridients.splice(
+          state.allIngridients.findIndex((ingridient) => ingridient.id === item),
+          1,
+        );
+        state.ingridients.push({ ...currentIngridient, weight: 0, total_price: 0 });
+      }
     },
     deleteIngridient(state, action) {
       const id = action.payload;
@@ -221,6 +262,7 @@ const newRecipes = createSlice({
       state.recipe.dry_milk_remainder = dry_milk_remainder;
       state.recipe.sugar = sugar;
       state.recipe.glycemic_index = glycemic_index;
+      state.norms = testNorm(state.recipe, state.norms);
     },
     changeIngridientWeight(state, action) {
       const { id, value } = action.payload;
@@ -237,6 +279,7 @@ const newRecipes = createSlice({
       state.recipe.dry_milk_remainder = dry_milk_remainder;
       state.recipe.sugar = sugar;
       state.recipe.glycemic_index = glycemic_index;
+      state.norms = testNorm(state.recipe, state.norms);
     },
     changeBasePrice(state, action) {
       console.log(action.payload);
@@ -259,6 +302,7 @@ const newRecipes = createSlice({
       state.recipe.dry_milk_remainder = dry_milk_remainder;
       state.recipe.sugar = sugar;
       state.recipe.glycemic_index = glycemic_index;
+      state.norms = testNorm(state.recipe, state.norms);
     },
   },
 
@@ -298,6 +342,7 @@ const newRecipes = createSlice({
   },
 });
 export const {
+  addIngridientsFromPattern,
   deleteIngridient,
   deleteBase,
   normalizeRecipe,

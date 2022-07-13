@@ -20,6 +20,8 @@ export default function NewRecipeCard(base) {
 
   const norm = React.useMemo(() => norms.find((norm) => norm.base_id === base.base), [norms, base]);
 
+  console.log('norms', norms);
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -34,7 +36,7 @@ export default function NewRecipeCard(base) {
             </TableHead>
             <TableBody>
               {norm.params.map((param) => (
-                <TableRow>
+                <TableRow key={param.key}>
                   <TableCell align="left">
                     <Typography gutterBottom variant="h6" component="div">
                       {param.title}
