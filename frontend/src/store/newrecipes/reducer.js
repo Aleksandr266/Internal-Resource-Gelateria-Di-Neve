@@ -14,6 +14,40 @@ const calculateRecipePrice = (base, ingridients) => {
   );
 };
 
+const calculateRecipeCharacteristics = (recipe, base, ingridients) => {
+  const fat =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.fat) * Number(ingridient.weight),
+      Number(base.fat) * Number(base.weight),
+    ) / 10;
+  const dry_matter =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.dry_matter) * Number(ingridient.weight),
+      Number(base.dry_matter) * Number(base.weight),
+    ) / 10;
+  const antifris =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.antifris) * Number(ingridient.weight),
+      Number(base.antifris) * Number(base.weight),
+    ) / 10;
+  const dry_milk_remainder =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.dry_milk_remainder) * Number(ingridient.weight),
+      Number(base.dry_milk_remainder) * Number(base.weight),
+    ) / 10;
+  const sugar =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.sugar) * Number(ingridient.weight),
+      Number(base.sugar) * Number(base.weight),
+    ) / 10;
+  const glycemic_index =
+    ingridients.reduce(
+      (acc, ingridient) => acc + Number(ingridient.glycemic_index) * Number(ingridient.weight),
+      Number(base.glycemic_index) * Number(base.weight),
+    ) / 10;
+  return { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index };
+};
+
 const normalizer = (recipe, base, ingridients) => {
   const newBase = { ...base, weight: Math.round((base.weight / recipe.weight) * 1000) / 100 };
   const newIngridients = ingridients.map((ingridient) => ({
@@ -72,6 +106,78 @@ const newRecipes = createSlice({
     allIngridients: [],
     ingridients: [],
     recipe: {},
+    norms: [
+      {
+        base_id: 1,
+        params: [
+          {
+            title: 'Жирность',
+            key: 'fat',
+            min: 3,
+            max: 9,
+          },
+          {
+            title: 'Сухие вещества',
+            key: 'dry_matter',
+            min: 35,
+            max: 42,
+          },
+          {
+            title: 'Сахар',
+            key: 'sugar',
+            min: 18,
+            max: 25,
+          },
+          {
+            title: 'Антифриз',
+            key: 'antifris',
+            min: 26,
+            max: 34,
+          },
+          {
+            title: 'Сухой молочный остаток',
+            key: 'dry_milk_remainder',
+            min: 5,
+            max: 12,
+          },
+          {
+            title: 'Гликимический индекс',
+            key: 'glycemic_index',
+          },
+        ],
+      },
+      {
+        base_id: 2,
+        params: [
+          {
+            title: 'Жирность',
+            key: 'fat',
+          },
+          {
+            title: 'Сухие вещества',
+            key: 'dry_matter',
+            min: 32,
+            max: 45,
+          },
+          {
+            title: 'Сахар',
+            key: 'sugar',
+            min: 25,
+            max: 30,
+          },
+          {
+            title: 'Антифриз',
+            key: 'antifris',
+            min: 26,
+            max: 34,
+          },
+          {
+            title: 'Гликимический индекс',
+            key: 'glycemic_index',
+          },
+        ],
+      },
+    ],
   },
   reducers: {
     setBase(state, action) {
@@ -107,6 +213,14 @@ const newRecipes = createSlice({
       state.base.total_price = state.base.weight * state.base.price;
       state.recipe.weight = calculateRecipeWeight(state.base, state.ingridients);
       state.recipe.total_price = calculateRecipePrice(state.base, state.ingridients);
+      const { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index } =
+        calculateRecipeCharacteristics(state.recipe, state.base, state.ingridients);
+      state.recipe.fat = fat;
+      state.recipe.dry_matter = dry_matter;
+      state.recipe.antifris = antifris;
+      state.recipe.dry_milk_remainder = dry_milk_remainder;
+      state.recipe.sugar = sugar;
+      state.recipe.glycemic_index = glycemic_index;
     },
     changeIngridientWeight(state, action) {
       const { id, value } = action.payload;
@@ -115,6 +229,14 @@ const newRecipes = createSlice({
       currentIngridient.total_price = currentIngridient.weight * currentIngridient.price;
       state.recipe.weight = calculateRecipeWeight(state.base, state.ingridients);
       state.recipe.total_price = calculateRecipePrice(state.base, state.ingridients);
+      const { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index } =
+        calculateRecipeCharacteristics(state.recipe, state.base, state.ingridients);
+      state.recipe.fat = fat;
+      state.recipe.dry_matter = dry_matter;
+      state.recipe.antifris = antifris;
+      state.recipe.dry_milk_remainder = dry_milk_remainder;
+      state.recipe.sugar = sugar;
+      state.recipe.glycemic_index = glycemic_index;
     },
     changeBasePrice(state, action) {
       console.log(action.payload);
@@ -129,6 +251,14 @@ const newRecipes = createSlice({
       state.ingridients = ingridients;
       state.recipe.weight = calculateRecipeWeight(state.base, state.ingridients);
       state.recipe.total_price = calculateRecipePrice(state.base, state.ingridients);
+      const { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index } =
+        calculateRecipeCharacteristics(state.recipe, state.base, state.ingridients);
+      state.recipe.fat = fat;
+      state.recipe.dry_matter = dry_matter;
+      state.recipe.antifris = antifris;
+      state.recipe.dry_milk_remainder = dry_milk_remainder;
+      state.recipe.sugar = sugar;
+      state.recipe.glycemic_index = glycemic_index;
     },
   },
 

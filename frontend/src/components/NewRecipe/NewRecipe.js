@@ -6,6 +6,7 @@
 import {
   Box,
   Button,
+  Card,
   FormControl,
   Grid,
   IconButton,
@@ -16,6 +17,7 @@ import {
   OutlinedInput,
   Paper,
   Select,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -40,9 +42,18 @@ import {
   normalizeRecipe,
   getIngridients,
 } from '../../store/newrecipes/reducer';
+import NewRecipeCard from '../NewRecipeCard/NewRecipeCard';
 
 const containsText = (text, searchText) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 function NewRecipe() {
   const dispatch = useDispatch();
@@ -102,7 +113,7 @@ function NewRecipe() {
     [dispatch],
   );
 
-  console.log('currIngridients', currIngridients);
+  console.log('base', base);
 
   const handleClickIngridient = React.useCallback(() => {
     if (selectValue !== '') {
@@ -281,7 +292,26 @@ function NewRecipe() {
           </TableContainer>
         </Grid>
         <Grid item container direction="column" spacing={2} xs={12} md={4}>
-          <Grid item>Карточка</Grid>
+          <Grid item>
+            <Item>
+              <Box
+                component="span"
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <TextField id="outlined-basic" label="Название" variant="outlined" />
+                <Button variant="outlined">Сохранить</Button>
+              </Box>
+            </Item>
+          </Grid>
+          {base && (
+            <Grid item>
+              <NewRecipeCard base={base.id}></NewRecipeCard>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Box>
