@@ -9,7 +9,7 @@ import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
 import BossMainPage from '../BossMainPage/BossMainPage'
 import BossAddUser from '../BossAddUser/BossAddUser'
-import BossStatistic from '../Statistics/LineStat/LineStat'
+import BossStatistic from '../Statistics/MarketPriceAndCost/MarkertPriceAndCost'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 

@@ -6,7 +6,7 @@ const expressConfig = require('./config/express');
 const { sequelize } = require('./db/models');
 
 // Отдает себестоимость рецептов
-const costpriceRouter = require('./routes/api/costprice.routes');
+const statisticRouter = require('./routes/api/statistic.routes');
 const authRouter = require('./routes/api/auth.routes');
 const recipesRouter = require('./routes/api/recipes.routes');
 
@@ -26,7 +26,7 @@ const PORT = process.env.PORT ?? 4000;
 
 expressConfig(app);
 // Отдает себестоимость рецептов
-app.use('/costprice', costpriceRouter);
+app.use('/static', statisticRouter);
 
 app.use('/auth', authRouter);
 app.use('/recipes', recipesRouter);

@@ -17,8 +17,32 @@ export const loadMarketPrice = createAsyncThunk(
   'technolog/loadMarketPrice',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      console.log("привет");
       const response = await fetch('/technolog', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      // dispatch(marketPriceComplete({data}))
+
+      return data; // записывает в action.payload
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const loadProductionVolume = createAsyncThunk(
+  'boss/loadProductionVolume',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      console.log("привет");
+      const response = await fetch('/static', {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -48,7 +72,8 @@ const bossSlice = createSlice({
   name: 'technolog',
   initialState: {
     marketPrice: [], // Отчет по рыночной цене и себестоимости
- 
+    productionVolume: [], // Отчет по Продажам
+    productionVolumeMass: []
   },
   reducers: {
 
@@ -65,11 +90,20 @@ const bossSlice = createSlice({
       // state.marketPriceByBases = getCategories(action.payload.collectResult);
     },
     [loadMarketPrice.rejected]: setError,
-    [loadMarketPrice.pending]: (state) => {
+    // [loadMarketPrice.pending]: (state) => {
+    //   state.status = 'loading';
+    //   state.error = null;
+    // },
+    [loadProductionVolume.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
-
+    [loadProductionVolume.fulfilled]: (state, action) => {
+      state.status = 'resolved';
+      state.productionVolume = action.payload.productionData;
+      // state.marketPriceByBases = getCategories(action.payload.collectResult);
+    },
+    [loadProductionVolume.rejected]: setError,
   },
 });
 
