@@ -38,7 +38,7 @@ function BossAddEmpoyees() {
     <div className='boxForm'>
        <Box component="form" onSubmit={registerForm} noValidate sx={{ mt: 1 }}>
  
-         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+         <FormControl variant="standard" sx={{ m: 1, minWidth: 480 }}>
              <InputLabel id="demo-simple-select-standard-label">Должность</InputLabel>
              <Select
                 labelId="demo-simple-select-standard-label"
