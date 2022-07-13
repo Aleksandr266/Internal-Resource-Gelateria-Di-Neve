@@ -56,15 +56,26 @@ const newRecipes = createSlice({
   },
   reducers: {
     setBase(state, action) {
-      console.log(action.payload);
       state.base = state.bases.find((base) => base.id === action.payload);
       state.base.weight = 0;
       state.base.total_price = state.base.weight * state.base.price;
       state.recipe.weight = 0;
       state.recipe.total_price = 0;
     },
+    deleteBase(state, action) {
+      state.base = null;
+      state.ingridients = [];
+    },
     addIngridient(state, action) {
       state.ingridients.push({ ...action.payload, weight: 0, total_price: 0 });
+    },
+    deleteIngridient(state, action) {
+      const id = action.payload;
+      console.log('reducer id', id);
+      state.ingridients.splice(
+        state.ingridients.findIndex((ingridient) => ingridient.id === id),
+        1,
+      );
     },
     changeBaseWeight(state, action) {
       console.log(action.payload);
@@ -113,6 +124,8 @@ const newRecipes = createSlice({
   },
 });
 export const {
+  deleteIngridient,
+  deleteBase,
   normalizeRecipe,
   changeIngridientWeight,
   changeBaseWeight,

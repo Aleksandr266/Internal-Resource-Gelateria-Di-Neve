@@ -8,6 +8,7 @@ import {
   Button,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -20,16 +21,18 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngridients } from '../../store/ingridients/reducer';
 import {
   getBases,
   setBase,
+  deleteBase,
   addIngridient,
   changeBaseWeight,
   changeIngridientWeight,
-  changeBasePrice,
+  deleteIngridient,
   normalizeRecipe,
 } from '../../store/newrecipes/reducer';
 
@@ -56,14 +59,18 @@ function NewRecipe() {
   const handleClickBase = React.useCallback(() => {
     dispatch(setBase(selectValue));
     setSelectValue('');
-    console.log(selectValue);
-  }, [selectValue]);
+  }, [dispatch, selectValue]);
+
+  const handleClickDeleteBase = React.useCallback(() => {
+    dispatch(deleteBase());
+    setSelectValue('');
+  }, [dispatch]);
 
   const handleChangeBaseWeight = React.useCallback(
     (event) => {
       dispatch(changeBaseWeight(event.target.value));
     },
-    [dispatch, changeBaseWeight],
+    [dispatch],
   );
 
   const handleClickNormalize = React.useCallback(() => {
@@ -71,20 +78,13 @@ function NewRecipe() {
       console.log('first');
       dispatch(normalizeRecipe());
     }
-  }, [recipe.weight]);
+  }, [dispatch, recipe.weight]);
 
   const handleChangeIngridientWeight = React.useCallback(
     (event, id) => {
       dispatch(changeIngridientWeight({ value: event.target.value, id }));
     },
-    [dispatch, changeIngridientWeight],
-  );
-
-  const handleChangePrice = React.useCallback(
-    (event) => {
-      dispatch(changeBasePrice(event.target.value));
-    },
-    [dispatch, changeBaseWeight],
+    [dispatch],
   );
 
   console.log('currIngridients', currIngridients);
@@ -95,7 +95,16 @@ function NewRecipe() {
       dispatch(addIngridient(choiseIngridient));
     }
     setSelectValue('');
-  }, [selectValue, ingridients]);
+  }, [dispatch, selectValue, ingridients]);
+
+  const handleClickDeleteIngridient = React.useCallback(
+    (id) => {
+      console.log('delete id', id);
+      dispatch(deleteIngridient(id));
+      setSelectValue('');
+    },
+    [dispatch],
+  );
 
   return (
     <Box sx={{ width: '100%', typography: 'body1', padding: '24px' }}>
@@ -105,15 +114,21 @@ function NewRecipe() {
             <Table size="small" aria-label="customized table">
               <TableHead>
                 <TableRow>
+                  <TableCell align="left"></TableCell>
                   <TableCell align="left">Ингридиент</TableCell>
                   <TableCell align="center">Масса на 10 кг продукта, кг</TableCell>
                   <TableCell align="center">Цена за 1 кг, руб</TableCell>
-                  <TableCell align="center">Стоимость, руб</TableCell>
+                  <TableCell align="center">Стоимость 10 кг, руб</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {base && (
                   <TableRow>
+                    <TableCell align="left">
+                      <IconButton>
+                        <DeleteIcon onClick={handleClickDeleteBase} />
+                      </IconButton>
+                    </TableCell>
                     <TableCell align="left">{base.title}</TableCell>
                     <TableCell align="center">
                       <OutlinedInput
@@ -139,6 +154,13 @@ function NewRecipe() {
                   <>
                     {currIngridients.map((currIngridient) => (
                       <TableRow key={currIngridient.id}>
+                        <TableCell align="left">
+                          <IconButton>
+                            <DeleteIcon
+                              onClick={() => handleClickDeleteIngridient(currIngridient.id)}
+                            />
+                          </IconButton>
+                        </TableCell>
                         <TableCell align="left">{currIngridient.title}</TableCell>
                         <TableCell align="center">
                           <OutlinedInput
@@ -166,6 +188,7 @@ function NewRecipe() {
                   </>
                 )}
                 <TableRow>
+                  <TableCell></TableCell>
                   <TableCell align="left">
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                       <InputLabel id="demo-select-small">Выбрать</InputLabel>
@@ -201,6 +224,7 @@ function NewRecipe() {
                   </TableCell>
                 </TableRow>
                 <TableRow>
+                  <TableCell></TableCell>
                   <TableCell align="right">Итого</TableCell>
                   <TableCell align="center">
                     <Button onClick={handleClickNormalize}>
