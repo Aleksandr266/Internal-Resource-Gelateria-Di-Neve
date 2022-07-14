@@ -22,15 +22,24 @@ function collectData(productionVolumes) {
 
 
 const getCategories = (recipes) => {
-  const categories = { title:[], market_price:[], cost_price:[]};
+  const categories = { title:[], market_price:[], cost_price:[], profitPercentage: [] };
   recipes.forEach((recipe) => {
       categories.title.push(recipe.title);
       categories.market_price.push(recipe.market_price);
       categories.cost_price.push(recipe.cost_price);
+      categories.profitPercentage.push((recipe.market_price/recipe.cost_price).toFixed(2))
   });
 
   return categories;  // записывает в action.payload
 };
+
+const getProfit = (data) => {
+  const categories = [];
+  for (let i = 0; i <  data.length; i++) {
+  categories.push( { id :  data[i].id, title: data[i].title, market_price: data[i].market_price, cost_price: data[i].cost_price, profit:(data[i].market_price/data[i].cost_price).toFixed(2)})
+  }
+  return categories;  // записывает в action.payload
+}
 
 function collectTable(productionVolumes) {
   var result = [];
@@ -142,7 +151,8 @@ const bossSlice = createSlice({
   name: 'boss',
   initialState: {
     employees: [], // стейт сотрудников
-    marketPrice: [], // Отчет по рыночной цене и себестоимости
+    marketPrice: [],
+    marketPriceTable: [], // Отчет по рыночной цене и себестоимости
     productionVolume: [], // Отчет по Продажам
     productionVolumeMass: [],
     status:null,
@@ -160,7 +170,7 @@ const bossSlice = createSlice({
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-
+      state.marketPriceTable = getProfit(action.payload.collectResult);
       state.marketPrice = getCategories(action.payload.collectResult);
     },
     [loadMarketPrice.rejected]: setError,

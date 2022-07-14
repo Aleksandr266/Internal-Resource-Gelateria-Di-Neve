@@ -9,9 +9,10 @@ import Bases from '../Bases/Bases';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
-import BossMainPage from '../BossMainPage/BossMainPage';
-import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees';
-import BossStatistic from '../Statistics/LineStat/LineStat';
+import BossMainPage from '../BossMainPage/BossMainPage'
+import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees'
+import BossStatisticPrice from '../Statistics/MarketPriceAndCost/MarkertPriceAndCost'
+import BossStatisticProduction from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Employees from '../Employees/Employees';
@@ -35,7 +36,8 @@ function App() {
               <Route path="/" element={<BossMainPage />} />
               <Route path="/boss/employees" element={<Employees />} />
               <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
-              <Route path="/boss/statistic" element={<BossStatistic />} />
+              <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
+              <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
               <Route path="*" element={<Error />} />
             </Route>
           ) : login.role === 'Повар' && login.isWorks ? (
@@ -62,6 +64,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </>
       )}
+
     </Routes>
   );
 }

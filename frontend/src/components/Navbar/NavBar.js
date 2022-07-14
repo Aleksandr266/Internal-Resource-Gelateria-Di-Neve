@@ -113,8 +113,11 @@ const ResponsiveAppBar = () => {
                 </Link>
               </MenuItem>
               <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-              <Link to="/boss/statistic">
-                <Typography  textAlign="center">Отчет</Typography>
+              <Link to="/boss/statistic/production">
+                <Typography  textAlign="center">Отчет производство</Typography>
+                </Link>
+                <Link to="/boss/statistic/price">
+                <Typography  textAlign="center">Отчет прайс</Typography>
                 </Link>
               </MenuItem>
           </Menu>
@@ -146,9 +149,12 @@ const ResponsiveAppBar = () => {
                </Link>
               </MenuItem>
               <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-              <Link to="/boss/statistic">
-                <Typography  textAlign="center">Отчет</Typography>
-               </Link>
+              <Link to="/boss/statistic/production">
+                <Typography  textAlign="center">Отчет производство</Typography>
+                </Link>
+                <Link to="/boss/statistic/price">
+                <Typography  textAlign="center">Отчет прайс</Typography>
+                </Link>
               </MenuItem>
         </Box>
 
