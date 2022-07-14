@@ -22,8 +22,10 @@ authRouter.route('/log').post(async (req, res) => {
       id: checkedUser.id,
       fullname: checkedUser.fullname,
       role: checkedUser.UserType.title,
+      isWorks: checkedUser.isWorks,
     });
   } catch (error) {
+    console.log(error);
     res.status(500);
     res.end();
   }
@@ -69,6 +71,7 @@ authRouter.route('/reg').post(
       res.status(200);
       res.end();
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }

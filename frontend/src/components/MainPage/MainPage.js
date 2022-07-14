@@ -6,12 +6,12 @@ import Container from '@mui/material/Container';
 
 function MainPage() {
   return (
-    <div>
+    <>
       <NavBar />
-      <Container maxWidth="xl">
+      <Container className='container' maxWidth="xl">
         <Outlet />
       </Container>
-    </div>
+    </>
   );
 }
 

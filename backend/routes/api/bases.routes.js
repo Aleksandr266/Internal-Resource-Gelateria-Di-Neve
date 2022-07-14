@@ -7,7 +7,9 @@ basesRouter
   .route('/')
   .get(async (req, res) => {
     try {
-      const bases = await Base.findAll();
+      const bases = await Base.findAll({
+        include: [Base.BasePrices],
+      });
       res.status(200);
       res.json(bases);
     } catch (error) {

@@ -50,6 +50,9 @@ function Profile() {
               <div className='div'>ФИО: {user.fullname}</div>
               <br />
               <div className='div'>Login: {user.login} </div>
+              {
+                user['UserType.title']
+              }
               <br />
               <Button onClick={showForm} variant="outlined">изменить</Button>
             </Box>

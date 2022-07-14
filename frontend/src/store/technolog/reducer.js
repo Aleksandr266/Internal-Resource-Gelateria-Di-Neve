@@ -18,7 +18,7 @@ const getCategories = (recipes) => {
 
 export const loadMarketPrice = createAsyncThunk(
   'technolog/loadMarketPrice',
-  async (_, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue}) => {
     try {
       console.log("привет");
       const response = await fetch('/technolog', {

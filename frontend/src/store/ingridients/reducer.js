@@ -80,7 +80,7 @@ const ingridientsSlice = createSlice({
         return {
           id: el.id,
           title: el.title,
-          price: el['IngridientPrices'].sort((a, b) => +b.id - +a.id)[0].price,
+          price: el['IngridientPrices'].sort((a, b) => b.createdAt - a.createdAt)[0].price,
           fat: el.fat,
           dry_matter: el.dry_matter,
           dry_milk_remainder: el.dry_milk_remainder,
