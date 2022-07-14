@@ -95,7 +95,9 @@ function Bases() {
                           {baseTodo.todos.map((todo, id) => (
                             <ListItem
                               key={id}
-                              onClick={handleToggle(base.id, id, todo.value)}
+                              onClick={
+                                todo.isDone ? undefined : handleToggle(base.id, id, todo.value)
+                              }
                               disablePadding>
                               <ListItemButton role={undefined} dense>
                                 <Checkbox
@@ -118,7 +120,7 @@ function Bases() {
                 {recipe.isOpen && (
                   <Draggable handle=".handle" defaultPosition={{ x: 0, y: -300 }}>
                     <div className="handle">
-                      <Recipe recipeId={recipe.id} />
+                      <Recipe recipeId={recipe.id} baseId={base.id} />
                     </div>
                   </Draggable>
                 )}

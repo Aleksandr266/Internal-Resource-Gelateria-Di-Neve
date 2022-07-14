@@ -53,7 +53,7 @@ export default function BasicCard({ base }) {
           всего в производство на сегодня
         </Typography>
         <Typography variant="h5" component="div">
-          {base.stock ? base.stock : 0} {'кг      '}
+          {base.stock ? Math.round(base.stock * 100) / 100 : 0} {'кг      '}
           <Button variant="outlined" size="small" onClick={handleClickReset}>
             сброс
           </Button>
