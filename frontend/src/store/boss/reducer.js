@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// const getCategories = (recipes) => {
+//   const categories = { title:[], market_price:[], cost_price:[]};
+//   recipes.forEach((recipe) => {
+//       categories.title.push(recipe.title);
+//       categories.market_price.push(recipe.market_price);
+//       categories.cost_price.push(recipe.cost_price);
+//   });
 
+<<<<<<< HEAD
 function collectData(productionVolumes) {
   var titles = [];
   var allTimes = [];
@@ -24,6 +32,10 @@ const getCategories = (recipes) => {
 
   return categories;  // записывает в action.payload
 };
+=======
+//   return categories;  // записывает в action.payload
+// };
+>>>>>>> 5b683927c39f5e52a1f50eda95efe9e24b99541d
 
 function collectTable(productionVolumes) {
   var result = [];
@@ -34,7 +46,7 @@ function collectTable(productionVolumes) {
 }
 
 export const loadMarketPrice = createAsyncThunk(
-  'technolog/loadMarketPrice',
+  'boss/loadMarketPrice',
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch('/technolog', {
@@ -68,7 +80,6 @@ export const loadProductionVolume = createAsyncThunk(
           Accept: 'application/json',
         },
       });
-
       if (!response.ok) {
         throw new Error('Server Error!');
       }
@@ -89,7 +100,7 @@ const setError = (state, action) => {
 };
 
 const bossSlice = createSlice({
-  name: 'technolog',
+  name: 'boss',
   initialState: {
     marketPrice: [], // Отчет по рыночной цене и себестоимости
     productionVolume: [], // Отчет по Продажам
@@ -100,14 +111,16 @@ const bossSlice = createSlice({
   },
 
   extraReducers: {
+    // reducer для загрузки market price
     [loadMarketPrice.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.marketPrice = getCategories(action.payload.collectResult);
-      // state.marketPriceByBases = getCategories(action.payload.collectResult);
+
+      //!!!!!!!!!!!! ВОЗМОЖНО ЭТО НУЖНО !!!!!!"
+      // state.marketPrice = getCategories(action.payload.collectResult);
     },
     [loadMarketPrice.rejected]: setError,
     // [loadMarketPrice.pending]: (state) => {

@@ -1,31 +1,33 @@
 import React, { useEffect } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngridients } from '../../store/ingridients/reducer'
+import { editIngridients, getIngridients } from '../../store/ingridients/reducer';
 import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-
 function Ingridients() {
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ingridients } = useSelector((state) => state.ingridients);
+
+  // const handlerEditCommit = (e) => {
+  //   fetch('/ingridients/editPriceIngridients', {
+  //     method: 'POST',
+  //     body: JSON.stringify({ id: e.row.id, price: e.value }),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  // };
 
   useEffect(() => {
     dispatch(getIngridients());
   }, [dispatch]);
 
   const handlerEditCommit = (e) => {
-    fetch('/ingridients/editPriceIngridients', {
-      method: 'POST',
-      body: JSON.stringify({ id: e.row.id, price: e.value }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    dispatch(editIngridients(e));
   };
 
   const columns = [
@@ -101,23 +103,30 @@ function Ingridients() {
     },
   ];
 
+  console.log('ingridients', ingridients);
+
   return (
-    <div >
-       <Button style={{marginTop: 10}} onClick={() => navigate('/formAddIngridients')} variant="outlined">Добавить ингридиент</Button>
-      { ingridients &&
-      <TableContainer style={{ marginTop: 10, height: 500, width: '100%' }} component={Paper}>
-        <DataGrid
-          rows={ingridients}
-          columns={columns}
-          disableSelectionOnClick
-          localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-          onCellEditCommit={handlerEditCommit}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-        />
-      </TableContainer>
-      }
+    <div>
+      <Button
+        style={{ marginTop: 10 }}
+        onClick={() => navigate('/formAddIngridients')}
+        variant="outlined">
+        Добавить ингридиент
+      </Button>
+      {ingridients && (
+        <TableContainer style={{ marginTop: 10, height: 500, width: '100%' }} component={Paper}>
+          <DataGrid
+            rows={ingridients}
+            columns={columns}
+            disableSelectionOnClick
+            localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+            onCellEditCommit={handlerEditCommit}
+            components={{
+              Toolbar: GridToolbar,
+            }}
+          />
+        </TableContainer>
+      )}
     </div>
   );
 }

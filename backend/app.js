@@ -20,6 +20,8 @@ const storesRouter = require('./routes/api/stores.routes');
 
 const technologRouter = require('./routes/api/technolog.routes');
 
+const employeesRouter = require('./routes/api/employees.routes');
+
 const app = express();
 
 const PORT = process.env.PORT ?? 4000;
@@ -41,9 +43,11 @@ app.use('/stores', storesRouter);
 
 app.use('/technolog', technologRouter); // метод GET возвращает id, title, market_price
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
+app.use('/employees', employeesRouter);
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+// });
 
 app.listen(PORT, async () => {
   /* eslint-disable no-console */

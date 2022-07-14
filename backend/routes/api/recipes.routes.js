@@ -42,6 +42,7 @@ recipesRouter
       res.status(200);
       res.json(recipe);
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }
@@ -91,6 +92,7 @@ recipesRouter
       res.status(200);
       res.json(recipe);
     } catch (error) {
+      console.log(error);
       res.status(500);
       res.end();
     }
