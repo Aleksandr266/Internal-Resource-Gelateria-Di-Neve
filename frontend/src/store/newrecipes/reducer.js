@@ -107,6 +107,27 @@ export const getIngridients = createAsyncThunk(
   },
 );
 
+export const saveRecipeBase = createAsyncThunk(
+  'ingridients/saveRecipeBase',
+  async (data, { rejectWithValue }) => {
+    console.log('fetch', data);
+    try {
+      const response = await fetch('/recipes', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const answer = await response.json();
+      console.log(answer);
+      return answer;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -123,7 +144,14 @@ const newRecipes = createSlice({
       1: [1, 2, 3, 4, 5, 6, 8],
       2: [3, 4, 5, 6, 10],
     },
-    recipe: {},
+    recipe: {
+      title: '',
+      market_price: 0,
+      standart: 10,
+    },
+    doneRecipe: {},
+    doneStatus: false,
+    recipeErrors: [],
     norms: [
       {
         base_id: 1,
@@ -282,9 +310,74 @@ const newRecipes = createSlice({
       state.norms = testNorm(state.recipe, state.norms);
     },
     changeBasePrice(state, action) {
-      console.log(action.payload);
       state.base.price = action.payload;
       state.base.total_price = state.base.weight * state.base.price;
+    },
+    changeRecipeTitle(state, action) {
+      state.recipe.title = action.payload;
+    },
+    changeRecipePrice(state, action) {
+      console.log(action.payload);
+      state.recipe.market_price = action.payload;
+    },
+    changeRecipeStandart(state, action) {
+      console.log(action.payload);
+      state.recipe.standart = action.payload;
+    },
+    saveRecipe(state, action) {
+      state.recipeErrors = [];
+      if (!state.recipe.title) {
+        if (!state.recipeErrors.includes('Название не введено')) {
+          state.recipeErrors.push('Название не введено');
+        }
+      }
+      if (!state.base) {
+        if (!state.recipeErrors.includes('База не выбрана')) {
+          state.recipeErrors.push('База не выбрана');
+        }
+      }
+      // if (!state.ingridients.length) {
+      //   if (!state.recipeErrors.includes('Ингридиенты не выбраны')) {
+      //     state.recipeErrors.push('Ингридиенты не выбраны');
+      //   }
+      // }
+      if (!(state.recipe.weight >= 9.98 && state.recipe.weight <= 10.02)) {
+        if (!state.recipeErrors.includes('Масса не нормирована')) {
+          state.recipeErrors.push('Масса не нормирована');
+        }
+      }
+      if (
+        state.base &&
+        !state.norms
+          .find((norm) => norm.base_id === state.base.id)
+          .params.every((norm) => norm.isNorm)
+      ) {
+        if (!state.recipeErrors.includes('Стандарты качества нарушены')) {
+          state.recipeErrors.push('Стандарты качества нарушены');
+        }
+      }
+      if (!state.recipeErrors.length) {
+        state.doneRecipe.recipe = {
+          title: state.recipe.title,
+          base_id: state.base.id,
+          base_weight: state.base.weight,
+        };
+        state.doneRecipe.recipePrice = {
+          market_price: state.recipe.market_price,
+        };
+        state.doneRecipe.store = {
+          standart: state.recipe.standart,
+        };
+        state.doneRecipe.recipeIngridients = state.ingridients
+          .map((ingridient) => ({
+            ingridient_id: ingridient.id,
+            weight: ingridient.weight,
+          }))
+          .filter((ingridient) => ingridient.weight > 0);
+        state.doneStatus = true;
+        console.log('Всё супер!!!');
+      }
+      // console.log(state.recipeErrors);
     },
     normalizeRecipe(state, action) {
       const { base, ingridients } = normalizer(state.recipe, state.base, state.ingridients);
@@ -342,6 +435,9 @@ const newRecipes = createSlice({
   },
 });
 export const {
+  changeRecipePrice,
+  saveRecipe,
+  changeRecipeTitle,
   addIngridientsFromPattern,
   deleteIngridient,
   deleteBase,
@@ -351,6 +447,7 @@ export const {
   setBase,
   addIngridient,
   changeBasePrice,
+  changeRecipeStandart,
 } = newRecipes.actions;
 
 export default newRecipes.reducer;
