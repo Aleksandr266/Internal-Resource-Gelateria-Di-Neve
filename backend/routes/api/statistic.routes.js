@@ -11,7 +11,6 @@ const {
 } = require('../../db/models');
 
 function volumeCalculator(el, data) {
-  console.log(data);
   var { title } = el;
   var volume = 0;
   var volueMont = 0;
@@ -21,7 +20,7 @@ function volumeCalculator(el, data) {
       volueMont += Number(element.out_amount);
     }
     });
-  return { recipes: { title: el.title, allTime: (volume).toFixed(2), month: (volueMont).toFixed(2) } };
+  return { recipes: { id: el.id, title: el.title, allTime: (volume).toFixed(2), month: (volueMont).toFixed(2) } };
 }
 
 function collectData(productionVolumes) {
@@ -36,6 +35,14 @@ function collectData(productionVolumes) {
   return { title: titles, allTime: allTimes, month: months };
 }
 
+function collectTable(productionVolumes) {
+  var result = [];
+  for (let i = 0; i < productionVolumes.length; i++) {
+     result.push(productionVolumes[i].recipes);
+  }
+  return { result };
+}
+
 statisticRouter
   .route('/')
   .get(async (req, res) => {
@@ -45,8 +52,8 @@ statisticRouter
     const data = new Date();
     var d = data.setMonth(data.getMonth() - 1);
     const productionVolumes = production.map((el) => volumeCalculator(el, data));
-    const productionData = collectData(productionVolumes);
-    res.json({ productionData });
+    const productionData = collectTable(productionVolumes);
+    res.json({ productionVolumes });
   });
 
 module.exports = statisticRouter;

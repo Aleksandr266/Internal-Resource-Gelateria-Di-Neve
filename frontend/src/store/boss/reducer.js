@@ -1,6 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 
+function collectData(productionVolumes) {
+  var titles = [];
+  var allTimes = [];
+  var months = [];
+  for (let i = 0; i < productionVolumes.length; i++) {
+    titles.push(productionVolumes[i].recipes.title);
+    allTimes.push(productionVolumes[i].recipes.allTime);
+    months.push(productionVolumes[i].recipes.month);
+  }
+  return { title: titles, allTime: allTimes, month: months };
+}
+
 
 const getCategories = (recipes) => {
   const categories = { title:[], market_price:[], cost_price:[]};
@@ -12,6 +24,14 @@ const getCategories = (recipes) => {
 
   return categories;  // записывает в action.payload
 };
+
+function collectTable(productionVolumes) {
+  var result = [];
+  for (let i = 0; i < productionVolumes.length; i++) {
+     result.push(productionVolumes[i].recipes);
+  }
+  return { result };
+}
 
 export const loadMarketPrice = createAsyncThunk(
   'technolog/loadMarketPrice',
@@ -100,7 +120,8 @@ const bossSlice = createSlice({
     },
     [loadProductionVolume.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.productionVolume = action.payload.productionData;
+      state.productionVolume = collectData(action.payload.productionVolumes) ;
+      state.productionVolumeMass = collectTable(action.payload.productionVolumes).result ;
       // state.marketPriceByBases = getCategories(action.payload.collectResult);
     },
     [loadProductionVolume.rejected]: setError,
