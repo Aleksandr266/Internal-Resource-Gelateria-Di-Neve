@@ -18,9 +18,7 @@ const loginForm = (e) => {
   e.preventDefault()
   const  log  = e.target.login.value;
   const  pass  = e.target.password.value;
-  // console.log(log, "Login");
-  // console.log(pass, "Password");
-  dispatch(loginUser({login:log, password:pass}))
+  dispatch(loginUser({login: log, password: pass}))
   if (login.role === 'Технолог') navigate('/technolog')
   if (login.role === 'Повар') navigate('/')
   if (login.role === 'Директор') navigate('/boss')
@@ -43,20 +41,18 @@ const loginForm = (e) => {
           className="input-login"
           id="standard-password-input1"
           label="Логин"
-          autoComplete="current-password"
           variant="outlined"
           name='login'
-          // autoComplete="off" // Включить!
+          autoComplete="off" 
         />
          <TextField sx={{ borderRadius: '50%' }}
            className="input-password"
           id="standard-password-input2"
           label="Пароль"
           type="password"
-          autoComplete="current-password"
           variant="outlined"
           name='password'
-          // autoComplete="off"  // Включить!
+          autoComplete="off"  
         />
         <Button 
        id='btn-login'

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { theme } from './theme'
 import { getUser } from '../../store/auth/reducer';
 import './App.css';
 import MainPage from '../MainPage/MainPage';
@@ -18,6 +19,7 @@ import NewRecipe from '../NewRecipe/NewRecipe';
 import Profile from '../Profile/Profile';
 import Employees from '../Employees/Employees'
 import Error from '../Error/Error';
+import { ThemeProvider } from '@emotion/react';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function App() {
   }, [dispatch]);
 
   return (
+<ThemeProvider theme={theme} >
     <Routes>
       {login.id ? (
         <>
@@ -70,6 +73,7 @@ function App() {
         </>
       )}
     </Routes>
+   </ThemeProvider>
   );
 }
 
