@@ -12,6 +12,8 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  List,
+  ListItem,
   ListSubheader,
   MenuItem,
   OutlinedInput,
@@ -32,6 +34,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getIngridients } from '../../store/ingridients/reducer';
 import {
+  reset,
+  saveRecipe,
+  changeRecipeTitle,
   getBases,
   setBase,
   deleteBase,
@@ -42,6 +47,9 @@ import {
   normalizeRecipe,
   getIngridients,
   addIngridientsFromPattern,
+  changeRecipePrice,
+  changeRecipeStandart,
+  saveRecipeBase,
 } from '../../store/newrecipes/reducer';
 import NewRecipeCard from '../NewRecipeCard/NewRecipeCard';
 
@@ -63,6 +71,9 @@ function NewRecipe() {
     base,
     bases,
     recipe,
+    recipeErrors,
+    doneRecipe,
+    doneStatus,
     allIngridients: ingridients,
     ingridients: currIngridients,
   } = useSelector((state) => state.newrecipes);
@@ -78,6 +89,13 @@ function NewRecipe() {
     dispatch(getIngridients());
     dispatch(getBases());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (doneStatus) {
+      dispatch(saveRecipeBase(doneRecipe));
+      dispatch(reset());
+    }
+  }, [dispatch, doneStatus, doneRecipe]);
 
   const handleChooseBase = React.useCallback((event) => {
     setSelectValue(event.target.value);
@@ -115,8 +133,8 @@ function NewRecipe() {
     [dispatch],
   );
 
-  console.log('ingridients', ingridients);
-  console.log('recipe', recipe);
+  // console.log('ingridients', ingridients);
+  console.log('doneRecipe', doneRecipe);
 
   const handleClickIngridient = React.useCallback(() => {
     if (selectValue !== '') {
@@ -132,6 +150,34 @@ function NewRecipe() {
       console.log('delete id', id);
       dispatch(deleteIngridient(id));
       setSelectValue('');
+    },
+    [dispatch],
+  );
+
+  const handleClickSaveRecipe = React.useCallback(() => {
+    dispatch(saveRecipe());
+  }, [dispatch]);
+
+  const handleChangeRecipeTitle = React.useCallback(
+    (event) => {
+      dispatch(changeRecipeTitle(event.target.value));
+      console.log('first');
+    },
+    [dispatch],
+  );
+
+  const handleChangeRecipePrice = React.useCallback(
+    (event) => {
+      dispatch(changeRecipePrice(event.target.value));
+      console.log('first');
+    },
+    [dispatch],
+  );
+
+  const handleChangeRecipeStandart = React.useCallback(
+    (event) => {
+      dispatch(changeRecipeStandart(event.target.value));
+      console.log('first');
     },
     [dispatch],
   );
@@ -305,8 +351,77 @@ function NewRecipe() {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                <TextField id="outlined-basic" label="Название" variant="outlined" />
-                <Button variant="outlined">Сохранить</Button>
+                <TextField
+                  id="outlined-basic"
+                  label="Название*"
+                  value={recipe.title}
+                  onChange={handleChangeRecipeTitle}
+                  variant="outlined"
+                  sx={{
+                    maxWidth: '200px',
+                  }}
+                />
+                <Button variant="outlined" onClick={handleClickSaveRecipe}>
+                  Сохранить
+                </Button>
+              </Box>
+            </Item>
+          </Grid>
+          {!!recipeErrors.length && (
+            <Grid item>
+              <Item>
+                <List>
+                  {recipeErrors.map((error) => (
+                    <ListItem sx={{ color: 'red' }} key={error}>
+                      {error}
+                    </ListItem>
+                  ))}
+                </List>
+              </Item>
+            </Grid>
+          )}
+          <Grid item>
+            <Item>
+              <Box
+                component="span"
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <TextField
+                  id="outlined-basic"
+                  label="Рыночная цена"
+                  type="number"
+                  value={recipe.market_price}
+                  onChange={handleChangeRecipePrice}
+                  variant="outlined"
+                  sx={{
+                    maxWidth: '170px',
+                  }}
+                  inputProps={{
+                    'aria-label': 'weight',
+                    step: '0.01',
+                    min: '0',
+                  }}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Стандарт"
+                  type="number"
+                  value={recipe.standart}
+                  onChange={handleChangeRecipeStandart}
+                  variant="outlined"
+                  sx={{
+                    maxWidth: '170px',
+                  }}
+                  inputProps={{
+                    'aria-label': 'weight',
+                    step: '0.01',
+                    min: '0',
+                  }}
+                />
               </Box>
             </Item>
           </Grid>

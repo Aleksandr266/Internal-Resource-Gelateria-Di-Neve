@@ -10,24 +10,24 @@ import { TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 
-const useStyles = makeStyles({
-  sticky: {
-    position: 'sticky',
-    left: 0,
-    background: 'white',
-    boxShadow: '5px 2px 5px grey',
-  },
-});
+// const useStyles = makeStyles({
+//   sticky: {
+//     position: 'sticky',
+//     left: 0,
+//     background: 'white',
+//     boxShadow: '5px 2px 5px grey',
+//   },
+// });
 
 const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-    // padding: '0px 12px 0px 0px',
-  },
-  body: {
-    fontSize: 15,
-  },
+  // head: {
+  //   backgroundColor: theme.palette.common.white,
+  //   color: theme.palette.common.black,
+  //   // padding: '0px 12px 0px 0px',
+  // },
+  // body: {
+  //   fontSize: 15,
+  // },
 }))(TableCell);
 
 function BaseRecipe({ recipeList }) {
