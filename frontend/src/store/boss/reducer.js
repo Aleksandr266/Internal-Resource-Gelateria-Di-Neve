@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// const getCategories = (recipes) => {
-//   const categories = { title:[], market_price:[], cost_price:[]};
-//   recipes.forEach((recipe) => {
-//       categories.title.push(recipe.title);
-//       categories.market_price.push(recipe.market_price);
-//       categories.cost_price.push(recipe.cost_price);
-//   });
+const getCategories = (recipes) => {
+  const categories = { title:[], market_price:[], cost_price:[]};
+  recipes.forEach((recipe) => {
+      categories.title.push(recipe.title);
+      categories.market_price.push(recipe.market_price);
+      categories.cost_price.push(recipe.cost_price);
+  });
 
-//   return categories;  // записывает в action.payload
-// };
+  return categories;  // записывает в action.payload
+};
 
 export const loadMarketPrice = createAsyncThunk(
   'boss/loadMarketPrice',
@@ -100,16 +100,15 @@ const bossSlice = createSlice({
   },
 
   extraReducers: {
-    // reducer для загрузки market price
+
     [loadMarketPrice.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
     [loadMarketPrice.fulfilled]: (state, action) => {
       state.status = 'resolved';
-
-      //!!!!!!!!!!!! ВОЗМОЖНО ЭТО НУЖНО !!!!!!"
-      // state.marketPrice = getCategories(action.payload.collectResult);
+      state.marketPrice = getCategories(action.payload.collectResult);
+      console.log( state.marketPrice, "Это стейт маркет прайс ");
     },
     [loadMarketPrice.rejected]: setError,
     

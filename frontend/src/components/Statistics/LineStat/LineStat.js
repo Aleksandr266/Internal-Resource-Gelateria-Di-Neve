@@ -30,7 +30,7 @@ import { Line } from "react-chartjs-2";
 //   ]
 // };
 
-function LineStat() {
+function BossStatistic() {
   const { marketPrice } = useSelector((state) => state.boss);
   const dispatch = useDispatch();
 
@@ -70,4 +70,4 @@ const data = {
   );
 }
 
-export default LineStat;
+export default BossStatistic;

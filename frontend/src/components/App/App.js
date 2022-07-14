@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-unresolved, import/extensions
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { loginUser } from '../../store/auth/reducer'
 import './App.css';
 import MainPage from '../MainPage/MainPage';
 import Bases from '../Bases/Bases';
@@ -15,21 +17,46 @@ import NewRecipe from '../NewRecipe/NewRecipe';
 import Employees from '../Employees/Employees'
 
 function App() {
+  const dispatch = useDispatch();
+  const { login }= useSelector((state) => state.auth)
+  console.log(login, "Это стейт логин в компоненте App.js");
+
+  useEffect(() => {
+    dispatch(loginUser());
+  }, [dispatch]);
+
   return (
     <Routes>
+      {login.role === "Директор" ? 
+
       <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<NewRecipe />} />
-        <Route path="/bases" element={<Bases />} />
-        <Route path="/recipes/new" element={<NewRecipe />} />
-        <Route path="/technolog" element={<TechnologBases />} />
-        <Route path="/formAddIngridients" element={<FormAddIngridients />} />
-        <Route path="/ingridients" element={<Ingridients />} />
-        <Route path="/boss" element={<BossMainPage />} />
+        <Route path="/" element={<BossMainPage />} />
         <Route path="/boss/employees" element={<Employees />} />
         <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
         <Route path="/boss/statistic" element={<BossStatistic />} />
       </Route>
-      <Route path="/auth" element={<Auth />} />
+
+      : login.role === "Повар" ? 
+
+      <Route path="/" element={<MainPage />}>
+        <Route path="/" element={<Bases />} />
+      </Route>
+      
+      : login.role === "Технолог" ?
+      
+      <Route path="/" element={<MainPage />}>
+        <Route path="/" element={<TechnologBases />} />
+        <Route path="/" element={<NewRecipe />} />
+        <Route path="/recipes/new" element={<NewRecipe />} />
+        <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+        <Route path="/ingridients" element={<Ingridients />} />
+      </Route>
+
+      :
+
+      <Route path="/" element={<Auth />} />
+
+      }
     </Routes>
   );
 }

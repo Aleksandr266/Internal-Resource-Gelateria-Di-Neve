@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -53,7 +52,7 @@ const ResponsiveAppBar = () => {
 
   const logout = () => {
     dispatch(logoutUser());
-    navigate('/auth')
+    navigate('/')
   }
 
   return (
@@ -66,7 +65,8 @@ const ResponsiveAppBar = () => {
           variant="h6"
           noWrap
           component="a"
-          href="/boss"
+          // href="/"
+          // onClick={navigate('/')} //Бесконечная загрузка
           sx={{
             mr: 2,
             display: { xs: 'none', md: 'flex' },
@@ -79,6 +79,7 @@ const ResponsiveAppBar = () => {
             <img src={logo} className="logo" />
           Gelateria Di Neve 
         </Typography>
+
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
@@ -113,7 +114,7 @@ const ResponsiveAppBar = () => {
                 </Link>
               </MenuItem>
               <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-              <Link to="/">
+              <Link to="/boss/statistic">
                 <Typography  textAlign="center">Отчет</Typography>
                 </Link>
               </MenuItem>
@@ -123,7 +124,7 @@ const ResponsiveAppBar = () => {
           variant="h5"
           noWrap
           component="a"
-          href="/boss"
+          href="/"
           sx={{
             mr: 2,
             display: { xs: 'flex', md: 'none' },
@@ -134,6 +135,7 @@ const ResponsiveAppBar = () => {
             color: 'inherit',
             textDecoration: 'none',
           }}>
+            {/* onClick={navigate('/')} */}
           <img src={logo} className="logo" />
          Gelateria Di Neve
         </Typography>
@@ -144,7 +146,7 @@ const ResponsiveAppBar = () => {
                </Link>
               </MenuItem>
               <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-              <Link to="/">
+              <Link to="/boss/statistic">
                 <Typography  textAlign="center">Отчет</Typography>
                </Link>
               </MenuItem>
@@ -153,7 +155,6 @@ const ResponsiveAppBar = () => {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            {/* // здесь вставить аватар */}
               <Avatar alt="Remy Sharp" src={avatarBoss} />
             </IconButton>
           </Tooltip>
@@ -193,7 +194,7 @@ const ResponsiveAppBar = () => {
         variant="h6"
         noWrap
         component="a"
-        href="/"
+        // href="/"
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
@@ -205,12 +206,13 @@ const ResponsiveAppBar = () => {
         }}>
           <img src={logo} className="logo" />
         Gelateria Di Neve
+        <Link to="/" />
       </Typography>
       <Typography
         variant="h5"
         noWrap
         component="a"
-        href="/boss"
+        // href="/"
         sx={{
           mr: 2,
           display: { xs: 'flex', md: 'none' },
@@ -222,6 +224,7 @@ const ResponsiveAppBar = () => {
           textDecoration: 'none',
         }}>
          <img src={logo} className="logo" />
+         <Link to="/" />
        Gelateria Di Neve 
       </Typography>
       <Box sx={{ flexGrow: 0 }}>
@@ -261,14 +264,11 @@ const ResponsiveAppBar = () => {
    <AppBar position="static">
    <Container maxWidth="xl" >
      <Toolbar disableGutters className='nav-bar-space-between'>
-        {/* здесь нужно заменить на логотип */}
-        {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />  */}
-        
        <Typography
          variant="h6"
          noWrap
          component="a"
-         href="/technolog"
+        //  href="/"
          sx={{
            mr: 2,
            display: { xs: 'none', md: 'flex' },
@@ -279,6 +279,7 @@ const ResponsiveAppBar = () => {
            textDecoration: 'none',
          }}>
            <img src={logo} className="logo" />
+           <Link to="/" />
          Gelateria Di Neve 
        </Typography>
  
@@ -309,13 +310,13 @@ const ResponsiveAppBar = () => {
            sx={{
              display: { xs: 'block', md: 'none' },
            }}>
-             <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
+             <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
              <Link to="/">
                <Typography  className="btn-navBar" textAlign="center">Вкусы</Typography>
                </Link>
              </MenuItem>
-             <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-             <Link to="/">
+             <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
+             <Link to="/ingridients">
                <Typography  textAlign="center">Ингридиенты</Typography>
                </Link>
              </MenuItem>
@@ -325,7 +326,7 @@ const ResponsiveAppBar = () => {
          variant="h5"
          noWrap
          component="a"
-         href="/boss"
+        //  href="/"
          sx={{
            mr: 2,
            display: { xs: 'flex', md: 'none' },
@@ -337,16 +338,17 @@ const ResponsiveAppBar = () => {
            textDecoration: 'none',
          }}>
          <img src={logo} className="logo" />
+         <Link to="/" />
         Gelateria Di Neve 
        </Typography>
        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
        <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
-          <Link to="/boss/addUser">
+          <Link to="/">
                <Typography  textAlign="center">Вкусы</Typography>
               </Link>
              </MenuItem>
              <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
-             <Link to="/auth">
+             <Link to="/ingridients">
                <Typography  textAlign="center">Ингридиенты</Typography>
               </Link>
              </MenuItem>
@@ -355,7 +357,6 @@ const ResponsiveAppBar = () => {
        <Box sx={{ flexGrow: 0 }}>
          <Tooltip title="Open settings">
            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-           {/* // здесь вставить аватар */}
              <Avatar alt="Remy Sharp" src={avatarTechnolog} />
            </IconButton>
          </Tooltip>
@@ -375,7 +376,6 @@ const ResponsiveAppBar = () => {
            open={Boolean(anchorElUser)}
            onClose={handleCloseUserMenu}>
              <MenuItem key={"Выйти"} onClick={logout}>
-            {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
          </Menu>
