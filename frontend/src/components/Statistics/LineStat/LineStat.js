@@ -34,6 +34,8 @@ function LineStat() {
   const { marketPrice } = useSelector((state) => state.boss);
   const dispatch = useDispatch();
 
+  
+
 console.log(marketPrice)
 
 const data = {

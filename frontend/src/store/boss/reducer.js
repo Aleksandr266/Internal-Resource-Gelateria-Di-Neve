@@ -8,14 +8,47 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 //       categories.cost_price.push(recipe.cost_price);
 //   });
 
+<<<<<<< HEAD
+function collectData(productionVolumes) {
+  var titles = [];
+  var allTimes = [];
+  var months = [];
+  for (let i = 0; i < productionVolumes.length; i++) {
+    titles.push(productionVolumes[i].recipes.title);
+    allTimes.push(productionVolumes[i].recipes.allTime);
+    months.push(productionVolumes[i].recipes.month);
+  }
+  return { title: titles, allTime: allTimes, month: months };
+}
+
+
+const getCategories = (recipes) => {
+  const categories = { title:[], market_price:[], cost_price:[]};
+  recipes.forEach((recipe) => {
+      categories.title.push(recipe.title);
+      categories.market_price.push(recipe.market_price);
+      categories.cost_price.push(recipe.cost_price);
+  });
+
+  return categories;  // записывает в action.payload
+};
+=======
 //   return categories;  // записывает в action.payload
 // };
+>>>>>>> 5b683927c39f5e52a1f50eda95efe9e24b99541d
+
+function collectTable(productionVolumes) {
+  var result = [];
+  for (let i = 0; i < productionVolumes.length; i++) {
+     result.push(productionVolumes[i].recipes);
+  }
+  return { result };
+}
 
 export const loadMarketPrice = createAsyncThunk(
   'boss/loadMarketPrice',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      console.log("привет");
       const response = await fetch('/technolog', {
         headers: {
           'Content-Type': 'application/json',
@@ -36,11 +69,12 @@ export const loadMarketPrice = createAsyncThunk(
   },
 );
 
-export const loadREmployees = createAsyncThunk(
-  'boss/loadMarketPrice',
-  async(_, {rejectWithValue}) => {
+export const loadProductionVolume = createAsyncThunk(
+  'boss/loadProductionVolume',
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch('/employees', {
+      console.log("привет");
+      const response = await fetch('/static', {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -50,36 +84,14 @@ export const loadREmployees = createAsyncThunk(
         throw new Error('Server Error!');
       }
       const data = await response.json();
-      return data;
+      // dispatch(marketPriceComplete({data}))
+
+      return data; // записывает в action.payload
     } catch (error) {
       return rejectWithValue(error.message);
     }
   },
 );
-
-export const changeStatusEmployee = createAsyncThunk(
-  'boss/changeStatusEmployees',
-  async(id, {rejectWithValue}) => {
-    try {
-      const response = await fetch('/employees', {
-        method: 'PUT',
-        body: JSON.stringify({ id }),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-      const data = await response.json();
-      console.log(data, "Получили ответ с сервера 1111111111111111");
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-)
 
 
 const setError = (state, action) => {
@@ -91,9 +103,8 @@ const bossSlice = createSlice({
   name: 'boss',
   initialState: {
     marketPrice: [], // Отчет по рыночной цене и себестоимости
-    employees: [], //все сотрудники
-    status:null,
-    error:null,
+    productionVolume: [], // Отчет по Продажам
+    productionVolumeMass: []
   },
   reducers: {
 
@@ -112,32 +123,21 @@ const bossSlice = createSlice({
       // state.marketPrice = getCategories(action.payload.collectResult);
     },
     [loadMarketPrice.rejected]: setError,
-    
-
-     //   reducer для загрузки employees
-    [loadREmployees.pending]: (state) => {
+    // [loadMarketPrice.pending]: (state) => {
+    //   state.status = 'loading';
+    //   state.error = null;
+    // },
+    [loadProductionVolume.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
-    [loadREmployees.fulfilled]: (state, action) => {
+    [loadProductionVolume.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.employees = action.payload;
-      console.log(state.employees, 'Это наполненный стейт с сотрудниками');
+      state.productionVolume = collectData(action.payload.productionVolumes) ;
+      state.productionVolumeMass = collectTable(action.payload.productionVolumes).result ;
+      // state.marketPriceByBases = getCategories(action.payload.collectResult);
     },
-    [loadREmployees.rejected]: setError,
-
-
-
-     //   reducer для обновления state employees после изменения isWorks
-     [changeStatusEmployee.pending]: (state) => {
-      state.status = 'loading';
-      state.error = null;
-    },
-    [changeStatusEmployee.fulfilled]: (state, action) => {
-      state.status = 'resolved';
-      state.employees.map((obj) => obj.id === action.payload.id ? obj.isWorks = !obj.isWorks : obj)
-    },
-    [changeStatusEmployee.rejected]: setError,
+    [loadProductionVolume.rejected]: setError,
   },
 });
 

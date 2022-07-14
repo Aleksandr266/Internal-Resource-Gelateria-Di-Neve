@@ -209,6 +209,78 @@ module.exports = {
       ingridient_id: 35,
       createdAt: new Date(),
       updatedAt: new Date(),
+    },
+    {
+      price: 34.00,
+      ingridient_id: 1,
+      createdAt: '2022-07-10 10:21:56.485+03',
+      updatedAt: '2022-07-10 10:21:56.485+03',
+    },
+    {
+      price: 34.80,
+      ingridient_id: 1,
+      createdAt: '2022-07-11 10:21:56.485+03',
+      updatedAt: '2022-07-11 10:21:56.485+03',
+    },
+    {
+      price: 35.00,
+      ingridient_id: 1,
+      createdAt: '2022-07-12 10:21:56.485+03',
+      updatedAt: '2022-07-12 10:21:56.485+03',
+    },
+    {
+      price: 230.00,
+      ingridient_id: 2,
+      createdAt: '2022-07-10 10:21:56.485+03',
+      updatedAt: '2022-07-10 10:21:56.485+03',
+    },
+    {
+      price: 232.50,
+      ingridient_id: 2,
+      createdAt: '2022-07-11 10:21:56.485+03',
+      updatedAt: '2022-07-11 10:21:56.485+03',
+    },
+    {
+      price: 238.00,
+      ingridient_id: 2,
+      createdAt: '2022-07-12 10:21:56.485+03',
+      updatedAt: '2022-07-12 10:21:56.485+03',
+    },
+    {
+      price: 36.20,
+      ingridient_id: 3,
+      createdAt: '2022-07-10 10:21:56.485+03',
+      updatedAt: '2022-07-10 10:21:56.485+03',
+    },
+    {
+      price: 37.50,
+      ingridient_id: 3,
+      createdAt: '2022-07-11 10:21:56.485+03',
+      updatedAt: '2022-07-11 10:21:56.485+03',
+    },
+    {
+      price: 36.20,
+      ingridient_id: 3,
+      createdAt: '2022-07-12 10:21:56.485+03',
+      updatedAt: '2022-07-12 10:21:56.485+03',
+    },
+    {
+      price: 58.00,
+      ingridient_id: 4,
+      createdAt: '2022-07-10 10:21:56.485+03',
+      updatedAt: '2022-07-10 10:21:56.485+03',
+    },
+    {
+      price: 58.70,
+      ingridient_id: 4,
+      createdAt: '2022-07-11 10:21:56.485+03',
+      updatedAt: '2022-07-11 10:21:56.485+03',
+    },
+    {
+      price: 59.90,
+      ingridient_id: 4,
+      createdAt: '2022-07-12 10:21:56.485+03',
+      updatedAt: '2022-07-12 10:21:56.485+03',
     }], {});
   },
 
