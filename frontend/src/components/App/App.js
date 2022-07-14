@@ -44,14 +44,16 @@ function App() {
               <Route path="*" element={<Error />} />
             </Route>
           ) : (
-            <Route path="/" element={<MainPage />}>
-              <Route path="/" element={<TechnologBases />} />
-              {/* <Route path="/" element={<NewRecipe />} /> */}
-              <Route path="/recipes/new" element={<NewRecipe />} />
-              <Route path="/formAddIngridients" element={<FormAddIngridients />} />
-              <Route path="/ingridients" element={<Ingridients />} />
-              <Route path="*" element={<Error />} />
-            </Route>
+            login.isWorks && (
+              <Route path="/" element={<MainPage />}>
+                <Route path="/" element={<TechnologBases />} />
+                {/* <Route path="/" element={<NewRecipe />} /> */}
+                <Route path="/recipes/new" element={<NewRecipe />} />
+                <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+                <Route path="/ingridients" element={<Ingridients />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            )
           )}
         </>
       ) : (

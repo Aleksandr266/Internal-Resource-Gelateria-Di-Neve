@@ -1,14 +1,16 @@
 import React from 'react';
 import './style.css';
 import { withStyles, makeStyles } from '@mui/styles';
-import { Table } from '@mui/material';
+import { Button, Table } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
 import { TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import CloseIcon from '@mui/icons-material/Close';
+import { closeBaseRecipe } from '../../store/recipes/reducer';
 
 // const useStyles = makeStyles({
 //   sticky: {
@@ -31,6 +33,12 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 function BaseRecipe({ recipeList }) {
+  const dispatch = useDispatch();
+
+  const handleCloseRecipe = React.useCallback(() => {
+    dispatch(closeBaseRecipe(recipeList[0]['Base.id']));
+  }, [dispatch]);
+
   return (
     <div className="boxRecipe">
       {recipeList && (
@@ -41,8 +49,13 @@ function BaseRecipe({ recipeList }) {
               <Table size="small" aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <TableCell className="tableBaseHeader" align="left" colSpan={2}>
+                    <TableCell className="tableBaseHeader" align="left">
                       {recipeList[0]['Base.title']}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button onClick={handleCloseRecipe}>
+                        <CloseIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                   <TableRow>

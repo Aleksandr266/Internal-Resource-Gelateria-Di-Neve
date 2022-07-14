@@ -318,6 +318,15 @@ const recipeSlice = createSlice({
       }
       // state.openedRecipes.push(action.payload);
     },
+    closeBaseRecipe(state, action) {
+      console.log('closeBaseRecipe', action.payload);
+      state.openedBaseRecipes.splice(
+        state.openedBaseRecipes.findIndex(
+          (openedBaseRecipe) => openedBaseRecipe[0].base_id === action.payload,
+        ),
+        1,
+      );
+    },
     openRecipe(state, action) {
       console.log('sdfsdf', action.payload);
       const id = action.payload;
@@ -384,6 +393,7 @@ const recipeSlice = createSlice({
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
+  closeBaseRecipe,
   closeRecipe,
   openBaseRecipe,
   openRecipe,
