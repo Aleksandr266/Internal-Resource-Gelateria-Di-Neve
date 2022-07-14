@@ -20,6 +20,8 @@ const storesRouter = require('./routes/api/stores.routes');
 
 const technologRouter = require('./routes/api/technolog.routes');
 
+const profileRouter = require('./routes/api/profile.routes');
+
 const app = express();
 
 const PORT = process.env.PORT ?? 4000;
@@ -29,6 +31,9 @@ expressConfig(app);
 app.use('/costprice', costpriceRouter);
 
 app.use('/auth', authRouter);
+
+app.use('/profile', profileRouter);
+
 app.use('/recipes', recipesRouter);
 
 app.use('/addIngridients', addIngridientsRouter);

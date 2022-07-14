@@ -1,0 +1,39 @@
+.glavn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+}
+
+.boxProfile {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.boxForm {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.div {
+  font-size: 47px;
+}
+
+.formEdit {
+  display: flex;
+  flex-direction: column;
+}

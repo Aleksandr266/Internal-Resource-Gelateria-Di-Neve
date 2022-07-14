@@ -12,6 +12,7 @@ import BossAddUser from '../BossAddUser/BossAddUser'
 import BossStatistic from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/boss" element={<BossMainPage />} />
         <Route path="/boss/addUser" element={<BossAddUser />} />
         <Route path="/boss/statistic" element={<BossStatistic />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
     </Routes>

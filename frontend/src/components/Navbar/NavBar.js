@@ -56,6 +56,10 @@ const ResponsiveAppBar = () => {
     navigate('/auth')
   }
 
+  const profile = () => {
+    navigate('/profile')
+  }
+
   return (
     // NavBar директора
     (login.role === 'Директор' ?
@@ -172,7 +176,10 @@ const ResponsiveAppBar = () => {
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}>
-             <MenuItem key={"Выйти"} onClick={logout}>
+            <MenuItem onClick={profile} key={"Личный кабинет"}>
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
+            <MenuItem key={"Выйти"} onClick={logout}>
             {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
@@ -245,6 +252,9 @@ const ResponsiveAppBar = () => {
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}>
+            <MenuItem onClick={profile} key={"Личный кабинет"}>
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
             <MenuItem key={"Выйти"} onClick={logout}>
             {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
@@ -374,7 +384,10 @@ const ResponsiveAppBar = () => {
            }}
            open={Boolean(anchorElUser)}
            onClose={handleCloseUserMenu}>
-             <MenuItem key={"Выйти"} onClick={logout}>
+            <MenuItem onClick={profile} key={"Личный кабинет"}>
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
+            <MenuItem key={"Выйти"} onClick={logout}>
             {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
