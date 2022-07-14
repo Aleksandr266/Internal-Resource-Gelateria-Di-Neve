@@ -20,6 +20,7 @@ const storesRouter = require('./routes/api/stores.routes');
 
 const technologRouter = require('./routes/api/technolog.routes');
 
+const profileRouter = require('./routes/api/profile.routes');
 const employeesRouter = require('./routes/api/employees.routes');
 
 const app = express();
@@ -31,6 +32,9 @@ expressConfig(app);
 app.use('/static', statisticRouter);
 
 app.use('/auth', authRouter);
+
+app.use('/profile', profileRouter);
+
 app.use('/recipes', recipesRouter);
 
 app.use('/addIngridients', addIngridientsRouter);

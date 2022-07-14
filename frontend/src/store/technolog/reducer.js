@@ -110,19 +110,6 @@ const recipeSlice = createSlice({
     error: null,
   },
   reducers: {
-    // addTodo(state, action) {
-    //   state.todos.push(action.payload);
-    // },
-    // toggleComplete(state, action) {
-    //   const toggledTodo = state.todos.find((todo) => todo.id === action.payload.id);
-    //   toggledTodo.completed = !toggledTodo.completed;
-    // },
-    // removeTodo(state, action) {
-    //   state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
-    // },
-    // marketPriceComplete(state, action) {
-    //   state.marketPrice = [action.payload];
-    // },
     changeMarketPriceComplete(state, action) {
       const findedRecipe = state.marketPrice.find((store) => store.id === action.payload.id);
       findedRecipe.market_price = action.payload.value;

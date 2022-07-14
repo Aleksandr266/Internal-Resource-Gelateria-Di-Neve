@@ -51,6 +51,7 @@ const columns = [
     width: 100,
     maxWidth: 500,
     editable: false,
+    hide: true,
   
   },
   {
@@ -94,7 +95,7 @@ const columns = [
     <div style={{ width: '100%', height: "auto", marginTop: '3%', }}>
       <Line data={data} />
     </div>
-    <DataGrid style={{height: "690px", width: "850px", marginTop: '50px'}}
+    <DataGrid style={{height: "690px", width: "750px", marginTop: '50px'}}
       rows={marketPriceTable}
       columns={columns}
       // experimentalFeatures={{ newEditingApi: true }}

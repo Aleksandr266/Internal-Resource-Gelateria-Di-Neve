@@ -142,6 +142,41 @@ export const changeStatusEmployee = createAsyncThunk(
   }
 )
 
+export const registerUser = createAsyncThunk(
+  'boss/registerUser',
+  async ({ role, fullname, login, password }, { rejectWithValue }) => {
+    try {
+      console.log(role, 111111111111111111111111111);
+      console.log(fullname);
+      console.log(login);
+      console.log(password);
+      const response = await fetch('/auth/reg', {
+        method: 'POST',
+        body: JSON.stringify({
+          role,
+          fullname,
+          login,
+          password,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      console.log(data, " Это данные с сервера с зарегистрированным юзером");
+
+      return data; // записывает в action.payload
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -150,7 +185,7 @@ const setError = (state, action) => {
 const bossSlice = createSlice({
   name: 'boss',
   initialState: {
-    employees: [], // стейт сотрудников
+    employees: [], // стейт всех сотрудников
     marketPrice: [],
     marketPriceTable: [], // Отчет по рыночной цене и себестоимости
     productionVolume: [], // Отчет по Продажам
@@ -203,7 +238,17 @@ const bossSlice = createSlice({
     },
     [loadREmployees.rejected]: setError,
 
-
+  // добавление созданного сотрудника в стейт
+  [registerUser.pending]: (state) => {
+    state.status = 'loading';
+    state.error = null;
+  },
+  [registerUser.fulfilled]: (state, action) => {
+    state.status = 'resolved';
+    state.employees.push(action.payload);
+    console.log(state.login, 'это стейт логин');
+  },
+  [registerUser.rejected]: setError,
 
      //   reducer для обновления state employees после изменения isWorks
      [changeStatusEmployee.pending]: (state) => {

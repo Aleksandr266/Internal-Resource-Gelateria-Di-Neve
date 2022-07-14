@@ -55,6 +55,10 @@ const ResponsiveAppBar = () => {
     navigate('/')
   }
 
+  const profile = () => {
+    navigate('/profile')
+  }
+
   return (
     // NavBar директора
     (login.role === 'Директор' ?
@@ -75,7 +79,7 @@ const ResponsiveAppBar = () => {
             textDecoration: 'none!important',
           }}>
             <img src={logo} className="logo" />
-          Gelateria Di Neve Big
+          Gelateria Di Neve
         </Typography>
           </Link>
 
@@ -107,7 +111,7 @@ const ResponsiveAppBar = () => {
             sx={{
               display: { xs: 'block', md: 'none' },
             }}>
-              <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
+              <MenuItem onClick={handleCloseNavMenu}>
               <Link to="/boss/employees">
                 <Typography  
                 className="btn-navBar" 
@@ -117,12 +121,12 @@ const ResponsiveAppBar = () => {
                 >Сотрудники</Typography>
                 </Link>
               </MenuItem>
-              <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
+              <MenuItem onClick={handleCloseNavMenu}>
               <Link to="/boss/statistic/production">
                 <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет производство</Typography>
                 </Link>
                 </MenuItem>
-                <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
+                <MenuItem onClick={handleCloseNavMenu}>
                 <Link to="/boss/statistic/price" >
                 <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет прайс</Typography>
                 </Link>
@@ -143,21 +147,21 @@ const ResponsiveAppBar = () => {
             fontWeight: 700,
           }}>
           <img src={logo} className="logo" />
-         Gelateria Di Neve Small
+         Gelateria Di Neve 
         </Typography>
         </Link>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
+        <MenuItem  onClick={handleCloseNavMenu}>
            <Link to="/boss/employees">
                 <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Сотрудники</Typography>
                </Link>
         </MenuItem>
-        <MenuItem key={'Отчет производство'} onClick={handleCloseNavMenu}>
+        <MenuItem onClick={handleCloseNavMenu}>
            <Link to="/boss/statistic/production">
                 <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет производство</Typography>
                </Link>
         </MenuItem>
-        <MenuItem key={'Отчет прайс'} onClick={handleCloseNavMenu}>
+        <MenuItem onClick={handleCloseNavMenu}>
            <Link to="/boss/statistic/price">
                 <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет прайс</Typography>
                </Link>
@@ -185,8 +189,10 @@ const ResponsiveAppBar = () => {
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}>
-             <MenuItem key={"Выйти"} onClick={logout}>
-            {/* <Link className="btn-logout" to="/auth/logout"> */}
+            <MenuItem onClick={profile} key={"Личный кабинет"}>
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
+            <MenuItem onClick={logout}>
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
           </Menu>
@@ -258,7 +264,10 @@ const ResponsiveAppBar = () => {
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}>
-            <MenuItem key={"Выйти"} onClick={logout}>
+            <MenuItem onClick={profile} >
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
+            <MenuItem onClick={logout}>
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
         </Menu>
@@ -270,9 +279,10 @@ const ResponsiveAppBar = () => {
   :   login.role === 'Технолог' ?
   
    // навбар технолога
-   <AppBar position="static" color="secondary">
-   <Container maxWidth="xl" >
-     <Toolbar disableGutters className='nav-bar-space-between'>
+   <AppBar position="static" className='111111' color="secondary"sx={{display: 'flex'}}>
+   <Container maxWidth="xl"  className='222222' >
+     <Toolbar disableGutters className='3333333' >
+     {/* className='nav-bar-space-between' */}
       <Link to='/'>
         <Typography
           variant="h6"
@@ -286,7 +296,7 @@ const ResponsiveAppBar = () => {
               fontFamily: 'roboto'
              }}>
             <img src={logo} className="logo" />
-          Gelateria Di Neve Big
+          Gelateria Di Neve
         </Typography>
        </Link>
  
@@ -317,12 +327,12 @@ const ResponsiveAppBar = () => {
            sx={{
              display: { xs: 'block', md: 'none' },
            }}>
-             <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
+             <MenuItem  onClick={handleCloseNavMenu}>
              <Link to="/">
                <Typography  className="btn-navBar" textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Вкусы</Typography>
                </Link>
              </MenuItem>
-             <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
+             <MenuItem onClick={handleCloseNavMenu}>
              <Link to="/ingridients">
                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Ингридиенты</Typography>
                </Link>
@@ -344,16 +354,16 @@ const ResponsiveAppBar = () => {
 
           }}>
           <img src={logo} className="logo" />
-          Gelateria Di Neve Small
+          Gelateria Di Neve
          </Typography>
        </Link>
        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-       <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
+       <MenuItem onClick={handleCloseNavMenu}>
           <Link to="/" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>
                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Вкусы</Typography>
               </Link>
              </MenuItem>
-             <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
+             <MenuItem onClick={handleCloseNavMenu}>
              <Link to="/ingridients" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>
                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Ингридиенты</Typography>
               </Link>
@@ -381,7 +391,10 @@ const ResponsiveAppBar = () => {
            }}
            open={Boolean(anchorElUser)}
            onClose={handleCloseUserMenu}>
-             <MenuItem key={"Выйти"} onClick={logout}>
+            <MenuItem onClick={profile}>
+              <Typography textAlign="center">Личный кабинет</Typography>
+            </MenuItem>
+            <MenuItem onClick={logout}>
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
          </Menu>

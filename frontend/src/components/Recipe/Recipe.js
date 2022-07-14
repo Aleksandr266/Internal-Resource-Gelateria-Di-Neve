@@ -6,7 +6,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import  TableRow  from '@mui/material/TableRow';
+import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
@@ -27,7 +27,6 @@ const StyledTableCell = withStyles((theme) => ({
   // head: {
   //   backgroundColor: theme.palette.common.white,
   //   color: theme.palette.common.black,
-   
   // },
   // body: {
   //   fontSize: 15,
@@ -44,12 +43,12 @@ function Recipe({ recipeId }) {
   }, [recipeIngridients]);
 
   function close() {
-    dispatch(closeRecipe(recipeId))
+    dispatch(closeRecipe(recipeId));
   }
 
   function a(e) {
-    e.preventDefault()
-    console.log(11111111111)
+    e.preventDefault();
+    console.log(11111111111);
   }
 
   return (
@@ -65,15 +64,15 @@ function Recipe({ recipeId }) {
                     <TableCell className="tableHeader" align="left">
                       {recipeIngridient[0]['Recipe.title']}
                     </TableCell>
-                    <TableCell align='right'>
-                    <Button onClick={close}>
-                      <CloseIcon />
-                    </Button>
+                    <TableCell align="right">
+                      <Button onClick={close}>
+                        <CloseIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <StyledTableCell align="left">Ингридиенты</StyledTableCell>
-                    <StyledTableCell align="left">Масса, кг</StyledTableCell>
+                    <StyledTableCell align="left">Масса на 4 кг, кг</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -89,10 +88,12 @@ function Recipe({ recipeId }) {
                   ))}
                 </TableBody>
               </Table>
-              <form onSubmit={a} className='formInputs'>
-                <TextField name='dryMilkMatter' id="standard-basic" label="инпут раз" />
-                <TextField name='dryMilkMatter' id="standard-basic" label="инпут два" />
-                <Button type='submit' variant="contained">Применить</Button>
+              <form onSubmit={a} className="formInputs">
+                <TextField name="dryMilkMatter" id="standard-basic" label="инпут раз" />
+                <TextField name="dryMilkMatter" id="standard-basic" label="инпут два" />
+                <Button type="submit" variant="contained">
+                  Применить
+                </Button>
               </form>
             </TableContainer>
           </div>

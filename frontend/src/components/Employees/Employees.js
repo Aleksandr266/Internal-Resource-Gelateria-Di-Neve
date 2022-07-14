@@ -11,8 +11,6 @@ import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 
 
-
-
 function Employees() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +20,7 @@ function Employees() {
   useEffect(() => {
     dispatch(loadREmployees());
   }, [dispatch]);
+  
   const handleChange = (id) => {
     dispatch(changeStatusEmployee(id))
   }
@@ -36,7 +35,7 @@ function Employees() {
 
   return (
     <>
-     <Button  color="secondary" sx={{margin: 10,}} variant="outlined" size="medium" onClick={() => navigate('/boss/addEmpoyees')}>
+     <Button   sx={{margin: 10,}} variant="outlined" size="medium" onClick={() => navigate('/boss/addEmpoyees')}>
           Добавить сотрудника
         </Button>
       <List sx={style} component="nav" aria-label="mailbox folders">

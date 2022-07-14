@@ -1,3 +1,8 @@
+.box {
+  display: flex;
+  justify-content: center;
+}
+
 .boxForm {
   display: flex;
   flex-direction: column;

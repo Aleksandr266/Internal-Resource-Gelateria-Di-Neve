@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import { registerUser } from '../../store/auth/reducer'
+import { registerUser } from '../../store/boss/reducer'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -51,10 +51,10 @@ function BossAddEmpoyees() {
                 <MenuItem value={"Повар"}>Повар</MenuItem>
                 <MenuItem value={"Технолог"}>Технолог</MenuItem>
              </Select>
-          <TextField  type="text" name='fullname'  label="Фамилия и имя" sx={{ padding: '10px'}}/>
-          <TextField  type="text" name='login'  label="Логин" sx={{ padding: '10px'}} />
-          <TextField  type="password"  name='password' label="Пароль" sx={{ padding: '10px'}} />
-          <Button type='submit' id='btn' color="secondary" variant="outlined">Зарегистрировать</Button>
+          <TextField  type="text" name='fullname'  label="Фамилия и имя" sx={{ padding: '10px'}} autoComplete="off"/>
+          <TextField  type="text" name='login'  label="Логин" sx={{ padding: '10px'}} autoComplete="off"/>
+          <TextField  type="password"  name='password' label="Пароль" sx={{ padding: '10px'}} autoComplete="off"/>
+          <Button type='submit' id='btn' variant="outlined">Зарегистрировать</Button>
          </FormControl>
      </Box>
 </div>
