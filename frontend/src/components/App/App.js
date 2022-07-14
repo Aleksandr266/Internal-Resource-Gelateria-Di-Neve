@@ -36,10 +36,12 @@ function App() {
               <Route path="/boss/employees" element={<Employees />} />
               <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
               <Route path="/boss/statistic" element={<BossStatistic />} />
+              <Route path="*" element={<Error />} />
             </Route>
           ) : login.role === 'Повар' && login.isWorks ? (
             <Route path="/" element={<MainPage />}>
               <Route path="/" element={<Bases />} />
+              <Route path="*" element={<Error />} />
             </Route>
           ) : (
             <Route path="/" element={<MainPage />}>
@@ -48,6 +50,7 @@ function App() {
               <Route path="/recipes/new" element={<NewRecipe />} />
               <Route path="/formAddIngridients" element={<FormAddIngridients />} />
               <Route path="/ingridients" element={<Ingridients />} />
+              <Route path="*" element={<Error />} />
             </Route>
           )}
         </>

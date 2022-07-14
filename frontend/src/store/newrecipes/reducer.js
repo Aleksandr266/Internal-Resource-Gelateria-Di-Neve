@@ -243,7 +243,7 @@ const newRecipes = createSlice({
     setBase(state, action) {
       state.base = state.bases.find((base) => base.id === action.payload);
       state.base.weight = 0;
-      state.base.total_price = state.base.weight * state.base.price;
+      state.base.total_price = (state.base.weight * state.base.price) / 10;
       state.recipe.base_id = action.payload;
       state.recipe.weight = 0;
       state.recipe.total_price = 0;
@@ -282,7 +282,7 @@ const newRecipes = createSlice({
     changeBaseWeight(state, action) {
       console.log(action.payload);
       state.base.weight = action.payload;
-      state.base.total_price = state.base.weight * state.base.price;
+      state.base.total_price = (state.base.weight * state.base.price) / 10;
       state.recipe.weight = calculateRecipeWeight(state.base, state.ingridients);
       state.recipe.total_price = calculateRecipePrice(state.base, state.ingridients);
       const { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index } =
@@ -299,7 +299,7 @@ const newRecipes = createSlice({
       const { id, value } = action.payload;
       const currentIngridient = state.ingridients.find((ingridient) => ingridient.id === id);
       currentIngridient.weight = value;
-      currentIngridient.total_price = currentIngridient.weight * currentIngridient.price;
+      currentIngridient.total_price = (currentIngridient.weight * currentIngridient.price) / 10;
       state.recipe.weight = calculateRecipeWeight(state.base, state.ingridients);
       state.recipe.total_price = calculateRecipePrice(state.base, state.ingridients);
       const { fat, dry_matter, antifris, dry_milk_remainder, sugar, glycemic_index } =
@@ -314,7 +314,7 @@ const newRecipes = createSlice({
     },
     changeBasePrice(state, action) {
       state.base.price = action.payload;
-      state.base.total_price = state.base.weight * state.base.price;
+      state.base.total_price = (state.base.weight * state.base.price) / 10;
     },
     changeRecipeTitle(state, action) {
       state.recipe.title = action.payload;
