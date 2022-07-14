@@ -15,7 +15,8 @@ import BossStatisticPrice from '../Statistics/MarketPriceAndCost/MarkertPriceAnd
 import BossStatisticProduction from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
-import Employees from '../Employees/Employees';
+import Profile from '../Profile/Profile';
+import Employees from '../Employees/Employees'
 import Error from '../Error/Error';
 
 function App() {
@@ -38,11 +39,13 @@ function App() {
               <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
               <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
               <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
+              <Route path='/profile' element={<Profile />} />
               <Route path="*" element={<Error />} />
             </Route>
           ) : login.role === 'Повар' && login.isWorks ? (
             <Route path="/" element={<MainPage />}>
               <Route path="/" element={<Bases />} />
+              <Route path='/profile' element={<Profile />} />
               <Route path="*" element={<Error />} />
             </Route>
           ) : (
@@ -53,6 +56,7 @@ function App() {
                 <Route path="/recipes/new" element={<NewRecipe />} />
                 <Route path="/formAddIngridients" element={<FormAddIngridients />} />
                 <Route path="/ingridients" element={<Ingridients />} />
+                <Route path='/profile' element={<Profile />} />
                 <Route path="*" element={<Error />} />
               </Route>
             )
@@ -64,7 +68,6 @@ function App() {
           <Route path="*" element={<Error />} />
         </>
       )}
-
     </Routes>
   );
 }
