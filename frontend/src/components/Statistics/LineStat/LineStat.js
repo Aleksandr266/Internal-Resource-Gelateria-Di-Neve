@@ -36,7 +36,7 @@ function LineStat() {
 
   
 
-console.log(marketPrice)
+console.log(marketPrice, 111111111111111111111)
 
 const data = {
   labels: marketPrice.title,

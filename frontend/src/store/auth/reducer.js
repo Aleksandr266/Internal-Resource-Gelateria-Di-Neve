@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUsers',
-  async ({login, password}, { rejectWithValue, dispatch }) => {
+  async ({login, password}, { rejectWithValue }) => {
     try {
       const response = await fetch('/auth/log', {
         method: 'POST',
@@ -31,12 +31,12 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async ({role, fullname, login, password}, { rejectWithValue, dispatch }) => {
+  async ({role, fullname, login, password}, { rejectWithValue}) => {
     try {
-      console.log(role, 111111111111111111111111111);
-      console.log(fullname);
-      console.log(login);
-      console.log(password);
+      // console.log(role, 111111111111111111111111111);
+      // console.log(fullname);
+      // console.log(login);
+      // console.log(password);
       const response = await fetch('/auth/reg', {
         method: 'POST',
         body: JSON.stringify({
