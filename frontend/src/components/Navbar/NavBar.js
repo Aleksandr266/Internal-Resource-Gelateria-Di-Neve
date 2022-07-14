@@ -58,29 +58,29 @@ const ResponsiveAppBar = () => {
   return (
     // NavBar директора
     (login.role === 'Директор' ?
-    <AppBar position="static">
+    <AppBar position="static" color="secondary">
     <Container maxWidth="xl">
       <Toolbar disableGutters className='nav-bar-space-between'>
         <Link to="/" >
         <Typography
           variant="h6"
           noWrap
-          component="a"
+          component="div"
           sx={{
             mr: 2,
             display: { xs: 'none', md: 'flex' },
-            fontFamily: 'monospace',
+            fontFamily: '',
+            color: '#cd3039', 
             fontWeight: 700,
-            // letterSpacing: '.3rem',
-            color: 'inherit', //цвет надписи LOGO
-            textDecoration: 'none',
+            textDecoration: 'none!important',
           }}>
             <img src={logo} className="logo" />
-          Gelateria Di Neve
+          Gelateria Di Neve Big
         </Typography>
           </Link>
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* вклдка со скрытым меню */}
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -109,20 +109,27 @@ const ResponsiveAppBar = () => {
             }}>
               <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
               <Link to="/boss/employees">
-                <Typography  className="btn-navBar" textAlign="center">Сотрудники</Typography>
+                <Typography  
+                className="btn-navBar" 
+                textAlign="center"
+                fontFamily="roboto"
+                color="#cd3039"
+                >Сотрудники</Typography>
                 </Link>
               </MenuItem>
               <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
               <Link to="/boss/statistic/production">
-                <Typography  textAlign="center">Отчет производство</Typography>
+                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет производство</Typography>
                 </Link>
-                <Link to="/boss/statistic/price">
-                <Typography  textAlign="center">Отчет прайс</Typography>
+                </MenuItem>
+                <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
+                <Link to="/boss/statistic/price" >
+                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет прайс</Typography>
                 </Link>
               </MenuItem>
           </Menu>
         </Box>
-        <Link to="/" >
+        <Link to="/" sx={{textDecoration: 'none', color: '#cd3039', fontFamily: 'roboto'}}>
         <Typography
           variant="h5"
           noWrap
@@ -131,31 +138,30 @@ const ResponsiveAppBar = () => {
             mr: 2,
             display: { xs: 'flex', md: 'none' },
             flexGrow: 1,
-            fontFamily: 'monospace',
+            fontFamily: 'roboto',
+            color: '#cd3039', 
             fontWeight: 700,
-            // letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
           }}>
-            {/* onClick={navigate('/')} */}
           <img src={logo} className="logo" />
-         Gelateria Di Neve
+         Gelateria Di Neve Small
         </Typography>
         </Link>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
         <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
            <Link to="/boss/employees">
-                <Typography  textAlign="center">Сотрудники</Typography>
+                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Сотрудники</Typography>
                </Link>
-              </MenuItem>
-              <MenuItem key={'Отчет'} onClick={handleCloseNavMenu}>
-              <Link to="/boss/statistic/production">
-                <Typography  textAlign="center">Отчет производство</Typography>
-                </Link>
-                <Link to="/boss/statistic/price">
-                <Typography  textAlign="center">Отчет прайс</Typography>
-                </Link>
-              </MenuItem>
+        </MenuItem>
+        <MenuItem key={'Отчет производство'} onClick={handleCloseNavMenu}>
+           <Link to="/boss/statistic/production">
+                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет производство</Typography>
+               </Link>
+        </MenuItem>
+        <MenuItem key={'Отчет прайс'} onClick={handleCloseNavMenu}>
+           <Link to="/boss/statistic/price">
+                <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Отчет прайс</Typography>
+               </Link>
+        </MenuItem>
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>
@@ -193,28 +199,27 @@ const ResponsiveAppBar = () => {
 
 
   // навбар повара
-  <AppBar position="static" >
+  <AppBar position="static" color="secondary">
   <Container maxWidth="xl" >
     <Toolbar disableGutters className='nav-bar-space-between' >
-      <Link to='/' >
+      <Link to='/'>
         <Typography
          variant="h6"
           noWrap
          component="a"
+         fontFamily='roboto'
+         color='#cd3039'
          sx={{
            mr: 2,
            display: { xs: 'none', md: 'flex' },
-           fontFamily: 'monospace',
            fontWeight: 700,
-           // letterSpacing: '.3rem',
-           color: 'inherit', //цвет надписи LOGO
-           textDecoration: 'none',
+
          }}>
            <img src={logo} className="logo" />
           Gelateria Di Neve
        </Typography>
       </Link>
-      <Link to='/' >
+      <Link to='/'>
        <Typography
          variant="h5"
          noWrap
@@ -225,9 +230,8 @@ const ResponsiveAppBar = () => {
             flexGrow: 1,
             fontFamily: 'monospace',
            fontWeight: 700,
-           // letterSpacing: '.3rem',
-            color: 'inherit',
-           textDecoration: 'none',
+           fontFamily:'roboto',
+           color:'#cd3039',
          }}>
           <img src={logo} className="logo" />
          Gelateria Di Neve 
@@ -266,10 +270,10 @@ const ResponsiveAppBar = () => {
   :   login.role === 'Технолог' ?
   
    // навбар технолога
-   <AppBar position="static">
+   <AppBar position="static" color="secondary">
    <Container maxWidth="xl" >
      <Toolbar disableGutters className='nav-bar-space-between'>
-      <Link to='/' >
+      <Link to='/'>
         <Typography
           variant="h6"
           noWrap
@@ -277,14 +281,12 @@ const ResponsiveAppBar = () => {
           sx={{
             mr: 2,
              display: { xs: 'none', md: 'flex' },
-             fontFamily: 'monospace',
              fontWeight: 700,
-             // letterSpacing: '.3rem',
-            color: 'inherit', //цвет надписи LOGO
-            textDecoration: 'none',
-          }}>
+             color: '#cd3039',
+              fontFamily: 'roboto'
+             }}>
             <img src={logo} className="logo" />
-          Gelateria Di Neve 
+          Gelateria Di Neve Big
         </Typography>
        </Link>
  
@@ -317,44 +319,43 @@ const ResponsiveAppBar = () => {
            }}>
              <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
              <Link to="/">
-               <Typography  className="btn-navBar" textAlign="center">Вкусы</Typography>
+               <Typography  className="btn-navBar" textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Вкусы</Typography>
                </Link>
              </MenuItem>
              <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
              <Link to="/ingridients">
-               <Typography  textAlign="center">Ингридиенты</Typography>
+               <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Ингридиенты</Typography>
                </Link>
              </MenuItem>
          </Menu>
        </Box>
-       <Link to='/' >
+       <Link to='/'>
         <Typography
           variant="h5"
           noWrap
-          component="a"
+          component="div"
           sx={{
             mr: 2,
             display: { xs: 'flex', md: 'none' },
             flexGrow: 1,
-            fontFamily: 'monospace',
             fontWeight: 700,
-            // letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
+            color: '#cd3039', 
+            fontFamily: 'roboto'
+
           }}>
           <img src={logo} className="logo" />
-          Gelateria Di Neve 
+          Gelateria Di Neve Small
          </Typography>
        </Link>
        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
        <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
-          <Link to="/">
-               <Typography  textAlign="center">Вкусы</Typography>
+          <Link to="/" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>
+               <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Вкусы</Typography>
               </Link>
              </MenuItem>
              <MenuItem key={'Ингридиенты'} onClick={handleCloseNavMenu}>
-             <Link to="/ingridients">
-               <Typography  textAlign="center">Ингридиенты</Typography>
+             <Link to="/ingridients" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>
+               <Typography  textAlign="center" sx={{  color: '#cd3039', fontFamily: 'roboto'}}>Ингридиенты</Typography>
               </Link>
              </MenuItem>
        </Box>

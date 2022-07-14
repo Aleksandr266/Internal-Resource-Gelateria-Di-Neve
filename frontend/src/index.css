@@ -56,6 +56,7 @@ code {
 }
 
 .auth-section {
+
   min-height: 100%;
   background: center/cover url('../public/img/milkshake_illustration_page-0001.jpg') no-repeat;
 }
@@ -64,7 +65,7 @@ display: flex;
 flex-direction: column;
 width: 20%;
 padding-left: 42%;
-padding-top: 12%;
+padding-top: 18%;
 align-items: center;
 }
 
@@ -103,5 +104,12 @@ padding-top: 10px;
 .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop{
 background-color: transparent!important;
 }
+
+a {
+  text-decoration: none;
+  color: '#cd3039';
+  font-family: 'roboto';
+}
+
 
 

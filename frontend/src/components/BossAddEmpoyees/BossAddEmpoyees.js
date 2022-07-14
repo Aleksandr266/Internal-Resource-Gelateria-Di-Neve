@@ -38,23 +38,23 @@ function BossAddEmpoyees() {
     <div className='boxForm'>
        <Box component="form" onSubmit={registerForm} noValidate sx={{ mt: 1 }}>
  
-         <FormControl variant="standard" sx={{ m: 1, minWidth: 480 }}>
+         <FormControl variant="standard" sx={{ m: 1, minWidth: 470 }}>
              <InputLabel id="demo-simple-select-standard-label">Должность</InputLabel>
              <Select
                 labelId="demo-simple-select-standard-label"
                id="demo-simple-select-standard"
                value={role}
                 onChange={handleChange}
-                // label="role"
                 name='role'
+                sx={{ marginBottom: 1 }}
               > 
                 <MenuItem value={"Повар"}>Повар</MenuItem>
                 <MenuItem value={"Технолог"}>Технолог</MenuItem>
              </Select>
-          <TextField  type="text" name='fullname'  label="Фамилия и имя" />
-          <TextField  type="text" name='login'  label="Логин" />
-          <TextField  type="password"  name='password' label="Пароль" />
-          <Button type='submit' id='btn' variant="outlined">Зарегистрировать</Button>
+          <TextField  type="text" name='fullname'  label="Фамилия и имя" sx={{ padding: '10px'}}/>
+          <TextField  type="text" name='login'  label="Логин" sx={{ padding: '10px'}} />
+          <TextField  type="password"  name='password' label="Пароль" sx={{ padding: '10px'}} />
+          <Button type='submit' id='btn' color="secondary" variant="outlined">Зарегистрировать</Button>
          </FormControl>
      </Box>
 </div>

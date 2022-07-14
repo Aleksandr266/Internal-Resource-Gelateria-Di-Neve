@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-// import { loadREmployees } from '../../store/boss/reducer'
-// import { changeStatusEmployee } from '../../store/boss/reducer'
+import { loadREmployees } from '../../store/boss/reducer'
+import { changeStatusEmployee } from '../../store/boss/reducer'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -19,12 +19,12 @@ function Employees() {
   const { employees }= useSelector((state) => state.boss)
 
 
-  // useEffect(() => {
-  //   dispatch(loadREmployees());
-  // }, [dispatch]);
-  // const handleChange = (id) => {
-  //   dispatch(changeStatusEmployee(id))
-  // }
+  useEffect(() => {
+    dispatch(loadREmployees());
+  }, [dispatch]);
+  const handleChange = (id) => {
+    dispatch(changeStatusEmployee(id))
+  }
 
   const style = {
     width: '100%',
@@ -36,7 +36,7 @@ function Employees() {
 
   return (
     <>
-     <Button sx={{margin: 10,}} variant="outlined" size="medium" onClick={() => navigate('/boss/addEmpoyees')}>
+     <Button  color="secondary" sx={{margin: 10,}} variant="outlined" size="medium" onClick={() => navigate('/boss/addEmpoyees')}>
           Добавить сотрудника
         </Button>
       <List sx={style} component="nav" aria-label="mailbox folders">
@@ -55,7 +55,7 @@ function Employees() {
         />
         <Switch 
         checked={empl.isWorks} 
-        // onChange={() => handleChange(empl.id)}
+        onChange={() => handleChange(empl.id)}
         inputProps={{ 'aria-label': 'controlled' }}
         />
      </ListItem>

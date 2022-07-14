@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { loginUser } from '../../store/auth/reducer'
+import { theme } from './theme'
 import './App.css';
 import MainPage from '../MainPage/MainPage';
 import Bases from '../Bases/Bases';
@@ -17,6 +18,7 @@ import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Employees from '../Employees/Employees'
 import Error from '../Error/Error';
+import { ThemeProvider } from '@emotion/react';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,41 +30,42 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      {login.role === "Директор" ? 
+    <ThemeProvider theme={theme} >
+      <Routes>
+        {login.role === "Директор" ? 
 
-      <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<BossMainPage />} />
-        <Route path="/boss/employees" element={<Employees />} />
-        <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
-        <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
-        <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
-      </Route>
+          <Route path="/" element={<MainPage />}>
+            <Route path="/" element={<BossMainPage />} />
+            <Route path="/boss/employees" element={<Employees />} />
+            <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
+            <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
+            <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
+          </Route>
 
-      : login.role === "Повар" && login.isWorks ? 
+        : login.role === "Повар" && login.isWorks ? 
 
-      <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<Bases />} />
-      </Route>
-      
-      : login.role === "Технолог" && login.isWorks ?
-      
-      <Route path="/" element={<MainPage />}>
-        <Route path="/" element={<TechnologBases />} />
-        <Route path="/" element={<NewRecipe />} />
-        <Route path="/recipes/new" element={<NewRecipe />} />
-        <Route path="/formAddIngridients" element={<FormAddIngridients />} />
-        <Route path="/ingridients" element={<Ingridients />} />
-      
-      </Route>
+          <Route path="/" element={<MainPage />}>
+            <Route path="/" element={<Bases />} />
+          </Route>
 
-      :
-       <>
-       <Route path="/" element={<Auth />} />
-       <Route path="*" element={<Error />} />
-      </>
-      }
-    </Routes>
+       : login.role === "Технолог" && login.isWorks ?
+
+        <Route path="/" element={<MainPage />}>
+          <Route path="/" element={<TechnologBases />} />
+          <Route path="/" element={<NewRecipe />} />
+          <Route path="/recipes/new" element={<NewRecipe />} />
+          <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+          <Route path="/ingridients" element={<Ingridients />} />
+        </Route>
+
+        :
+         <>
+          <Route path="/" element={<Auth />} />
+          <Route path="*" element={<Error />} />
+        </>
+       }
+     </Routes>
+    </ThemeProvider>
   );
 }
 

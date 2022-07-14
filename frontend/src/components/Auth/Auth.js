@@ -43,20 +43,20 @@ const loginForm = (e) => {
           className="input-login"
           id="standard-password-input1"
           label="Логин"
-          autoComplete="current-password"
+          // autoComplete="current-password"
           variant="outlined"
           name='login'
-          // autoComplete="off" // Включить!
+          autoComplete="off" // Включить!
         />
          <TextField sx={{ borderRadius: '50%' }}
            className="input-password"
           id="standard-password-input2"
           label="Пароль"
           type="password"
-          autoComplete="current-password"
+          // autoComplete="current-password"
           variant="outlined"
           name='password'
-          // autoComplete="off"  // Включить!
+          autoComplete="off"  // Включить!
         />
         <Button 
        id='btn-login'
