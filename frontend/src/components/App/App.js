@@ -11,7 +11,8 @@ import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
 import BossMainPage from '../BossMainPage/BossMainPage'
 import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees'
-import BossStatistic from '../Statistics/LineStat/LineStat'
+import BossStatisticPrice from '../Statistics/MarketPriceAndCost/MarkertPriceAndCost'
+import BossStatisticProduction from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Employees from '../Employees/Employees'
@@ -34,15 +35,14 @@ function App() {
         <Route path="/" element={<BossMainPage />} />
         <Route path="/boss/employees" element={<Employees />} />
         <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
-        <Route path="/boss/statistic" element={<BossStatistic />} />
-       <Route path="*" element={<Error />} />
+        <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
+        <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
       </Route>
 
       : login.role === "Повар" && login.isWorks ? 
 
       <Route path="/" element={<MainPage />}>
         <Route path="/" element={<Bases />} />
-        <Route path="*" element={<Error />} />
       </Route>
       
       : login.role === "Технолог" && login.isWorks ?
@@ -53,13 +53,14 @@ function App() {
         <Route path="/recipes/new" element={<NewRecipe />} />
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/ingridients" element={<Ingridients />} />
-        <Route path="*" element={<Error />} />
+      
       </Route>
 
       :
-
-      <Route path="/" element={<Auth />} />
-
+       <>
+       <Route path="/" element={<Auth />} />
+       <Route path="*" element={<Error />} />
+      </>
       }
     </Routes>
   );
