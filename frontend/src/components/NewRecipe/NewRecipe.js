@@ -34,6 +34,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getIngridients } from '../../store/ingridients/reducer';
 import {
+  reset,
   saveRecipe,
   changeRecipeTitle,
   getBases,
@@ -92,6 +93,7 @@ function NewRecipe() {
   React.useEffect(() => {
     if (doneStatus) {
       dispatch(saveRecipeBase(doneRecipe));
+      dispatch(reset());
     }
   }, [dispatch, doneStatus, doneRecipe]);
 

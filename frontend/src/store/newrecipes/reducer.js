@@ -133,110 +133,113 @@ const setError = (state, action) => {
   state.error = action.payload;
 };
 
+const initialState = {
+  bases: [],
+  base: null,
+  allIngridients: [],
+  ingridients: [],
+  patterns: {
+    1: [1, 2, 3, 4, 5, 6, 8],
+    2: [3, 4, 5, 6, 10],
+  },
+  recipe: {
+    title: '',
+    market_price: 0,
+    standart: 10,
+  },
+  doneRecipe: {},
+  doneStatus: false,
+  recipeErrors: [],
+  norms: [
+    {
+      base_id: 1,
+      params: [
+        {
+          title: 'Жирность',
+          key: 'fat',
+          min: 3,
+          max: 9,
+          isNorm: false,
+        },
+        {
+          title: 'Сухие вещества',
+          key: 'dry_matter',
+          min: 35,
+          max: 42,
+          isNorm: false,
+        },
+        {
+          title: 'Сахар',
+          key: 'sugar',
+          min: 18,
+          max: 25,
+          isNorm: false,
+        },
+        {
+          title: 'Антифриз',
+          key: 'antifris',
+          min: 26,
+          max: 34,
+          isNorm: false,
+        },
+        {
+          title: 'Сухой молочный остаток',
+          key: 'dry_milk_remainder',
+          min: 5,
+          max: 12,
+          isNorm: false,
+        },
+        {
+          title: 'Гликимический индекс',
+          key: 'glycemic_index',
+          isNorm: true,
+        },
+      ],
+    },
+    {
+      base_id: 2,
+      params: [
+        {
+          title: 'Жирность',
+          key: 'fat',
+          isNorm: true,
+        },
+        {
+          title: 'Сухие вещества',
+          key: 'dry_matter',
+          min: 32,
+          max: 45,
+          isNorm: false,
+        },
+        {
+          title: 'Сахар',
+          key: 'sugar',
+          min: 25,
+          max: 30,
+          isNorm: false,
+        },
+        {
+          title: 'Антифриз',
+          key: 'antifris',
+          min: 26,
+          max: 34,
+          isNorm: false,
+        },
+        {
+          title: 'Гликимический индекс',
+          key: 'glycemic_index',
+          isNorm: true,
+        },
+      ],
+    },
+  ],
+};
+
 const newRecipes = createSlice({
   name: 'newrecipes',
-  initialState: {
-    bases: [],
-    base: null,
-    allIngridients: [],
-    ingridients: [],
-    patterns: {
-      1: [1, 2, 3, 4, 5, 6, 8],
-      2: [3, 4, 5, 6, 10],
-    },
-    recipe: {
-      title: '',
-      market_price: 0,
-      standart: 10,
-    },
-    doneRecipe: {},
-    doneStatus: false,
-    recipeErrors: [],
-    norms: [
-      {
-        base_id: 1,
-        params: [
-          {
-            title: 'Жирность',
-            key: 'fat',
-            min: 3,
-            max: 9,
-            isNorm: false,
-          },
-          {
-            title: 'Сухие вещества',
-            key: 'dry_matter',
-            min: 35,
-            max: 42,
-            isNorm: false,
-          },
-          {
-            title: 'Сахар',
-            key: 'sugar',
-            min: 18,
-            max: 25,
-            isNorm: false,
-          },
-          {
-            title: 'Антифриз',
-            key: 'antifris',
-            min: 26,
-            max: 34,
-            isNorm: false,
-          },
-          {
-            title: 'Сухой молочный остаток',
-            key: 'dry_milk_remainder',
-            min: 5,
-            max: 12,
-            isNorm: false,
-          },
-          {
-            title: 'Гликимический индекс',
-            key: 'glycemic_index',
-            isNorm: true,
-          },
-        ],
-      },
-      {
-        base_id: 2,
-        params: [
-          {
-            title: 'Жирность',
-            key: 'fat',
-            isNorm: true,
-          },
-          {
-            title: 'Сухие вещества',
-            key: 'dry_matter',
-            min: 32,
-            max: 45,
-            isNorm: false,
-          },
-          {
-            title: 'Сахар',
-            key: 'sugar',
-            min: 25,
-            max: 30,
-            isNorm: false,
-          },
-          {
-            title: 'Антифриз',
-            key: 'antifris',
-            min: 26,
-            max: 34,
-            isNorm: false,
-          },
-          {
-            title: 'Гликимический индекс',
-            key: 'glycemic_index',
-            isNorm: true,
-          },
-        ],
-      },
-    ],
-  },
+  initialState,
   reducers: {
+    reset: () => initialState,
     setBase(state, action) {
       state.base = state.bases.find((base) => base.id === action.payload);
       state.base.weight = 0;
@@ -435,6 +438,7 @@ const newRecipes = createSlice({
   },
 });
 export const {
+  reset,
   changeRecipePrice,
   saveRecipe,
   changeRecipeTitle,
