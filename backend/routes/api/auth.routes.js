@@ -22,6 +22,7 @@ authRouter.route('/log').post(async (req, res) => {
       id: checkedUser.id,
       fullname: checkedUser.fullname,
       role: checkedUser.UserType.title,
+      isWorks: checkedUser.isWorks,
     });
   } catch (error) {
     console.log(error);

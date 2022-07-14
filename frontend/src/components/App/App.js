@@ -15,6 +15,7 @@ import BossStatistic from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Employees from '../Employees/Employees'
+import Error from '../Error/Error';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,15 +35,17 @@ function App() {
         <Route path="/boss/employees" element={<Employees />} />
         <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
         <Route path="/boss/statistic" element={<BossStatistic />} />
+       <Route path="*" element={<Error />} />
       </Route>
 
-      : login.role === "Повар" ? 
+      : login.role === "Повар" && login.isWorks ? 
 
       <Route path="/" element={<MainPage />}>
         <Route path="/" element={<Bases />} />
+        <Route path="*" element={<Error />} />
       </Route>
       
-      : login.role === "Технолог" ?
+      : login.role === "Технолог" && login.isWorks ?
       
       <Route path="/" element={<MainPage />}>
         <Route path="/" element={<TechnologBases />} />
@@ -50,6 +53,7 @@ function App() {
         <Route path="/recipes/new" element={<NewRecipe />} />
         <Route path="/formAddIngridients" element={<FormAddIngridients />} />
         <Route path="/ingridients" element={<Ingridients />} />
+        <Route path="*" element={<Error />} />
       </Route>
 
       :

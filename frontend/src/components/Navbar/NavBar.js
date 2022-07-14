@@ -61,12 +61,11 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
     <Container maxWidth="xl">
       <Toolbar disableGutters className='nav-bar-space-between'>
+        <Link to="/" >
         <Typography
           variant="h6"
           noWrap
           component="a"
-          // href="/"
-          // onClick={navigate('/')} //Бесконечная загрузка
           sx={{
             mr: 2,
             display: { xs: 'none', md: 'flex' },
@@ -77,9 +76,9 @@ const ResponsiveAppBar = () => {
             textDecoration: 'none',
           }}>
             <img src={logo} className="logo" />
-          Gelateria Di Neve 
+          Gelateria Di Neve
         </Typography>
-
+          </Link>
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
@@ -120,11 +119,11 @@ const ResponsiveAppBar = () => {
               </MenuItem>
           </Menu>
         </Box>
+        <Link to="/" >
         <Typography
           variant="h5"
           noWrap
           component="a"
-          href="/"
           sx={{
             mr: 2,
             display: { xs: 'flex', md: 'none' },
@@ -139,6 +138,7 @@ const ResponsiveAppBar = () => {
           <img src={logo} className="logo" />
          Gelateria Di Neve
         </Typography>
+        </Link>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
         <MenuItem key={'Сотрудники'} onClick={handleCloseNavMenu}>
            <Link to="/boss/employees">
@@ -190,43 +190,43 @@ const ResponsiveAppBar = () => {
   <AppBar position="static" >
   <Container maxWidth="xl" >
     <Toolbar disableGutters className='nav-bar-space-between' >
-      <Typography
-        variant="h6"
-        noWrap
-        component="a"
-        // href="/"
-        sx={{
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          // letterSpacing: '.3rem',
-          color: 'inherit', //цвет надписи LOGO
-          textDecoration: 'none',
-        }}>
+      <Link to='/' >
+        <Typography
+         variant="h6"
+          noWrap
+         component="a"
+         sx={{
+           mr: 2,
+           display: { xs: 'none', md: 'flex' },
+           fontFamily: 'monospace',
+           fontWeight: 700,
+           // letterSpacing: '.3rem',
+           color: 'inherit', //цвет надписи LOGO
+           textDecoration: 'none',
+         }}>
+           <img src={logo} className="logo" />
+          Gelateria Di Neve
+       </Typography>
+      </Link>
+      <Link to='/' >
+       <Typography
+         variant="h5"
+         noWrap
+         component="a"
+          sx={{
+            mr: 2,
+            display: { xs: 'flex', md: 'none' },
+            flexGrow: 1,
+            fontFamily: 'monospace',
+           fontWeight: 700,
+           // letterSpacing: '.3rem',
+            color: 'inherit',
+           textDecoration: 'none',
+         }}>
           <img src={logo} className="logo" />
-        Gelateria Di Neve
-        <Link to="/" />
-      </Typography>
-      <Typography
-        variant="h5"
-        noWrap
-        component="a"
-        // href="/"
-        sx={{
-          mr: 2,
-          display: { xs: 'flex', md: 'none' },
-          flexGrow: 1,
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          // letterSpacing: '.3rem',
-          color: 'inherit',
-          textDecoration: 'none',
-        }}>
-         <img src={logo} className="logo" />
-         <Link to="/" />
-       Gelateria Di Neve 
-      </Typography>
+         Gelateria Di Neve 
+        </Typography>
+      </Link>
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -249,7 +249,6 @@ const ResponsiveAppBar = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}>
             <MenuItem key={"Выйти"} onClick={logout}>
-            {/* <Link className="btn-logout" to="/auth/logout"> */}
               <Typography textAlign="center">Выйти</Typography>
             </MenuItem>
         </Menu>
@@ -264,24 +263,24 @@ const ResponsiveAppBar = () => {
    <AppBar position="static">
    <Container maxWidth="xl" >
      <Toolbar disableGutters className='nav-bar-space-between'>
-       <Typography
-         variant="h6"
-         noWrap
-         component="a"
-        //  href="/"
-         sx={{
-           mr: 2,
-           display: { xs: 'none', md: 'flex' },
-           fontFamily: 'monospace',
-           fontWeight: 700,
-           // letterSpacing: '.3rem',
-           color: 'inherit', //цвет надписи LOGO
-           textDecoration: 'none',
-         }}>
-           <img src={logo} className="logo" />
-           <Link to="/" />
-         Gelateria Di Neve 
-       </Typography>
+      <Link to='/' >
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          sx={{
+            mr: 2,
+             display: { xs: 'none', md: 'flex' },
+             fontFamily: 'monospace',
+             fontWeight: 700,
+             // letterSpacing: '.3rem',
+            color: 'inherit', //цвет надписи LOGO
+            textDecoration: 'none',
+          }}>
+            <img src={logo} className="logo" />
+          Gelateria Di Neve 
+        </Typography>
+       </Link>
  
        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
          <IconButton
@@ -322,25 +321,25 @@ const ResponsiveAppBar = () => {
              </MenuItem>
          </Menu>
        </Box>
-       <Typography
-         variant="h5"
-         noWrap
-         component="a"
-        //  href="/"
-         sx={{
-           mr: 2,
-           display: { xs: 'flex', md: 'none' },
-           flexGrow: 1,
-           fontFamily: 'monospace',
-           fontWeight: 700,
-           // letterSpacing: '.3rem',
-           color: 'inherit',
-           textDecoration: 'none',
-         }}>
-         <img src={logo} className="logo" />
-         <Link to="/" />
-        Gelateria Di Neve 
-       </Typography>
+       <Link to='/' >
+        <Typography
+          variant="h5"
+          noWrap
+          component="a"
+          sx={{
+            mr: 2,
+            display: { xs: 'flex', md: 'none' },
+            flexGrow: 1,
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            // letterSpacing: '.3rem',
+            color: 'inherit',
+            textDecoration: 'none',
+          }}>
+          <img src={logo} className="logo" />
+          Gelateria Di Neve 
+         </Typography>
+       </Link>
        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
        <MenuItem key={'Вкусы'} onClick={handleCloseNavMenu}>
           <Link to="/">
