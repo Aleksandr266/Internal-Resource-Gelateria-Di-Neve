@@ -133,8 +133,8 @@ function NewRecipe() {
     [dispatch],
   );
 
-  // console.log('ingridients', ingridients);
-  console.log('doneRecipe', doneRecipe);
+  console.log('ingridients', ingridients);
+  // console.log('doneRecipe', doneRecipe);
 
   const handleClickIngridient = React.useCallback(() => {
     if (selectValue !== '') {
@@ -194,7 +194,7 @@ function NewRecipe() {
                   <TableCell align="left">Ингридиент</TableCell>
                   <TableCell align="center">Масса на 10 кг продукта, кг</TableCell>
                   <TableCell align="center">Цена за 1 кг, руб</TableCell>
-                  <TableCell align="center">Стоимость 10 кг, руб</TableCell>
+                  <TableCell align="center">Стоимость 1 кг, руб</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

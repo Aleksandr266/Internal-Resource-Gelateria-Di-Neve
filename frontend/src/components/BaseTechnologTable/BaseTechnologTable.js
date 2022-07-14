@@ -68,7 +68,7 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     // width: 160,
-    valueGetter: (marketPrice) => `${(marketPrice.row.production_losses)*100}%`, 
+    valueGetter: (marketPrice) => `${(Math.abs((marketPrice.row.production_losses))*100).toFixed(2)}%`, 
   }, 
 ];
 

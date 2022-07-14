@@ -10,6 +10,8 @@ import './style.css'
 
 function Profile() {
 
+  const { login } = useSelector((state) => state.auth);
+
   const { user, userEdit } = useSelector((state) => state.profile)
 
   const dispatch = useDispatch();
@@ -51,10 +53,11 @@ function Profile() {
               <br />
               <div className='div'>Login: {user.login} </div>
               {
-                user['UserType.title']
+                login.role === 'Директор' 
+                ? (<><br /><Button onClick={showForm} variant="outlined">изменить</Button></>)
+                : (<></>)
               }
-              <br />
-              <Button onClick={showForm} variant="outlined">изменить</Button>
+              
             </Box>
           </Box>
         </Box>
