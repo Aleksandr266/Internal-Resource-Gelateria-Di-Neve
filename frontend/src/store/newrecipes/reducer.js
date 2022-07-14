@@ -321,11 +321,11 @@ const newRecipes = createSlice({
     },
     changeRecipePrice(state, action) {
       console.log(action.payload);
-      state.recipe.market_price = action.payload;
+      state.recipe.market_price = action.payload || 0;
     },
     changeRecipeStandart(state, action) {
       console.log(action.payload);
-      state.recipe.standart = action.payload;
+      state.recipe.standart = action.payload || 0;
     },
     saveRecipe(state, action) {
       state.recipeErrors = [];
@@ -371,12 +371,18 @@ const newRecipes = createSlice({
         state.doneRecipe.store = {
           standart: state.recipe.standart,
         };
-        state.doneRecipe.recipeIngridients = state.ingridients
-          .map((ingridient) => ({
-            ingridient_id: ingridient.id,
-            weight: ingridient.weight,
-          }))
-          .filter((ingridient) => ingridient.weight > 0);
+        const baseIngridientId = state.allIngridients.find(
+          (ingridient) => ingridient.title === state.base.title,
+        ).id;
+        state.doneRecipe.recipeIngridients = [
+          ...state.ingridients
+            .map((ingridient) => ({
+              ingridient_id: ingridient.id,
+              weight: ingridient.weight,
+            }))
+            .filter((ingridient) => ingridient.weight > 0),
+          { ingridient_id: baseIngridientId, weight: state.base.weight },
+        ];
         state.doneStatus = true;
         console.log('Всё супер!!!');
       }

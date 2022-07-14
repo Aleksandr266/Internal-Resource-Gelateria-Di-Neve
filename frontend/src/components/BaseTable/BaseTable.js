@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 import React, { useCallback } from 'react';
 import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateStore } from '../../store/recipes/reducer';
 
 import Button from '@mui/material/Button';
@@ -67,6 +67,19 @@ function BaseTable({ recipes }) {
       width: 150,
       editable: true,
       valueGetter: (recipes) => `${recipes.row.Store.plan}`,
+    },
+    {
+      field: 'current_plan',
+      headerName: 'В работу',
+      type: 'number',
+      width: 150,
+      editable: false,
+      valueGetter: (recipes) =>
+        `${
+          recipes.row.Store.plan - recipes.row.Store.amount < 0
+            ? 0
+            : Math.round((recipes.row.Store.plan - recipes.row.Store.amount) * 100) / 100
+        }`,
     },
     {
       field: 'total_base',

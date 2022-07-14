@@ -9,10 +9,10 @@ import Bases from '../Bases/Bases';
 import FormAddIngridients from '../FormAddIngridients/FormAddIngridients';
 import Ingridients from '../Ingridients/ingridients';
 import Auth from '../Auth/Auth';
-import BossMainPage from '../BossMainPage/BossMainPage'
-import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees'
-import BossStatisticPrice from '../Statistics/MarketPriceAndCost/MarkertPriceAndCost'
-import BossStatisticProduction from '../Statistics/LineStat/LineStat'
+import BossMainPage from '../BossMainPage/BossMainPage';
+import BossAddEmpoyees from '../BossAddEmpoyees/BossAddEmpoyees';
+import BossStatisticPrice from '../Statistics/MarketPriceAndCost/MarkertPriceAndCost';
+import BossStatisticProduction from '../Statistics/LineStat/LineStat';
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Profile from '../Profile/Profile';
@@ -48,18 +48,19 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path="*" element={<Error />} />
             </Route>
+          ) : login.isWorks ? (
+            <Route path="/" element={<MainPage />}>
+              <Route path="/" element={<TechnologBases />} />
+              {/* <Route path="/" element={<NewRecipe />} /> */}
+              <Route path="/recipes/new" element={<NewRecipe />} />
+              <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+              <Route path="/ingridients" element={<Ingridients />} />
+              <Route path="*" element={<Error />} />
+            </Route>
           ) : (
-            login.isWorks && (
-              <Route path="/" element={<MainPage />}>
-                <Route path="/" element={<TechnologBases />} />
-                {/* <Route path="/" element={<NewRecipe />} /> */}
-                <Route path="/recipes/new" element={<NewRecipe />} />
-                <Route path="/formAddIngridients" element={<FormAddIngridients />} />
-                <Route path="/ingridients" element={<Ingridients />} />
-                <Route path='/profile' element={<Profile />} />
-                <Route path="*" element={<Error />} />
-              </Route>
-            )
+            <Route path="/" element={<MainPage />}>
+              <Route path="*" element={<Error />} />
+            </Route>
           )}
         </>
       ) : (

@@ -58,22 +58,25 @@ const getCategories = (recipes) => {
   const categories = {};
   console.log(recipes);
   recipes.forEach((recipe) => {
+    const currentPlan =
+      recipe.Store.plan - recipe.Store.amount < 0 ? 0 : recipe.Store.plan - recipe.Store.amount;
+    console.log(currentPlan, 'currentPlan');
     if (categories.hasOwnProperty(recipe.Base.title)) {
       categories[recipe.Base.title].push({
         ...recipe,
         total_base:
-          Math.round(
-            (Math.round(Number(recipe.base_weight) * 10) / 100) * recipe.Store.plan * 100,
-          ) / 100,
+          (Math.round((Math.round(Number(recipe.base_weight) * 10) / 100) * currentPlan * 100) /
+            100) *
+          2,
       });
     } else {
       categories[recipe.Base.title] = [
         {
           ...recipe,
           total_base:
-            Math.round(
-              (Math.round(Number(recipe.base_weight) * 10) / 100) * recipe.Store.plan * 100,
-            ) / 100,
+            (Math.round((Math.round(Number(recipe.base_weight) * 10) / 100) * currentPlan * 100) /
+              100) *
+            2,
         },
       ];
     }
@@ -108,6 +111,7 @@ export const loadRecipes = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log('recipes from base', data);
 
       return data;
     } catch (error) {
@@ -133,6 +137,8 @@ export const loadRecipeById = createAsyncThunk(
 
       const data = await response.json();
       dispatch(openRecipe(id));
+      // console.log('После АААА');
+      // dispatch(addProduction(id));
 
       return data;
     } catch (error) {
@@ -179,8 +185,6 @@ export const updateStore = createAsyncThunk(
           Accept: 'application/json',
         },
       });
-      console.log('это перед респонсом');
-      console.log(response);
       if (!response.ok) {
         throw new Error('Server Error!');
       }
@@ -266,6 +270,31 @@ export const resetStock = createAsyncThunk(
   },
 );
 
+export const createProduct = createAsyncThunk(
+  'recipes/createProduct',
+  async ({ production }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch('/recipes/production', {
+        method: 'POST',
+        body: JSON.stringify(production),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      dispatch(
+        createProductComplete({ id: production.recipe_id, value: production.input_amount / 2 }),
+      );
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const setError = (state, action) => {
   state.status = 'rejected';
   state.error = action.payload;
@@ -279,6 +308,7 @@ const recipeSlice = createSlice({
     recipeIngridients: [],
     openedBaseRecipes: [],
     basesTodos: [],
+    production: [],
     need: 35,
     stockVisibles: {},
     status: null,
@@ -316,6 +346,22 @@ const recipeSlice = createSlice({
     changeNeed(state, action) {
       state.need = action.payload;
     },
+    changeInputProduction(state, action) {
+      state.production = state.production.map((product) => {
+        if (product.recipe_id === action.payload.recipeId) {
+          product.input = action.payload.value;
+        }
+        return product;
+      });
+    },
+    changeOutputProduction(state, action) {
+      state.production = state.production.map((product) => {
+        if (product.recipe_id === action.payload.recipeId) {
+          product.output = action.payload.value;
+        }
+        return product;
+      });
+    },
     openBaseRecipe(state, action) {
       if (!state.openedBaseRecipes.find((el) => el[0].base_id === action.payload[0].base_id)) {
         state.openedBaseRecipes.push(action.payload);
@@ -337,6 +383,11 @@ const recipeSlice = createSlice({
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.isOpen = true;
       state.recipesByBases = getCategories(state.recipes);
+      state.production.push({
+        recipe_id: id,
+        input: 4,
+        output: 4,
+      });
       // state.openedRecipes.push(action.payload);
     },
     closeRecipe(state, action) {
@@ -344,6 +395,10 @@ const recipeSlice = createSlice({
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.isOpen = false;
       state.recipesByBases = getCategories(state.recipes);
+      state.production.splice(
+        state.production.findIndex((product) => product.recipe_id === id),
+        1,
+      );
     },
     setTodoToggle(state, action) {
       const { baseId, id } = action.payload;
@@ -362,6 +417,12 @@ const recipeSlice = createSlice({
       const { id, field, value } = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.Store[field] = value;
+      state.recipesByBases = getCategories(state.recipes);
+    },
+    createProductComplete(state, action) {
+      const { id, value } = action.payload;
+      const findedRecipe = state.recipes.find((store) => store.id === id);
+      findedRecipe.Store.amount = Number(findedRecipe.Store.amount) + Number(value);
       state.recipesByBases = getCategories(state.recipes);
     },
   },
@@ -397,6 +458,10 @@ const recipeSlice = createSlice({
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
+  createProductComplete,
+  changeOutputProduction,
+  changeInputProduction,
+  addProduction,
   changeNeed,
   closeBaseRecipe,
   closeRecipe,
