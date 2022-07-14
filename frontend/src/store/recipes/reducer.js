@@ -279,6 +279,7 @@ const recipeSlice = createSlice({
     recipeIngridients: [],
     openedBaseRecipes: [],
     basesTodos: [],
+    need: 35,
     stockVisibles: {},
     status: null,
     error: null,
@@ -311,6 +312,9 @@ const recipeSlice = createSlice({
     setStockVisibles(state, action) {
       const { id } = action.payload;
       state.stockVisibles[id] = !state.stockVisibles[id];
+    },
+    changeNeed(state, action) {
+      state.need = action.payload;
     },
     openBaseRecipe(state, action) {
       if (!state.openedBaseRecipes.find((el) => el[0].base_id === action.payload[0].base_id)) {
@@ -393,6 +397,7 @@ const recipeSlice = createSlice({
 const { changeStoreComplete } = recipeSlice.actions;
 // const { addTodo, toggleComplete, removeTodo } = recipeSlice.actions;
 export const {
+  changeNeed,
   closeBaseRecipe,
   closeRecipe,
   openBaseRecipe,

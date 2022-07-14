@@ -1,16 +1,16 @@
 import React from 'react';
 import './style.css';
 import { withStyles, makeStyles } from '@mui/styles';
-import { Button, Table } from '@mui/material';
+import { Button, Table, TextField } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import { TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
-import { closeBaseRecipe } from '../../store/recipes/reducer';
+import { closeBaseRecipe, changeNeed } from '../../store/recipes/reducer';
 
 // const useStyles = makeStyles({
 //   sticky: {
@@ -34,10 +34,26 @@ const StyledTableCell = withStyles((theme) => ({
 
 function BaseRecipe({ recipeList }) {
   const dispatch = useDispatch();
+  const { basesTodos, need } = useSelector((state) => state.recipes);
 
   const handleCloseRecipe = React.useCallback(() => {
     dispatch(closeBaseRecipe(recipeList[0]['Base.id']));
   }, [dispatch]);
+
+  const handleChangeNeed = React.useCallback(
+    (e) => {
+      dispatch(changeNeed(e.target.value));
+    },
+    [dispatch],
+  );
+
+  const currentNeed = React.useMemo(() => {
+    console.log('basesTodos', basesTodos);
+    const currentTodos = basesTodos.find((todo) => todo.id === recipeList[0]['Base.id']);
+    const currentList = currentTodos ? currentTodos.todos : null;
+    console.log('currentList', currentList);
+    return currentList ? currentList[0].value : need;
+  }, [basesTodos, need]);
 
   return (
     <div className="boxRecipe">
@@ -59,6 +75,27 @@ function BaseRecipe({ recipeList }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
+                    <StyledTableCell align="left" colSpan={2}>
+                      <TextField
+                        id="outlined-basic"
+                        label="Потребность, кг"
+                        size="small"
+                        type="number"
+                        value={currentNeed}
+                        onChange={handleChangeNeed}
+                        variant="outlined"
+                        sx={{
+                          maxWidth: '200px',
+                        }}
+                        inputProps={{
+                          'aria-label': 'weight',
+                          step: '0.01',
+                          min: '0',
+                        }}
+                      />
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
                     <StyledTableCell align="left">Ингридиенты</StyledTableCell>
                     <StyledTableCell align="left">Масса, кг</StyledTableCell>
                   </TableRow>
@@ -70,7 +107,7 @@ function BaseRecipe({ recipeList }) {
                         {ingridient['Ingridient.title']}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {((ingridient.weight / 10) * 4).toFixed(3)}
+                        {((ingridient.weight * currentNeed) / 10).toFixed(3)}
                       </StyledTableCell>
                     </TableRow>
                   ))}
