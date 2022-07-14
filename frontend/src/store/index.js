@@ -6,6 +6,7 @@ import technologReducer from './technolog/reducer';
 import ingridientsReducer from './ingridients/reducer';
 import newRecipes from './newrecipes/reducer';
 import bossReduserReducer from './boss/reducer'
+import profileReducer from './profile/reducer'
 
 
 export default configureStore({
@@ -17,5 +18,6 @@ export default configureStore({
     technolog: technologReducer,
     ingridients: ingridientsReducer,
     boss: bossReduserReducer ,
+    profile: profileReducer,
   },
 });

@@ -71,6 +71,7 @@ const columns = [
     // width: 160,
     valueGetter: (marketPrice) => `${marketPrice.row.production_losses * 100}%`,
   },
+
 ];
 
 function BaseTechnologTable({ marketPrice }) {
