@@ -16,6 +16,7 @@ import BossStatisticProduction from '../Statistics/LineStat/LineStat'
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Profile from '../Profile/Profile';
+import EditProfile from '../Profile/editProfile';
 import Employees from '../Employees/Employees'
 import Error from '../Error/Error';
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
               <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/editProfile' element={<EditProfile />} />
               <Route path="*" element={<Error />} />
             </Route>
           ) : login.role === 'Повар' && login.isWorks ? (
