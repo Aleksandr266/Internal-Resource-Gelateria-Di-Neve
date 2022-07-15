@@ -142,6 +142,7 @@ function MarkertPriceAndCost() {
       width: 100,
       maxWidth: 500,
       editable: false,
+      hide: true,
     
     },
     {
@@ -149,12 +150,12 @@ function MarkertPriceAndCost() {
       headerName: 'Наименование',
       width: 150,
       editable: false,
-      hide: true,
+     
   
     },
     {
       field: 'month',
-      headerName: 'Кг месяц',
+      headerName: 'кг за месяц',
       width: 150,
       editable: false,
     }

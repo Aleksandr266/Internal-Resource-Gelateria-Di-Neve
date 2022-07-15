@@ -108,7 +108,7 @@ function Ingridients() {
   return (
     <div>
       <Button
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 30, marginBottom: '30px' }}
         onClick={() => navigate('/formAddIngridients')}
         variant="outlined">
         Добавить ингридиент

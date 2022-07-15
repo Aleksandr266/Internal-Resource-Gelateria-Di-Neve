@@ -82,6 +82,8 @@ authRouter.route('/reg').post(
     let { role } = req.body;
     const { fullname, login, password } = req.body;
     try {
+      console.log('попали  на бэк');
+      console.log(fullname, login, password, role, ' данные на бэке');
       const existingUser = await User.findOne({ where: { login } });
       if (existingUser) {
         res.json({ success: false, message: 'Пользователь с такой почтой уже есть' });
@@ -95,9 +97,22 @@ authRouter.route('/reg').post(
         userType_id: role,
         login,
         password: await bcrypt.hash(password, 10),
+        isWorks: true,
       });
+      const fullUser = await User.findOne({
+        where: {
+          id: user.id,
+        },
+        include: [User.UserType],
+      });
+      console.log(user, ' только что созданный юзер');
       res.status(200);
-      res.end();
+      res.json({
+        id: user.id,
+        fullname: user.fullname,
+        isWorks: true,
+        role: fullUser.UserType.title,
+      });
     } catch (error) {
       console.log(error);
       res.status(500);

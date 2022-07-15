@@ -37,7 +37,7 @@ function TechnologBases() {
   return (
     <>
           <Button
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 30, marginBottom: '30px' }}
         onClick={() => navigate('/recipes/new')}
         variant="outlined">
         Добавить вкус

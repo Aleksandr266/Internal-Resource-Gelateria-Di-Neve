@@ -12,7 +12,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
-import { closeRecipe } from '../../store/recipes/reducer';
+import {
+  closeRecipe,
+  changeInputProduction,
+  changeOutputProduction,
+  createProduct,
+} from '../../store/recipes/reducer';
 
 const useStyles = makeStyles({
   sticky: {
@@ -33,29 +38,73 @@ const StyledTableCell = withStyles((theme) => ({
   // },
 }))(TableCell);
 
-function Recipe({ recipeId }) {
-  const { recipeIngridients } = useSelector((state) => state.recipes);
+function Recipe({ recipeId, baseId }) {
+  const { recipeIngridients, recipesByBases } = useSelector((state) => state.recipes);
+  const { production } = useSelector((state) => state.recipes);
+  const { login } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  console.log('recipesByBases', recipesByBases);
+  console.log('recipeIngridients', recipeIngridients);
+  console.log('login', login);
+
   const recipeIngridient = React.useMemo(() => {
-    console.log('MEMO', recipeIngridients);
     return recipeIngridients.find((el) => el[0].recipe_id === recipeId);
   }, [recipeIngridients]);
+
+  const { currentInput, currentOutput } = React.useMemo(() => {
+    let currentInput, currentOutput;
+    if (recipeIngridient) {
+      currentInput = production.find((el) => el.recipe_id === recipeIngridient[0].recipe_id)?.input;
+      currentOutput = production.find(
+        (el) => el.recipe_id === recipeIngridient[0].recipe_id,
+      )?.output;
+    }
+    return { currentInput, currentOutput };
+  }, [production, recipeIngridient]);
 
   function close() {
     dispatch(closeRecipe(recipeId));
   }
 
-  function a(e) {
+  function handleSubmitProduction(e) {
     e.preventDefault();
-    console.log(11111111111);
+    const production = {
+      user_id: login.id,
+      recipe_id: recipeId,
+      input_amount: currentInput,
+      out_amount: currentOutput,
+    };
+    const currentBase = recipesByBases.find((base) => base.id === baseId);
+    const baseWeight =
+      (Number(currentBase.recipes.find((recipe) => recipe.id === recipeId).base_weight) *
+        currentInput) /
+      10;
+    console.log('currentBase.stock', currentBase.stock);
+    console.log('baseWeight', baseWeight);
+    if (currentBase.stock >= baseWeight) {
+      dispatch(createProduct({ production }));
+    }
+    // console.log(e.target.output.value);
   }
+
+  const handleChangeInput = React.useCallback(
+    (e) => {
+      dispatch(changeInputProduction({ recipeId, value: e.target.value }));
+    },
+    [dispatch, recipeId],
+  );
+  const handleChangeOutput = React.useCallback(
+    (e) => {
+      dispatch(changeOutputProduction({ recipeId, value: e.target.value }));
+    },
+    [dispatch, recipeId],
+  );
 
   return (
     <div className="boxRecipe">
       {recipeIngridient && (
         <div>
-          {/* <h1 className="titleRecipes">{recipeIngridient[0]['Recipe.title']}</h1> */}
           <div>
             <TableContainer component={Paper}>
               <Table size="small" aria-label="customized table">
@@ -88,11 +137,45 @@ function Recipe({ recipeId }) {
                   ))}
                 </TableBody>
               </Table>
-              <form onSubmit={a} className="formInputs">
-                <TextField name="dryMilkMatter" id="standard-basic" label="инпут раз" />
-                <TextField name="dryMilkMatter" id="standard-basic" label="инпут два" />
+              <form onSubmit={handleSubmitProduction} className="formInputs">
+                <TextField
+                  required
+                  size="small"
+                  type="number"
+                  sx={{
+                    marginBottom: '10px',
+                  }}
+                  inputProps={{
+                    'aria-label': 'weight',
+                    step: '0.01',
+                    min: '0',
+                  }}
+                  name="input"
+                  id="standard-basic"
+                  label="Масса на входе"
+                  value={currentInput || 0}
+                  onChange={handleChangeInput}
+                />
+                <TextField
+                  required
+                  size="small"
+                  type="number"
+                  sx={{
+                    marginBottom: '10px',
+                  }}
+                  inputProps={{
+                    'aria-label': 'weight',
+                    step: '0.01',
+                    min: '0',
+                  }}
+                  name="output"
+                  id="standard-basic"
+                  label="Масса на выходе"
+                  value={currentOutput || 0}
+                  onChange={handleChangeOutput}
+                />
                 <Button type="submit" variant="contained">
-                  Применить
+                  Произвести
                 </Button>
               </form>
             </TableContainer>

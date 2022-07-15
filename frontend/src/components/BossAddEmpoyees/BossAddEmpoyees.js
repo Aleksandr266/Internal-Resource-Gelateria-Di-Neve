@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import { registerUser } from '../../store/auth/reducer'
+import { registerUser } from '../../store/boss/reducer'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -38,22 +38,22 @@ function BossAddEmpoyees() {
     <div className='boxForm'>
        <Box component="form" onSubmit={registerForm} noValidate sx={{ mt: 1 }}>
  
-         <FormControl variant="standard" sx={{ m: 1, minWidth: 480 }}>
+         <FormControl variant="standard" sx={{ m: 1, minWidth: 470 }}>
              <InputLabel id="demo-simple-select-standard-label">Должность</InputLabel>
              <Select
                 labelId="demo-simple-select-standard-label"
                id="demo-simple-select-standard"
                value={role}
                 onChange={handleChange}
-                // label="role"
                 name='role'
+                sx={{ marginBottom: 1 }}
               > 
                 <MenuItem value={"Повар"}>Повар</MenuItem>
                 <MenuItem value={"Технолог"}>Технолог</MenuItem>
              </Select>
-          <TextField  type="text" name='fullname'  label="Фамилия и имя" />
-          <TextField  type="text" name='login'  label="Логин" />
-          <TextField  type="password"  name='password' label="Пароль" />
+          <TextField  type="text" name='fullname'  label="Фамилия и имя" sx={{ padding: '10px'}} autoComplete="off"/>
+          <TextField  type="text" name='login'  label="Логин" sx={{ padding: '10px'}} autoComplete="off"/>
+          <TextField  type="password"  name='password' label="Пароль" sx={{ padding: '10px'}} autoComplete="off"/>
           <Button type='submit' id='btn' variant="outlined">Зарегистрировать</Button>
          </FormControl>
      </Box>
