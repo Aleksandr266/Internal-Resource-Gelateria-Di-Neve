@@ -17,7 +17,8 @@ import BossStatisticProduction from '../Statistics/LineStat/LineStat';
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Profile from '../Profile/Profile';
-import Employees from '../Employees/Employees';
+import EditProfile from '../Profile/editProfile';
+import Employees from '../Employees/Employees'
 import Error from '../Error/Error';
 import { ThemeProvider } from '@emotion/react';
 
@@ -42,13 +43,14 @@ function App() {
                 <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
                 <Route path="/boss/statistic/production" element={<BossStatisticPrice />} />
                 <Route path="/boss/statistic/price" element={<BossStatisticProduction />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path='/profile' element={<Profile />} />
+                <Route path='/editProfile' element={<EditProfile />} />
                 <Route path="*" element={<Error />} />
               </Route>
             ) : login.role === 'Повар' && login.isWorks ? (
               <Route path="/" element={<MainPage />}>
                 <Route path="/" element={<Bases />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path='/profile' element={<Profile />} />
                 <Route path="*" element={<Error />} />
               </Route>
             ) : login.isWorks ? (

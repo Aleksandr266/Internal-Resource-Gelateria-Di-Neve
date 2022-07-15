@@ -22,39 +22,34 @@ profileRouter
   .route('/edit')
   .put(async (req, res) => {
     try {
-      if (req.body.fullName === '' && req.body.login) {
-        const user = await User.findOne({
-          where: { login: req.body.login },
-        });
-        if (!user) {
-          await User.update({ login: req.body.login }, {
-            where: {
-              id: req.session.userId,
-            },
-          });
-          res.json({ status: 'Ваши данные успешно изменены' });
-        }
-        res.json({ status: 'Пользователь с таким логином уже существует' });
-      }
-      if (req.body.login === '' && req.body.fullName) {
-        await User.update({ fullname: req.body.fullName }, {
-          where: {
-            id: req.session.userId,
-          },
-        });
-        res.json({ status: 'Ваши данные успешно изменены' });
-      }
       if (req.body.login && req.body.fullName) {
         const user = await User.findOne({
           where: { login: req.body.login },
         });
-        if (!user) {
-          await User.update({ login: req.body.login, fullname: req.body.fullName }, {
+        if (user && user.fullname !== req.body.fullName && user.id === req.session.userId) {
+          User.update({
+            login: req.body.login,
+            fullname: req.body.fullName,
+          }, {
             where: {
               id: req.session.userId,
             },
           });
-          res.json({ status: 'Ваши данные успешно изменены' });
+          res.json({ status: true });
+        }
+        if (user && user.fullname !== req.body.fullName && user.id !== req.session.userId) {
+          res.json({ status: false });
+        }
+        if (!user) {
+          await User.update({
+            login: req.body.login,
+            fullname: req.body.fullName,
+          }, {
+            where: {
+              id: req.session.userId,
+            },
+          });
+          res.json({ status: true });
         }
       }
     } catch (error) {
