@@ -23,7 +23,7 @@ export default function BasicCard({ base }) {
     );
   }, [dispatch, base]);
 
-  console.log('Before stockVisibles[base.id]', stockVisibles[base.id]);
+  console.log('base', base);
 
   const handleOpenRecipe = React.useCallback(() => {
     dispatch(loadBaseRecipeById(base.id));

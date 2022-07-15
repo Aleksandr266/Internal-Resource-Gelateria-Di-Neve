@@ -75,8 +75,8 @@ function Recipe({ recipeId, baseId }) {
       input_amount: currentInput,
       out_amount: currentOutput,
     };
-    console.log('base', recipesByBases);
-    console.log('base', baseId);
+    console.log('recipesByBases_recipe', recipesByBases);
+    console.log('baseId_recipe', baseId);
     const currentBase = recipesByBases.find((base) => base.id === baseId);
     const baseWeight =
       (Number(currentBase.recipes.find((recipe) => recipe.id === recipeId).base_weight) *

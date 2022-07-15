@@ -382,7 +382,11 @@ const recipeSlice = createSlice({
       const id = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.isOpen = true;
-      state.recipesByBases = getCategories(state.recipes);
+      const findedBaseRecipe = state.recipesByBases
+        .find((base) => base.id === findedRecipe.base_id)
+        .recipes.find((recipe) => recipe.id === id);
+      findedBaseRecipe.isOpen = true;
+      // state.recipesByBases = getCategories(state.recipes);
       state.production.push({
         recipe_id: id,
         input: 4,
@@ -394,7 +398,10 @@ const recipeSlice = createSlice({
       const id = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.isOpen = false;
-      state.recipesByBases = getCategories(state.recipes);
+      const findedBaseRecipe = state.recipesByBases
+        .find((base) => base.id === findedRecipe.base_id)
+        .recipes.find((recipe) => recipe.id === id);
+      findedBaseRecipe.isOpen = false;
       state.production.splice(
         state.production.findIndex((product) => product.recipe_id === id),
         1,
@@ -423,7 +430,11 @@ const recipeSlice = createSlice({
       const { id, value } = action.payload;
       const findedRecipe = state.recipes.find((store) => store.id === id);
       findedRecipe.Store.amount = Number(findedRecipe.Store.amount) + Number(value);
-      state.recipesByBases = getCategories(state.recipes);
+      // state.recipesByBases = getCategories(state.recipes);
+      const findedBaseRecipe = state.recipesByBases
+        .find((base) => base.id === findedRecipe.base_id)
+        .recipes.find((recipe) => recipe.id === id);
+      findedBaseRecipe.Store.amount = Number(findedBaseRecipe.Store.amount) + Number(value);
     },
   },
 
