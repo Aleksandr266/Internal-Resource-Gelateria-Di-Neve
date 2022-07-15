@@ -95,6 +95,7 @@ ingridientsRouter
   });
 
 ingridientsRouter.route('/editPriceIngridients').post(async (req, res) => {
+  console.log(req.body);
   await IngridientPrice.create({
     ingridient_id: req.body.id,
     price: req.body.price,

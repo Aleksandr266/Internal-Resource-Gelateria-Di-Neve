@@ -34,7 +34,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
   display: 'flex',
   flexDirection: 'column',
-  height: 400,
+  height: 420,
   flexGrow: 3,
 }));
 
