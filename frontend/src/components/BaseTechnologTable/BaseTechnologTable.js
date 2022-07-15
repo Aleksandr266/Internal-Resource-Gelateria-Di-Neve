@@ -69,9 +69,9 @@ const columns = [
     minWidth: 200,
     maxWidth: 500,
     // width: 160,
-    valueGetter: (marketPrice) => `${marketPrice.row.production_losses * 100}%`,
+    valueGetter: (marketPrice) =>
+      `${Math.round(-1 * (marketPrice.row.production_losses * 100) * 10) / 10}%`,
   },
-
 ];
 
 function BaseTechnologTable({ marketPrice }) {
