@@ -98,6 +98,8 @@ function BaseTable({ recipes }) {
     <DataGrid
       rows={recipes}
       columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={[5, 10, 20]}
       // experimentalFeatures={{ newEditingApi: true }}
       onCellEditCommit={handlerEditCommit}
       localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}

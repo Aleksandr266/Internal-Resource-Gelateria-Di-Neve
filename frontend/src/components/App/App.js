@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { theme } from './theme'
+import { theme } from './theme';
 import { getUser } from '../../store/auth/reducer';
 import './App.css';
 import MainPage from '../MainPage/MainPage';
@@ -17,7 +17,7 @@ import BossStatisticProduction from '../Statistics/LineStat/LineStat';
 import TechnologBases from '../TechnologBases/TechnologBases';
 import NewRecipe from '../NewRecipe/NewRecipe';
 import Profile from '../Profile/Profile';
-import Employees from '../Employees/Employees'
+import Employees from '../Employees/Employees';
 import Error from '../Error/Error';
 import { ThemeProvider } from '@emotion/react';
 
@@ -31,49 +31,49 @@ function App() {
   }, [dispatch]);
 
   return (
-<ThemeProvider theme={theme} >
-    <Routes>
-      {login.id ? (
-        <>
-          {login.role === 'Директор' ? (
-            <Route path="/" element={<MainPage />}>
-              <Route path="/" element={<BossMainPage />} />
-              <Route path="/boss/employees" element={<Employees />} />
-              <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
-              <Route path="/boss/statistic/production" element={<BossStatisticProduction />} />
-              <Route path="/boss/statistic/price" element={<BossStatisticPrice />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path="*" element={<Error />} />
-            </Route>
-          ) : login.role === 'Повар' && login.isWorks ? (
-            <Route path="/" element={<MainPage />}>
-              <Route path="/" element={<Bases />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path="*" element={<Error />} />
-            </Route>
-          ) : login.isWorks ? (
-            <Route path="/" element={<MainPage />}>
-              <Route path="/" element={<TechnologBases />} />
-              {/* <Route path="/" element={<NewRecipe />} /> */}
-              <Route path="/recipes/new" element={<NewRecipe />} />
-              <Route path="/formAddIngridients" element={<FormAddIngridients />} />
-              <Route path="/ingridients" element={<Ingridients />} />
-              <Route path="*" element={<Error />} />
-            </Route>
-          ) : (
-            <Route path="/" element={<MainPage />}>
-              <Route path="*" element={<Error />} />
-            </Route>
-          )}
-        </>
-      ) : (
-        <>
-          <Route path="/" element={<Auth />} />
-          <Route path="*" element={<Error />} />
-        </>
-      )}
-    </Routes>
-   </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <Routes>
+        {login.id ? (
+          <>
+            {login.role === 'Директор' ? (
+              <Route path="/" element={<MainPage />}>
+                <Route path="/" element={<BossMainPage />} />
+                <Route path="/boss/employees" element={<Employees />} />
+                <Route path="/boss/addEmpoyees" element={<BossAddEmpoyees />} />
+                <Route path="/boss/statistic/production" element={<BossStatisticPrice />} />
+                <Route path="/boss/statistic/price" element={<BossStatisticProduction />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            ) : login.role === 'Повар' && login.isWorks ? (
+              <Route path="/" element={<MainPage />}>
+                <Route path="/" element={<Bases />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            ) : login.isWorks ? (
+              <Route path="/" element={<MainPage />}>
+                <Route path="/" element={<TechnologBases />} />
+                {/* <Route path="/" element={<NewRecipe />} /> */}
+                <Route path="/recipes/new" element={<NewRecipe />} />
+                <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+                <Route path="/ingridients" element={<Ingridients />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            ) : (
+              <Route path="/" element={<MainPage />}>
+                <Route path="*" element={<Error />} />
+              </Route>
+            )}
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Auth />} />
+            <Route path="*" element={<Error />} />
+          </>
+        )}
+      </Routes>
+    </ThemeProvider>
   );
 }
 
