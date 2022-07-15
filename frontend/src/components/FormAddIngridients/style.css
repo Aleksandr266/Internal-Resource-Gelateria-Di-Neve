@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px 30px 30px;
+  margin-top: 50px;
 }
 
 .formAddIngridients {
@@ -17,4 +19,8 @@
 
 #btn {
   margin-top: 10px;
+}
+
+.inputText {
+  margin-bottom: 10px;
 }

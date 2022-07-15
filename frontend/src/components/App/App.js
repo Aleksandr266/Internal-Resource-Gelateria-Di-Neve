@@ -59,6 +59,7 @@ function App() {
                 {/* <Route path="/" element={<NewRecipe />} /> */}
                 <Route path="/recipes/new" element={<NewRecipe />} />
                 <Route path="/formAddIngridients" element={<FormAddIngridients />} />
+                <Route path='/profile' element={<Profile />} />
                 <Route path="/ingridients" element={<Ingridients />} />
                 <Route path="*" element={<Error />} />
               </Route>
