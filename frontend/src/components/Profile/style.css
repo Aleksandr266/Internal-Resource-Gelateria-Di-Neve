@@ -21,7 +21,6 @@
 .boxForm {
   display: flex;
   justify-content: center;
-  padding-bottom: 50px;
 }
 
 .profile {
