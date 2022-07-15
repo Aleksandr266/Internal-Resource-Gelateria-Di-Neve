@@ -32,7 +32,6 @@ export const editUser = createAsyncThunk(
         },
       })
       const data = await response.json()
-      // console.log(data)
       return data
     } catch (error) {
       return rejectWithValue(error.message);
@@ -44,7 +43,7 @@ const users = createSlice({
   name: 'user',
   initialState: {
     user: [],
-    userEdit: []
+    userEdit: 1
   },
   reducers: {
     changeFullName(state, action) {
@@ -52,6 +51,9 @@ const users = createSlice({
     },
     changeLogin(state, action) {
       state.user.login = action.payload
+    },
+    changeUserEdit(state) {
+      state.userEdit = 1
     }
   },
   extraReducers: {
@@ -75,7 +77,8 @@ const users = createSlice({
 })
 export const {
   changeFullName,
-  changeLogin
+  changeLogin,
+  changeUserEdit,
 } = users.actions
 
 export default users.reducer;
