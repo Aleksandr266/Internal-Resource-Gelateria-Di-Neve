@@ -1,0 +1,9 @@
+.logo{
+  width: 27px;
+  margin-right: 15px;
+  margin-left: 20px;
+}
+.nav-bar-space-between{
+  display: flex;
+  justify-content: space-between;
+}

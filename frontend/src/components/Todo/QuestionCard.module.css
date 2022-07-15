@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap');
+.question {
+  margin: 0px;
+  border-radius: 15px;
+  padding: 20px 50px;
+  text-align: center;
+  font-size: 27px;
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  background-color: #8b0a0a;
+  color: #fff;
+  display: flex;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px 12px 31px -7px rgba(194, 194, 194, 0.26);
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px -6px 31px -7px rgba(194, 194, 194, 0.26), 10px -6px 31px -7px rgba(194, 194, 194, 0.26),
+    10px 12px 31px -7px rgba(194, 194, 194, 0.26);
+}
+
+.question:hover {
+  background-color: rgb(222, 4, 4);
+  color: rgb(0, 0, 0);
+}
+
+.answered {
+  margin: 0px;
+  font-size: 20px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  padding: 20px 50px;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  display: flex;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: appear;
+  animation-duration: 300ms;
+}
+
+.modalDialog {
+  width: 550px;
+  max-width: 850px;
+  padding: 25px 50px;
+  border-radius: 30px;
+  background: rgb(241, 220, 220);
+  position: relative;
+  margin: 0 -50px;
+  max-height: calc(100vh - 40px);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+}
+
+.modalHeader {
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Raleway' sans-serif;
+}
+
+.modalTimer {
+  color: #8b0a0a;
+  font-size: 30px;
+  font-family: 'Raleway', sans-serif;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+p {
+  font-size: 20px;
+}
+
+
+.modalButton {
+  width: 145px;
+  max-width: 850px;
+  padding: 25px 50px;
+  border-radius: 30px;
+  background: rgb(241, 220, 220);
+  position: relative;
+  margin: 0 -10px;
+  max-height: calc(100vh - 40px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+}

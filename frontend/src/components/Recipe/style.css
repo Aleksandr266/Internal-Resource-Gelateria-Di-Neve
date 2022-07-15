@@ -1,0 +1,27 @@
+.titleRecipes {
+  display: flex;
+  justify-content: center;
+}
+.boxRecipe {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  max-width: 300px;
+}
+.boxTableRecipe {
+  max-width: 80%;
+  min-width: 70%;
+}
+
+.tableHeader {
+  color: rgb(248, 94, 222) !important;
+  font-weight: 900 !important;
+  font-size: 1.6em !important;
+}
+
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 10px;
+}

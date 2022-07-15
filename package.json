@@ -1,0 +1,26 @@
+{
+  "name": "internal-resource-gelateria-di-neve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd backend && npm i && npx sequelize db:migrate && cd ../frontend && npm i --legacy-peer-deps && npm run build",
+    "start": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve.git"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve/issues"
+  },
+  "homepage": "https://github.com/Tciganskybaron/Internal-Resource-Gelateria-Di-Neve#readme",
+  "dependencies": {
+  }
+}

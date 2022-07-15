@@ -1,0 +1,46 @@
+.tdRecipeList {
+  background-color: #f7b7d0;
+  font-weight: 300;
+}
+
+.thRecipeList {
+  background-color: #f7b7d0;
+}
+
+.tableRecipelist {
+  background-color: #cd3039;
+  border-color: #cd3039;
+}
+
+.boxTableRecipeList {
+  display: flex;
+  justify-content: center;
+}
+
+.titleRecipesList {
+  display: flex;
+  justify-content: center;
+}
+
+.tablist {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.tab {
+  padding: 10px 30px;
+  cursor: pointer;
+  border: 1px solid green;
+}
+
+.react-tabs__tab--selected {
+  color: red;
+  border: 1px solid red;
+  background: yellow;
+}
+
+.handle {
+  /* position: absolute; */
+  max-width: 350px;
+}
